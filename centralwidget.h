@@ -5,12 +5,99 @@
 
 #include <QWidget>
 
+class QAction;
+
 class CentralWidget : public QWidget
 {
     Q_OBJECT
 public:
-    CentralWidget(QWidget *parent = nullptr);
+    /*!
+     * \brief Основной конструктор
+     * \param parent - указатель на родительский класс
+     */
+    CentralWidget(QWidget* parent = nullptr);
+
+    /*!
+     * \brief Основной деструктор
+     */
     ~CentralWidget();
+
+    /*!
+     * \brief Вернуть лист указателей на кнопки тулбара
+     * \return лист с указателями
+     */
+    QList<QAction*> actions();
+
+private:
+    /*************************************************/
+    /*      Методы относящиеся к работе с GUI        */
+    /*************************************************/
+    /*!
+     * \brief Настрока этого (центрального) виджета
+     */
+    void setupCentralWidget();
+
+    /*!
+     * \brief Создать и настроить все кнопки тулбара
+     */
+    void setupActions();
+
+    /*!
+     * \brief Создать и настроить кнопку подключения
+     * \return указатель на Action
+     */
+    QAction* createAction(const QString& name, const QString& iconPath);
+
+    /*!
+     * \brief Функция настраивает соединения Signal/Slots
+     */
+    void setupSignalSlotsConnection();
+
+    /*!
+     * \brief Создать лист указателей на кнопки тулбара
+     * \return лист с указателями
+     */
+    QList<QAction*> createListActions();
+
+    /*!
+     * \brief Создать сепаратор для тулбара
+     * \return указатель на генератор
+     */
+    QAction* createSeparator();
+
+private slots:
+    /*!
+     * \brief Слот, обрабатывающая логику кнопки круга
+     */
+    void onCircleAction();
+
+    /*!
+     * \brief Слот, обрабатывающая логику кнопки квадрата
+     */
+    void onSquareAction();
+
+    /*!
+     * \brief Слот, обрабатывающая логику кнопки прямоугольника
+     */
+    void onRectangleAction();
+
+    /*!
+     * \brief Слот, обрабатывающая логику кнопки треугольника
+     */
+    void onTriangleAction();
+
+private:
+    // Указатель на кнопку отрисовки круга
+    QAction* m_pCircleAction;
+
+    // Указатель на кнопку отрисовки квадрата
+    QAction* m_pSquareAction;
+
+    // Указатель на кнопку отрисовки прямоугольника
+    QAction* m_pRectangleAction;
+
+    // Указатель на кнопку отрисовки треугольника
+    QAction* m_pTriangleAction;
 };
 
 #endif
