@@ -5,6 +5,16 @@
 
 #include "point.h"
 
+#include <cstdint>
+
+/*!
+ * \brief тип фигуры
+ */
+enum class FigureType : int8_t
+{
+    Square = 0,
+};
+
 class Figures
 {
 public:
@@ -25,7 +35,7 @@ public:
     Figures& operator=(Figures&&) = delete;
 
     /*!
-     * \brief Вирутальный деструктор
+     * \brief Виртуальный деструктор
      */
     virtual ~Figures();
 
@@ -35,7 +45,16 @@ public:
      */
     virtual Point calculateCenter() const = 0;
 
+    /*!
+     * \brief Вернуть центральную точку фигуры
+     * \return точка в пространстве
+     */
+    Point position() const;
+
 private:
+    /*!
+     * \brief Позиция центра фигуры
+     */
     Point m_position;
 };
 

@@ -1,11 +1,12 @@
 #include "centralwidget.h"
 
-#include "figures.h"
 #include "figurescene.h"
 #include "figureview.h"
+#include "square.h"
 
 #include <QAction>
 #include <QGraphicsView>
+#include <QGraphicsRectItem>
 #include <QHBoxLayout>
 
 CentralWidget::CentralWidget(QWidget* parent)
@@ -136,6 +137,19 @@ void CentralWidget::onCircleAction()
 void CentralWidget::onSquareAction()
 {
     qDebug("Pressed Square");
+
+    Square square{50};
+    // TODO: square->(new Draw);
+    QRectF rectangle{square.point(SquarePoint::Fourth).x(),
+                     square.point(SquarePoint::Fourth).y(),
+                     square.side(),
+                     square.side()};
+
+    m_scene->addEllipse(-1, -1, 2.0, 2.0, QPen(), QBrush(Qt::SolidPattern));
+
+    QGraphicsRectItem* item = m_scene->addRect(rectangle);
+    item->setFlags(QGraphicsItem::ItemIsMovable
+                   | QGraphicsItem::ItemIsSelectable);
 }
 
 void CentralWidget::onRectangleAction()

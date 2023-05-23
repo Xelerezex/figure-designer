@@ -9,19 +9,19 @@ public:
      * \param x - значение точки X
      * \param y - значение точки Y
      */
-    explicit Point(int x = 0, int y = 0);
+    explicit Point(double x = 0, double y = 0);
 
     /*!
      * \brief возвращает значение X
      * \return целочисленое значение
      */
-    int x() const;
+    double x() const;
 
     /*!
      * \brief возвращает значение Y
      * \return целочисленое значение
      */
-    int y() const;
+    double y() const;
 
     /*!
      * \brief Установить значение по X
@@ -40,11 +40,11 @@ public:
      * \param x
      * \param y
      */
-    void setPosition(int x, int y);
+    void setPosition(double x, double y);
 
 private:
-    int m_positionX;
-    int m_positionY;
+    double m_positionX;
+    double m_positionY;
 };
 
 #endif // POINT_H

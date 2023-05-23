@@ -1,17 +1,17 @@
 #include "point.h"
 
-Point::Point(int x, int y)
+Point::Point(double x, double y)
     : m_positionX{x}
     , m_positionY{y}
 {
 }
 
-int Point::x() const
+double Point::x() const
 {
     return m_positionX;
 }
 
-int Point::y() const
+double Point::y() const
 {
     return m_positionY;
 }
@@ -26,7 +26,7 @@ void Point::setY(int y)
     m_positionX = y;
 }
 
-void Point::setPosition(int x, int y)
+void Point::setPosition(double x, double y)
 {
     m_positionX = x;
     m_positionY = y;

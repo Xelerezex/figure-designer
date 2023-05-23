@@ -10,7 +10,9 @@ add_library(
         figures.h
         figures.cpp
         point.h
-        point.cpp)
+        point.cpp
+        square.h
+        square.cpp)
 
 target_include_directories(
     ${SOURCE_TARGET_NAME} 
