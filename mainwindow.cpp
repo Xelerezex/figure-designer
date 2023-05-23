@@ -42,10 +42,10 @@ MainWindow::~MainWindow()
 void MainWindow::setupMainWindow()
 {
     // Устанавливаем название организации
-    QCoreApplication::setOrganizationName(tr("\"SPE \"AMS\""));
+    QCoreApplication::setOrganizationName(tr("Top Systems"));
 
     // Устанавливаем название приложения
-    QCoreApplication::setApplicationName(QLatin1String("PEL-73031E Test Program"));
+    QCoreApplication::setApplicationName(QLatin1String("Figure Designer"));
 
     // Устанавливаем имя объекта класса
     setObjectName(QLatin1String("MainWindow"));
