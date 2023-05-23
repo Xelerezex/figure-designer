@@ -1,6 +1,7 @@
 #include "centralwidget.h"
 
 #include "figurescene.h"
+#include "figureview.h"
 
 #include <QAction>
 #include <QGraphicsView>
@@ -49,7 +50,8 @@ void CentralWidget::setupActions()
 void CentralWidget::setupScene()
 {
     m_scene = new FigureScene(this);
-    m_view	= new QGraphicsView(m_scene);
+    m_view	= new FigureView(m_scene, this);
+    m_view->setScene(m_scene);
 }
 
 void CentralWidget::setupMainLayout()

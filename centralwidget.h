@@ -7,7 +7,7 @@
 
 class QAction;
 class FigureScene;
-class QGraphicsView;
+class FigureView;
 
 class CentralWidget : public QWidget
 {
@@ -127,7 +127,7 @@ private:
     /*!
      * \brief Указатель на отображение сцены
      */
-    QGraphicsView* m_view;
+    FigureView* m_view;
 };
 
 #endif
