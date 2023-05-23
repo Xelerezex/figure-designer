@@ -8,7 +8,9 @@ add_library(
     ${SOURCE_TARGET_NAME} 
         STATIC
         figures.h
-        figures.cpp)
+        figures.cpp
+        point.h
+        point.cpp)
 
 target_include_directories(
     ${SOURCE_TARGET_NAME} 
