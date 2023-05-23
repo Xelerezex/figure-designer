@@ -91,45 +91,11 @@ void FigureView::middleMouseButtonRelease(QMouseEvent* event)
 
 void FigureView::leftMouseButtonPress(QMouseEvent* event)
 {
-    //    QString type       = getItemAtClick(event);
-    //    lastLeftMouseClick = mapToScene(event->pos());
-
-    //    if (type == "Socket")
-    //    {
-    //        if (mode == MODE::NOOP)
-    //        {
-    //            mode = MODE::DRAG_EDGE;
-    //            dragEdgeStart(type);
-    //            return;
-    //        }
-    //    }
-
-    //    if (mode == MODE::DRAG_EDGE)
-    //    {
-    //        if (dragEdgeEnd(type))
-    //        {
-    //            return;
-    //        }
-    //    }
-
     QGraphicsView::mousePressEvent(event);
 }
 
 void FigureView::leftMouseButtonRelease(QMouseEvent* event)
 {
-    //    QString type = getItemAtClick(event);
-
-    //    if (mode == MODE::DRAG_EDGE)
-    //    {
-    //        if (distanceBetweenClickReleaseOff(event))
-    //        {
-    //            if (dragEdgeEnd(type))
-    //            {
-    //                return;
-    //            }
-    //        }
-    //    }
-
     QGraphicsView::mouseReleaseEvent(event);
 }
 
