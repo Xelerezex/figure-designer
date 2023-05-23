@@ -1,6 +1,10 @@
 #include "centralwidget.h"
 
+#include "figurescene.h"
+
 #include <QAction>
+#include <QGraphicsView>
+#include <QHBoxLayout>
 
 CentralWidget::CentralWidget(QWidget* parent)
     : QWidget(parent)
@@ -10,6 +14,12 @@ CentralWidget::CentralWidget(QWidget* parent)
 
     // Создание и настройка кнопок для тулбара
     setupActions();
+
+    // Создание и настройка виджета сцены
+    setupScene();
+
+    // Создание и настройка основного лейаута
+    setupMainLayout();
 
     // Соединения Signal/Slot:
     setupSignalSlotsConnection();
@@ -34,6 +44,19 @@ void CentralWidget::setupActions()
                                       QStringLiteral(":/images/rectangle.png"));
     m_pTriangleAction  = createAction(QStringLiteral("Triangle"),
                                       QStringLiteral(":/images/triangle.png"));
+}
+
+void CentralWidget::setupScene()
+{
+    m_scene = new FigureScene(this);
+    m_view	= new QGraphicsView(m_scene);
+}
+
+void CentralWidget::setupMainLayout()
+{
+    QHBoxLayout* mainLayout = new QHBoxLayout;
+    mainLayout->addWidget(m_view);
+    setLayout(mainLayout);
 }
 
 QAction* CentralWidget::createAction(const QString& name,

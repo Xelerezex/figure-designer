@@ -18,6 +18,8 @@ set(PROJECT_SOURCES
         mainwindow.h
         centralwidget.h
         centralwidget.cpp
+        figurescene.h
+        figurescene.cpp
 )
 
 set(PROJECT_RESOURCES

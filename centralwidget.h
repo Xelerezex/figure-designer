@@ -6,6 +6,8 @@
 #include <QWidget>
 
 class QAction;
+class FigureScene;
+class QGraphicsView;
 
 class CentralWidget : public QWidget
 {
@@ -41,6 +43,16 @@ private:
      * \brief Создать и настроить все кнопки тулбара
      */
     void setupActions();
+
+    /*!
+     * \brief Создание и настройка виджета сцены
+     */
+    void setupScene();
+
+    /*!
+     * \brief Создание и настройка основного лейаута
+     */
+    void setupMainLayout();
 
     /*!
      * \brief Создать и настроить кнопку подключения
@@ -87,17 +99,35 @@ private slots:
     void onTriangleAction();
 
 private:
-    // Указатель на кнопку отрисовки круга
+    /*!
+     * \brief Указатель на кнопку отрисовки круга
+     */
     QAction* m_pCircleAction;
 
-    // Указатель на кнопку отрисовки квадрата
+    /*!
+     * \brief Указатель на кнопку отрисовки квадрата
+     */
     QAction* m_pSquareAction;
 
-    // Указатель на кнопку отрисовки прямоугольника
+    /*!
+     * \brief Указатель на кнопку отрисовки прямоугольника
+     */
     QAction* m_pRectangleAction;
 
-    // Указатель на кнопку отрисовки треугольника
+    /*!
+     * \brief Указатель на кнопку отрисовки треугольника
+     */
     QAction* m_pTriangleAction;
+
+    /*!
+     * \brief Указатель на виджет сцены
+     */
+    FigureScene* m_scene;
+
+    /*!
+     * \brief Указатель на отображение сцены
+     */
+    QGraphicsView* m_view;
 };
 
 #endif
