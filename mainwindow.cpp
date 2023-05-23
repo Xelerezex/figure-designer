@@ -10,7 +10,7 @@
  * \brief Конструктор
  * \param parent - указатель на родительский виджет
  */
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
 {
     // Настроить основное окно
@@ -63,8 +63,11 @@ void MainWindow::setupToolBar()
     // Запрещает скрытие тулбара при нажатии на правую кнопку мыши
     m_pToolBar->setContextMenuPolicy(Qt::PreventContextMenu);
 
-    // Добавим тулбар на основное окно
-    addToolBar(m_pToolBar);
+    // Запретить двигать тулбар
+    m_pToolBar->setMovable(false);
+
+    // Добавим тулбар на основное окно, слева
+    addToolBar(Qt::LeftToolBarArea, m_pToolBar);
 }
 
 /*!
@@ -91,7 +94,7 @@ void MainWindow::setupToolBarButtons()
  * \brief Переопределенная функция вызывающаяся при закрытии окна
  * \param event - указатель на событие закрытия
  */
-void MainWindow::closeEvent(QCloseEvent *event)
+void MainWindow::closeEvent(QCloseEvent* event)
 {
     // Записать позиции основного окна в файл настроек
     writeState();
@@ -136,8 +139,10 @@ void MainWindow::readState()
     settings.beginGroup(objectName());
 
     // Восстанавливаем настройку  геометрию и положение окна
-    restoreGeometry(settings.value(QLatin1String("geometry"), saveGeometry()).toByteArray());
-    restoreState(settings.value(QLatin1String("state"), saveState()).toByteArray());
+    restoreGeometry(settings.value(QLatin1String("geometry"), saveGeometry())
+                        .toByteArray());
+    restoreState(
+        settings.value(QLatin1String("state"), saveState()).toByteArray());
     move(settings.value(QLatin1String("position"), pos()).toPoint());
     resize(settings.value(QLatin1String("size"), size()).toSize());
 
