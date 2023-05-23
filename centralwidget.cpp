@@ -3,6 +3,7 @@
 #include "figurescene.h"
 #include "figureview.h"
 #include "square.h"
+#include "squaresceneobject.h"
 
 #include <QAction>
 #include <QGraphicsView>
@@ -144,6 +145,9 @@ void CentralWidget::onSquareAction()
                      square.point(SquarePoint::Fourth).y(),
                      square.side(),
                      square.side()};
+
+
+	SquareSceneObject obj{0, nullptr, nullptr};
 
     m_scene->addEllipse(-1, -1, 2.0, 2.0, QPen(), QBrush(Qt::SolidPattern));
 
