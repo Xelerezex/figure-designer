@@ -2,7 +2,6 @@
 
 CentralWidget::CentralWidget(QWidget *parent)
     : QWidget(parent)
-    , m_pThread{nullptr}
 {
 }
 
