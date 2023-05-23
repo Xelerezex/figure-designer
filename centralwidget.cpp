@@ -1,5 +1,6 @@
 #include "centralwidget.h"
 
+#include "figures.h"
 #include "figurescene.h"
 #include "figureview.h"
 

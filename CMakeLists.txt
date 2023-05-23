@@ -54,7 +54,13 @@ else()
     endif()
 endif()
 
-target_link_libraries(figure-designer PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+include_directories(${PROJECT_SOURCE_DIR}/figures)
+add_subdirectory(${PROJECT_SOURCE_DIR}/figures)
+
+target_link_libraries(figure-designer
+                      PRIVATE
+                            Qt${QT_VERSION_MAJOR}::Widgets
+                            figures-target)
 
 set_target_properties(figure-designer PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
