@@ -40,12 +40,6 @@ public:
     virtual ~Figures();
 
     /*!
-     * \brief Функция высчитывает центр фигуры
-     * \return координаты центра
-     */
-    virtual Point calculateCenter() const = 0;
-
-    /*!
      * \brief Вернуть центральную точку фигуры
      * \return точка в пространстве
      */

@@ -2,6 +2,8 @@
 
 #include "figurescene.h"
 #include "figureview.h"
+#include "rectangle.h"
+#include "rectanglesceneobject.h"
 #include "square.h"
 #include "squaresceneobject.h"
 
@@ -152,6 +154,14 @@ void CentralWidget::onSquareAction()
 void CentralWidget::onRectangleAction()
 {
     qDebug("Pressed Rectangle");
+
+    auto rectangle = QSharedPointer<RectangleSceneObject>::create(
+        static_cast<unsigned int>(m_sceneObjects.size()),
+        new Rectangle{100, 50});
+
+    m_scene->addItem(rectangle.get());
+
+    m_sceneObjects.append(rectangle);
 }
 
 void CentralWidget::onTriangleAction()

@@ -7,11 +7,6 @@ Square::Square(double side)
     calculateStartCoordinate(side);
 }
 
-Point Square::calculateCenter() const
-{
-    return Point{};
-}
-
 double Square::side() const
 {
     return m_side;

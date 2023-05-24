@@ -24,6 +24,11 @@ public:
     explicit Square(double side);
 
     /*!
+     *  \brief Дефолтный деструткор
+     */
+    ~Square() = default;
+
+    /*!
      * \brief Удаленные операторы
      */
     Square()					= delete;
@@ -33,14 +38,8 @@ public:
     Square& operator=(Square&&) = delete;
 
     /*!
-     * \brief Переопределенный метод, высчитывающий точку центра
-     * \return
-     */
-    Point calculateCenter() const override;
-
-    /*!
      * \brief Метод возвращает длину одной стороны
-     * \return
+     * \return длина
      */
     double side() const;
 
