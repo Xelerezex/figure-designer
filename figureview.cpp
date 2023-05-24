@@ -59,8 +59,8 @@ void FigureView::mouseReleaseEvent(QMouseEvent* event)
 void FigureView::middleMouseButtonPress(QMouseEvent* event)
 {
     QMouseEvent* releaseEvent = new QMouseEvent(QEvent::MouseButtonRelease,
-												event->position(),
-												event->globalPosition(),
+                                                event->localPos(),
+                                                event->screenPos(),
                                                 Qt::LeftButton,
                                                 Qt::NoButton,
                                                 event->modifiers());
@@ -69,8 +69,8 @@ void FigureView::middleMouseButtonPress(QMouseEvent* event)
     setDragMode(QGraphicsView::ScrollHandDrag);
 
     QMouseEvent* fakeEvent = new QMouseEvent(event->type(),
-											 event->position(),
-											 event->globalPosition(),
+                                             event->localPos(),
+                                             event->screenPos(),
                                              Qt::LeftButton,
                                              event->buttons() | Qt::LeftButton,
                                              event->modifiers());
@@ -80,8 +80,8 @@ void FigureView::middleMouseButtonPress(QMouseEvent* event)
 void FigureView::middleMouseButtonRelease(QMouseEvent* event)
 {
     QMouseEvent* fakeEvent = new QMouseEvent(event->type(),
-											 event->position(),
-											 event->globalPosition(),
+                                             event->localPos(),
+                                             event->screenPos(),
                                              Qt::LeftButton,
                                              event->buttons() | Qt::LeftButton,
                                              event->modifiers());
