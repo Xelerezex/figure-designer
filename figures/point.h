@@ -43,7 +43,14 @@ public:
     void setPosition(double x, double y);
 
 private:
+    /*!
+     * \brief Позиция в точке X
+     */
     double m_positionX;
+
+    /*!
+     * \brief Позиция в точке Y
+     */
     double m_positionY;
 };
 

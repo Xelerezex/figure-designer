@@ -42,7 +42,14 @@ private:
     void setSceneBoundaries(const int32_t width, const int32_t height);
 
 private:
+    /*!
+     * \brief одно деление сетки
+     */
     const uint8_t m_gridSize;
+
+    /*!
+     * \brief размер одно кввадрата сетки
+     */
     const uint8_t m_gridSquares;
 };
 

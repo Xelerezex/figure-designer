@@ -59,12 +59,26 @@ private:
     void calculateStartCoordinate(double side);
 
 private:
+    /*!
+     * \brief Длина одной линии
+     */
     double m_side;
 
-    Point  m_first;
-    Point  m_second;
-    Point  m_third;
-    Point  m_fourth;
+    /*!
+     * \brief Относительные координаты размера фигуры
+     *
+     *    first--------second
+     *      |             |
+     *      |             |
+     *      |             |
+     *      |             |
+     *    fourth--------third
+     *
+     */
+    Point m_first;
+    Point m_second;
+    Point m_third;
+    Point m_fourth;
 };
 
 #endif // SQUARE_H
