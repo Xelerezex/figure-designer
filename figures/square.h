@@ -53,7 +53,7 @@ public:
 private:
     /*!
      * \brief Метод высчитывающий стартовую позицию фигуры
-     * \param side
+     * \param side - сторона квадрата
      */
     void calculateStartCoordinate(double side);
 
@@ -64,7 +64,7 @@ private:
     double m_side;
 
     /*!
-     * \brief Относительные координаты размера фигуры
+     * \brief Относительные координаты фигуры
      *
      *    first--------second
      *      |             |

@@ -28,6 +28,8 @@ set(PROJECT_SOURCES
         squaresceneobject.cpp
         rectanglesceneobject.h
         rectanglesceneobject.cpp
+        trianglesceneobject.h
+        trianglesceneobject.cpp
 )
 
 set(PROJECT_RESOURCES

@@ -15,6 +15,8 @@ add_library(
         square.cpp
         rectangle.h
         rectangle.cpp
+        triangle.h
+        triangle.cpp
 )
 
 target_include_directories(

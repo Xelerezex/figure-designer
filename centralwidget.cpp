@@ -6,6 +6,8 @@
 #include "rectanglesceneobject.h"
 #include "square.h"
 #include "squaresceneobject.h"
+#include "triangle.h"
+#include "trianglesceneobject.h"
 
 #include <QAction>
 #include <QGraphicsView>
@@ -167,4 +169,12 @@ void CentralWidget::onRectangleAction()
 void CentralWidget::onTriangleAction()
 {
     qDebug("Pressed Triangle");
+
+    auto triangle = QSharedPointer<TriangleSceneObject>::create(
+        static_cast<unsigned int>(m_sceneObjects.size()),
+        new Triangle{Point{0, 50}, Point{-70, -25}, Point{70, -25}});
+
+    m_scene->addItem(triangle.get());
+
+    m_sceneObjects.append(triangle);
 }

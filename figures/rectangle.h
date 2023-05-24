@@ -59,7 +59,8 @@ public:
 private:
     /*!
      * \brief Метод высчитывающий стартовую позицию фигуры
-     * \param side
+     * \param width - ширина прямоугольник
+     * \param height - высота прямоугольника
      */
     void calculateStartCoordinate(double width, double height);
 
@@ -71,7 +72,7 @@ private:
     double m_height;
 
     /*!
-     * \brief Относительные координаты размера фигуры
+     * \brief Относительные координаты фигуры
      *
      *    first------------second
      *    |                     |
