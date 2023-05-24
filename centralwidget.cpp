@@ -139,21 +139,14 @@ void CentralWidget::onSquareAction()
 {
     qDebug("Pressed Square");
 
-    Square square{50};
-    // TODO: square->(new Draw);
-    QRectF rectangle{square.point(SquarePoint::Fourth).x(),
-                     square.point(SquarePoint::Fourth).y(),
-                     square.side(),
-                     square.side()};
+    // square{};
 
+    auto square = QSharedPointer<SquareSceneObject>::create(
+        static_cast<unsigned int>(m_sceneObjects.size()), new Square{50});
 
-	SquareSceneObject obj{0, nullptr, nullptr};
+    m_scene->addItem(square.get());
 
-    m_scene->addEllipse(-1, -1, 2.0, 2.0, QPen(), QBrush(Qt::SolidPattern));
-
-    QGraphicsRectItem* item = m_scene->addRect(rectangle);
-    item->setFlags(QGraphicsItem::ItemIsMovable
-                   | QGraphicsItem::ItemIsSelectable);
+    m_sceneObjects.append(square);
 }
 
 void CentralWidget::onRectangleAction()

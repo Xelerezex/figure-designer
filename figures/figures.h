@@ -51,6 +51,12 @@ public:
      */
     Point position() const;
 
+    /*!
+     * \brief метод устанавливает позицию центра
+     * \param position - координата центра
+     */
+    void setCenter(Point position);
+
 private:
     /*!
      * \brief Позиция центра фигуры

@@ -10,14 +10,10 @@ class Figures;
 class SceneObject : public QGraphicsItem
 {
 protected:
-	SceneObject(unsigned int id, Figures* figure, QGraphicsItem* graphics);
-
+    SceneObject(unsigned int id);
 
 private:
-	const unsigned int m_id;
-
-	std::unique_ptr<Figures> m_figure;
-
-	QGraphicsItem* m_graphics;
+    const unsigned int m_id;
 };
+
 #endif // SCENEOBJECT_H

@@ -27,13 +27,13 @@ public:
      * \brief Установить значение по X
      * \param x
      */
-    void setX(int x);
+    void setX(double x);
 
     /*!
      * \brief Установить значение по Y
      * \param y
      */
-    void setY(int y);
+    void setY(double y);
 
     /*!
      * \brief Установить сразу две координаты

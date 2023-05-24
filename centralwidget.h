@@ -8,6 +8,7 @@
 class QAction;
 class FigureScene;
 class FigureView;
+class SceneObject;
 
 class CentralWidget : public QWidget
 {
@@ -128,6 +129,11 @@ private:
      * \brief Указатель на отображение сцены
      */
     FigureView* m_view;
+
+    /*!
+     * \brief контейнер для всех объектов сцены
+     */
+    QList<QSharedPointer<SceneObject>> m_sceneObjects;
 };
 
 #endif
