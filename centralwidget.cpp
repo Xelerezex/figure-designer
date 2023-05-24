@@ -15,6 +15,7 @@
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
 #include <QHBoxLayout>
+#include <QShortcut>
 
 CentralWidget::CentralWidget(QWidget* parent)
     : QWidget(parent)
@@ -27,6 +28,9 @@ CentralWidget::CentralWidget(QWidget* parent)
 
     // Создание и настройка виджета сцены
     setupScene();
+
+    // Создание и настройка шорткатов
+    setupShortcuts();
 
     // Создание и настройка основного лейаута
     setupMainLayout();
@@ -61,6 +65,12 @@ void CentralWidget::setupScene()
     m_scene = new FigureScene(this);
     m_view	= new FigureView(m_scene, this);
     m_view->setScene(m_scene);
+}
+
+void CentralWidget::setupShortcuts()
+{
+    QShortcut* ctrlZ = new QShortcut{QKeySequence{"Ctrl+Z"}, this};
+    connect(ctrlZ, &QShortcut::activated, this, &CentralWidget::onCtrlZ);
 }
 
 void CentralWidget::setupMainLayout()
@@ -186,4 +196,17 @@ void CentralWidget::onTriangleAction()
     m_scene->addItem(triangle.get());
 
     m_sceneObjects.append(triangle);
+}
+
+void CentralWidget::onCtrlZ()
+{
+    if (m_sceneObjects.empty())
+    {
+        return;
+    }
+
+    auto figurePointer = m_sceneObjects.top();
+    m_scene->removeItem(figurePointer.get());
+
+    m_sceneObjects.pop();
 }
