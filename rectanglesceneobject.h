@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef RECTANGLESCENEOBJECT_H
 #define RECTANGLESCENEOBJECT_H
 

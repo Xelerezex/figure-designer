@@ -8,6 +8,8 @@
 #include "squaresceneobject.h"
 #include "triangle.h"
 #include "trianglesceneobject.h"
+#include "circle.h"
+#include "circlesceneobject.h"
 
 #include <QAction>
 #include <QGraphicsView>
@@ -137,6 +139,13 @@ QAction* CentralWidget::createSeparator()
 void CentralWidget::onCircleAction()
 {
     qDebug("Pressed Circle");
+
+    auto circle = QSharedPointer<CircleSceneObject>::create(
+        static_cast<unsigned int>(m_sceneObjects.size()), new Circle{25});
+
+    m_scene->addItem(circle.get());
+
+    m_sceneObjects.append(circle);
 }
 
 void CentralWidget::onSquareAction()

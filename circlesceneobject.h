@@ -1,13 +1,13 @@
 #pragma once
 
-#ifndef TRIANGLESCENEOBJECT_H
-#define TRIANGLESCENEOBJECT_H
+#ifndef CIRCLESCENEOBJECT_H
+#define CIRCLESCENEOBJECT_H
 
 #include "sceneobject.h"
 
-class Triangle;
+class Circle;
 
-class TriangleSceneObject : public SceneObject
+class CircleSceneObject : public SceneObject
 {
 public:
     /*!
@@ -16,7 +16,7 @@ public:
      * \param figure - указатель на фигуру. Данная фигура будет владеть объектом
      *        на который указывает указатель
      */
-    TriangleSceneObject(unsigned int id, Triangle* figure);
+    CircleSceneObject(unsigned int id, Circle* figure);
 
 public:
     QRectF		 boundingRect() const override;
@@ -27,16 +27,9 @@ public:
 
 private:
     /*!
-     * \brief Возвращает полигон из фигуры
-     * \return полигон
-     */
-    QPolygonF getPolygonF() const;
-
-private:
-    /*!
      * \brief Указатель на класс фигуры
      */
-    std::unique_ptr<Triangle> m_triangle;
+    std::unique_ptr<Circle> m_circle;
 };
 
-#endif // TRIANGLESCENEOBJECT_H
+#endif // CIRCLESCENEOBJECT_H

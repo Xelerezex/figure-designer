@@ -17,6 +17,8 @@ add_library(
         rectangle.cpp
         triangle.h
         triangle.cpp
+        circle.h
+        circle.cpp
 )
 
 target_include_directories(

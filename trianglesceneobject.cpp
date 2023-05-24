@@ -39,6 +39,13 @@ void TriangleSceneObject::paint(QPainter*						painter,
     painter->drawPath(pathTitle.simplified());
 }
 
+QPainterPath TriangleSceneObject::shape() const
+{
+    QPainterPath path;
+    path.addPolygon(getPolygonF());
+    return path;
+}
+
 QPolygonF TriangleSceneObject::getPolygonF() const
 {
     QPointF	  first{m_triangle->point(TrianglePoint::First).x(),

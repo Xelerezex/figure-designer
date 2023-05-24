@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef SQUARESCENEOBJECT_H
 #define SQUARESCENEOBJECT_H
 
