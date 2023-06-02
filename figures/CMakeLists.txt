@@ -12,7 +12,14 @@ add_library(
         point.h
         point.cpp
         square.h
-        square.cpp)
+        square.cpp
+        rectangle.h
+        rectangle.cpp
+        triangle.h
+        triangle.cpp
+        circle.h
+        circle.cpp
+)
 
 target_include_directories(
     ${SOURCE_TARGET_NAME} 

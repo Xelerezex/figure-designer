@@ -2,12 +2,20 @@
 
 #include "figurescene.h"
 #include "figureview.h"
+#include "rectangle.h"
+#include "rectanglesceneobject.h"
 #include "square.h"
+#include "squaresceneobject.h"
+#include "triangle.h"
+#include "trianglesceneobject.h"
+#include "circle.h"
+#include "circlesceneobject.h"
 
 #include <QAction>
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
 #include <QHBoxLayout>
+#include <QShortcut>
 
 CentralWidget::CentralWidget(QWidget* parent)
     : QWidget(parent)
@@ -20,6 +28,9 @@ CentralWidget::CentralWidget(QWidget* parent)
 
     // Создание и настройка виджета сцены
     setupScene();
+
+    // Создание и настройка шорткатов
+    setupShortcuts();
 
     // Создание и настройка основного лейаута
     setupMainLayout();
@@ -54,6 +65,12 @@ void CentralWidget::setupScene()
     m_scene = new FigureScene(this);
     m_view	= new FigureView(m_scene, this);
     m_view->setScene(m_scene);
+}
+
+void CentralWidget::setupShortcuts()
+{
+    QShortcut* ctrlZ = new QShortcut{QKeySequence{"Ctrl+Z"}, this};
+    connect(ctrlZ, &QShortcut::activated, this, &CentralWidget::onCtrlZ);
 }
 
 void CentralWidget::setupMainLayout()
@@ -132,32 +149,64 @@ QAction* CentralWidget::createSeparator()
 void CentralWidget::onCircleAction()
 {
     qDebug("Pressed Circle");
+
+    auto circle = QSharedPointer<CircleSceneObject>::create(
+        static_cast<unsigned int>(m_sceneObjects.size()), new Circle{25});
+
+    m_scene->addItem(circle.get());
+
+    m_sceneObjects.append(circle);
 }
 
 void CentralWidget::onSquareAction()
 {
     qDebug("Pressed Square");
 
-    Square square{50};
-    // TODO: square->(new Draw);
-    QRectF rectangle{square.point(SquarePoint::Fourth).x(),
-                     square.point(SquarePoint::Fourth).y(),
-                     square.side(),
-                     square.side()};
+    // square{};
 
-    m_scene->addEllipse(-1, -1, 2.0, 2.0, QPen(), QBrush(Qt::SolidPattern));
+    auto square = QSharedPointer<SquareSceneObject>::create(
+        static_cast<unsigned int>(m_sceneObjects.size()), new Square{50});
 
-    QGraphicsRectItem* item = m_scene->addRect(rectangle);
-    item->setFlags(QGraphicsItem::ItemIsMovable
-                   | QGraphicsItem::ItemIsSelectable);
+    m_scene->addItem(square.get());
+
+    m_sceneObjects.append(square);
 }
 
 void CentralWidget::onRectangleAction()
 {
     qDebug("Pressed Rectangle");
+
+    auto rectangle = QSharedPointer<RectangleSceneObject>::create(
+        static_cast<unsigned int>(m_sceneObjects.size()),
+        new Rectangle{100, 50});
+
+    m_scene->addItem(rectangle.get());
+
+    m_sceneObjects.append(rectangle);
 }
 
 void CentralWidget::onTriangleAction()
 {
     qDebug("Pressed Triangle");
+
+    auto triangle = QSharedPointer<TriangleSceneObject>::create(
+        static_cast<unsigned int>(m_sceneObjects.size()),
+        new Triangle{Point{0, 50}, Point{-70, -25}, Point{70, -25}});
+
+    m_scene->addItem(triangle.get());
+
+    m_sceneObjects.append(triangle);
+}
+
+void CentralWidget::onCtrlZ()
+{
+    if (m_sceneObjects.empty())
+    {
+        return;
+    }
+
+    auto figurePointer = m_sceneObjects.top();
+    m_scene->removeItem(figurePointer.get());
+
+    m_sceneObjects.pop();
 }

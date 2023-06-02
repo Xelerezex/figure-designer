@@ -24,6 +24,11 @@ public:
     explicit Square(double side);
 
     /*!
+     *  \brief Дефолтный деструткор
+     */
+    ~Square() = default;
+
+    /*!
      * \brief Удаленные операторы
      */
     Square()					= delete;
@@ -33,14 +38,8 @@ public:
     Square& operator=(Square&&) = delete;
 
     /*!
-     * \brief Переопределенный метод, высчитывающий точку центра
-     * \return
-     */
-    Point calculateCenter() const override;
-
-    /*!
      * \brief Метод возвращает длину одной стороны
-     * \return
+     * \return длина
      */
     double side() const;
 
@@ -54,17 +53,31 @@ public:
 private:
     /*!
      * \brief Метод высчитывающий стартовую позицию фигуры
-     * \param side
+     * \param side - сторона квадрата
      */
     void calculateStartCoordinate(double side);
 
 private:
+    /*!
+     * \brief Длина одной линии
+     */
     double m_side;
 
-    Point  m_first;
-    Point  m_second;
-    Point  m_third;
-    Point  m_fourth;
+    /*!
+     * \brief Относительные координаты фигуры
+     *
+     *    first--------second
+     *      |             |
+     *      |             |
+     *      |             |
+     *      |             |
+     *    fourth--------third
+     *
+     */
+    Point m_first;
+    Point m_second;
+    Point m_third;
+    Point m_fourth;
 };
 
 #endif // SQUARE_H

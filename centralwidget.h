@@ -4,10 +4,12 @@
 #define CENTRALWIDGET_H
 
 #include <QWidget>
+#include <QStack>
 
 class QAction;
 class FigureScene;
 class FigureView;
+class SceneObject;
 
 class CentralWidget : public QWidget
 {
@@ -48,6 +50,11 @@ private:
      * \brief Создание и настройка виджета сцены
      */
     void setupScene();
+
+    /*!
+     * \brief Создание и настройка шорткатов
+     */
+    void setupShortcuts();
 
     /*!
      * \brief Создание и настройка основного лейаута
@@ -98,6 +105,11 @@ private slots:
      */
     void onTriangleAction();
 
+    /*!
+     * \brief Слот, обрабатывающая логику нажатия сочетания Ctrl+Z
+     */
+    void onCtrlZ();
+
 private:
     /*!
      * \brief Указатель на кнопку отрисовки круга
@@ -128,6 +140,11 @@ private:
      * \brief Указатель на отображение сцены
      */
     FigureView* m_view;
+
+    /*!
+     * \brief контейнер для всех объектов сцены
+     */
+    QStack<QSharedPointer<SceneObject>> m_sceneObjects;
 };
 
 #endif

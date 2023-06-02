@@ -16,12 +16,12 @@ double Point::y() const
     return m_positionY;
 }
 
-void Point::setX(int x)
+void Point::setX(double x)
 {
     m_positionX = x;
 }
 
-void Point::setY(int y)
+void Point::setY(double y)
 {
     m_positionX = y;
 }

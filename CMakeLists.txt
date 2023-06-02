@@ -22,6 +22,16 @@ set(PROJECT_SOURCES
         figurescene.cpp
         figureview.h
         figureview.cpp
+        sceneobject.h
+        sceneobject.cpp
+        squaresceneobject.h
+        squaresceneobject.cpp
+        rectanglesceneobject.h
+        rectanglesceneobject.cpp
+        trianglesceneobject.h
+        trianglesceneobject.cpp
+        circlesceneobject.h
+        circlesceneobject.cpp
 )
 
 set(PROJECT_RESOURCES
