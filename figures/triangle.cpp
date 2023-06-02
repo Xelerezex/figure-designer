@@ -1,5 +1,6 @@
 #include "triangle.h"
 
+#include <cmath>
 #include <stdexcept>
 
 Triangle::Triangle(Point first, Point second, Point third)
