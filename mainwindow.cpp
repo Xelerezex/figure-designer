@@ -3,6 +3,7 @@
 #include "centralwidget.h"
 
 #include <QApplication>
+#include <QToolButton>
 #include <QSettings>
 #include <QToolBar>
 
@@ -68,7 +69,10 @@ void MainWindow::setupCentralWidget()
 
 void MainWindow::setupToolBarButtons()
 {
-	m_pToolBar->addActions(m_pCentralWidget->actions());
+	foreach (auto* button, m_pCentralWidget->buttons())
+	{
+		m_pToolBar->addWidget(button);
+	}
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)

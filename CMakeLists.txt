@@ -39,6 +39,9 @@ else()
             ${PROJECT_SOURCES}
             centralwidget.h
             centralwidget.cpp
+            resources.qrc
+            figurescene.h
+            figurescene.cpp
         )
     endif()
 endif()
