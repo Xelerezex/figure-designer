@@ -33,7 +33,7 @@ MainWindow::~MainWindow()
 void MainWindow::setupMainWindow()
 {
 	// Устанавливаем название организации
-	QCoreApplication::setOrganizationName(tr("Top Systems"));
+	QCoreApplication::setOrganizationName(tr("Vestan"));
 
 	// Устанавливаем название приложения
 	QCoreApplication::setApplicationName(QLatin1String("Figure Designer"));

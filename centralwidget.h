@@ -4,8 +4,10 @@
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
-class QButtonGroup;
+class FigureScene;
 class QToolButton;
+class QButtonGroup;
+class QGraphicsView;
 class QAbstractButton;
 QT_END_NAMESPACE
 
@@ -27,9 +29,14 @@ public:
 
 private:
 	/*!
-	 * \brief Создать и настроить кнопки ля ТулБара
+	 * \brief Создать и настроить кнопки для ТулБара
 	 */
-	void createToolBarButtons();
+	void setupToolBarButtons();
+
+	/*!
+	 * \brief Создать и настроить Сцену для отрисовки Фигур
+	 */
+	void setupScene();
 
 	/*!
 	 * \brief Создать новую кнопку для тулбара
@@ -40,6 +47,16 @@ private:
 	QToolButton* createButton(const QString& iconPath, const QString& tipText);
 
 private:
+	/*!
+	 * \brief Указатель на основную сцену отрисовки Фигур
+	 */
+	FigureScene* m_figureScene;
+
+	/*!
+	 * \brief Указатель на основное представление Сцены
+	 */
+	QGraphicsView* m_graphicsView;
+
 	/*!
 	 * \brief Указаетль на основную группу кнопок
 	 */
