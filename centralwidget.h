@@ -46,6 +46,13 @@ private:
 	 */
 	QToolButton* createButton(const QString& iconPath, const QString& tipText);
 
+private slots:
+	/*!
+	 * \brief Слот, активирующийся при нажатии на одну из кнопок
+	 * \param index - айди кнопки
+	 */
+	void buttonGroupClicked(int index);
+
 private:
 	/*!
 	 * \brief Указатель на основную сцену отрисовки Фигур

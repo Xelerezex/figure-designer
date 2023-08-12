@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>images/square.png</file>
         <file>images/plus.png</file>
+        <file>images/rectangle.png</file>
+        <file>images/circle.png</file>
+        <file>images/triangle.png</file>
     </qresource>
 </RCC>

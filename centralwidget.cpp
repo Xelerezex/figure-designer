@@ -36,16 +36,40 @@ void CentralWidget::setupToolBarButtons()
 	m_toolBarButtonGroup->setExclusive(true);
 
 	// Добавить кнопку режима Модифкации
-	m_toolBarButtonGroup->addButton(
-		createButton(QLatin1String(":/images/plus.png"),
-					 tr("Modification Mode")),
-		int{FigureScene::Modification});
+	auto modificationButton = createButton(QLatin1String(":/images/plus.png"),
+										   tr("Modification Mode"));
+	modificationButton->setChecked(true);
+	m_toolBarButtonGroup->addButton(modificationButton,
+									int{FigureScene::Modification});
 
 	// Добавить кнопку отрисовки Квадрата
 	m_toolBarButtonGroup->addButton(
 		createButton(QLatin1String(":/images/square.png"),
 					 tr("Square Draw Mode")),
 		int{FigureScene::SquareDraw});
+
+	// Добавить кнопку отрисовки Прямоугольника
+	m_toolBarButtonGroup->addButton(
+		createButton(QLatin1String(":/images/rectangle.png"),
+					 tr("Rectangle Draw Mode")),
+		int{FigureScene::RectangleDraw});
+
+	// Добавить кнопку отрисовки Треугольника
+	m_toolBarButtonGroup->addButton(
+		createButton(QLatin1String(":/images/triangle.png"),
+					 tr("Triangle Draw Mode")),
+		int{FigureScene::TriangleDraw});
+
+	// Добавить кнопку отрисовки Окружности
+	m_toolBarButtonGroup->addButton(
+		createButton(QLatin1String(":/images/circle.png"),
+					 tr("Circle Draw Mode")),
+		int{FigureScene::CircleDraw});
+
+	connect(m_toolBarButtonGroup,
+			QOverload<int>::of(&QButtonGroup::buttonClicked),
+			this,
+			&CentralWidget::buttonGroupClicked);
 }
 
 void CentralWidget::setupScene()
@@ -72,4 +96,9 @@ QToolButton* CentralWidget::createButton(const QString& iconPath,
 	button->setIconSize(QSize(65, 65));
 
 	return button;
+}
+
+void CentralWidget::buttonGroupClicked(int index)
+{
+	m_figureScene->setCurrentMode(static_cast<FigureScene::Mode>(index));
 }

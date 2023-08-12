@@ -21,9 +21,10 @@ public:
 		Modification, /*!< Режим Модификации */
 		SquareDraw,	  /*!< Режим отрисовки Квадрата */
 		RectangleDraw, /*!< Режим отрисовки Прямоугольника */
-		TriangleDraw, /*!< Режим отрисовки Триугольника */
+		TriangleDraw, /*!< Режим отрисовки Треугольника */
 		CircleDraw /*!< Режим отрисовки Круга */
 	};
+	Q_ENUM(Mode);
 
 	/*!
 	 * \brief Основной конструктор
@@ -36,11 +37,48 @@ public:
 	 */
 	~FigureScene();
 
+	/*!
+	 * \brief Вернуть режим, в котором сейчас находится сцена
+	 * \return режим сцены
+	 */
+	Mode currentMode() const;
+
+	/*!
+	 * \brief Установить текущий режим сцены
+	 * \param newCurrentMode - новый режим
+	 */
+	void setCurrentMode(Mode newCurrentMode);
+
+protected:
+	/*!
+	 * \brief Переопределнный метод Нажатия Кнопки Мыщи
+	 * \param mouseEvent - указатель на событие
+	 */
+	void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+
+	/*!
+	 * \brief Переопределнный метод Движения Мыщи
+	 * \param mouseEvent - указатель на событие
+	 */
+	void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+
+	/*!
+	 * \brief Переопределнный метод Отжатия Кнопки Мыщи
+	 * \param mouseEvent - указатель на событие
+	 */
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+
 private:
 	/*!
 	 * \brief Основные настройки данного класса
 	 */
 	void setupFigureScene();
+
+private:
+	/*!
+	 * \brief Режим работы в котором, в данный момент времени, находится сцена
+	 */
+	Mode m_currentMode;
 };
 
 #endif // FIGURESCENE_H
