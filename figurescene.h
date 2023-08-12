@@ -5,6 +5,7 @@
 
 QT_BEGIN_NAMESPACE
 class QMenu;
+class Square;
 QT_END_NAMESPACE
 
 class FigureScene : public QGraphicsScene
@@ -79,6 +80,11 @@ private:
 	 * \brief Режим работы в котором, в данный момент времени, находится сцена
 	 */
 	Mode m_currentMode;
+
+	/*!
+	 * \brief Указатель на Квадрат с которым идет взаимодействие
+	 */
+	Square* m_currentSquare;
 };
 
 #endif // FIGURESCENE_H

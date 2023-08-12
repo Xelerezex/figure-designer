@@ -1,6 +1,8 @@
 #include "figurescene.h"
 
 #include <QMenu>
+#include <QGraphicsLineItem>
+#include <QGraphicsSceneMouseEvent>
 
 #include "square.h"
 
@@ -10,6 +12,7 @@
 FigureScene::FigureScene(QMenu* itemMenu, QObject* parent)
 	: QGraphicsScene{parent}
 	, m_currentMode{Mode::Modification}
+	, m_currentSquare{nullptr}
 {
 	// Настраиваем сцену
 	setupFigureScene();
@@ -34,9 +37,20 @@ void FigureScene::setCurrentMode(Mode newCurrentMode)
 
 void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+	if (mouseEvent->button() != Qt::LeftButton)
+		return;
+
 	if (m_currentMode == SquareDraw)
 	{
+		m_currentSquare = new Square{};
+		m_currentSquare->startCreating();
+		m_currentSquare->setCenter(mouseEvent->scenePos());
+		m_currentSquare->setDestination(mouseEvent->scenePos()
+										+ QPointF{0.1, 0.1});
+		addItem(m_currentSquare);
 	}
+
+	qDebug("mousePressEvent");
 
 	// Вызов метода базового класса
 	QGraphicsScene::mousePressEvent(mouseEvent);
@@ -44,19 +58,40 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-	if (m_currentMode == SquareDraw)
+	bool onlyLeftButton = mouseEvent->buttons() & Qt::LeftButton;
+	if (!onlyLeftButton)
 	{
+		return;
 	}
 
-	// Вызов метода базового класса
-	QGraphicsScene::mouseMoveEvent(mouseEvent);
+	if (m_currentMode == SquareDraw)
+	{
+		m_currentSquare->setDestination(mouseEvent->scenePos());
+		update();
+	}
+	else if (m_currentMode == Modification)
+	{
+		// TODO: Сделать обновление координат фигуры, в режиме передвижения
+		// Вызов метода базового класса
+		QGraphicsScene::mouseMoveEvent(mouseEvent);
+	}
+
+	qDebug("mouseMoveEvent");
 }
 
 void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+	if (mouseEvent->button() != Qt::LeftButton)
+		return;
+
 	if (m_currentMode == SquareDraw)
 	{
+		m_currentSquare->setDestination(mouseEvent->scenePos());
+		m_currentSquare->completeCreating();
+		m_currentSquare->update();
 	}
+
+	qDebug("mouseReleaseEvent");
 
 	// Вызов метода базового класса
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);

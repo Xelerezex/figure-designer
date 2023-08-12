@@ -18,12 +18,46 @@ public:
 	 */
 	~FigureBase() override;
 
+	/*!
+	 * \brief Метод должен вызываться когда начинается первичное создание
+	 *        объекта и его первичная отрисовка.
+	 */
+	void startCreating();
+
+	/*!
+	 * \brief Метод должен быть вызван при завершении создания и первичной
+	 *        настрйоки объекта
+	 */
+	void completeCreating();
+
+	/*!
+	 * \brief Метод возвращает признак полного создания элемента
+	 * \return true - если создание завершено
+	 */
+	bool isFullyCreated() const;
+
 protected:
 	/*!
 	 * \brief Основной конструктор
 	 * \param parent - указатель на родительский класс
 	 */
 	explicit FigureBase(QGraphicsItem* parent = nullptr);
+
+private:
+	/*!
+	 * \brief Жизненый цикл объекта Сцены
+	 */
+	enum LifeCycle
+	{
+		NotExisting,
+		Creating,
+		FullyCreated
+	};
+
+	/*!
+	 * \brief Текущий жизненый цикл
+	 */
+	LifeCycle m_currentCycle;
 };
 
 #endif // FIGUREBASE_H
