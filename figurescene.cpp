@@ -2,6 +2,8 @@
 
 #include <QMenu>
 
+#include "square.h"
+
 // DEBUG:
 #include <QDebug>
 

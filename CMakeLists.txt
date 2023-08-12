@@ -16,12 +16,22 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
+        centralwidget.h
+        centralwidget.cpp
+        resources.qrc
+        figurescene.h
+        figurescene.cpp
+)
+
+set(PROJECT_RESOURCES
+        resources.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(figure-designer
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        ${PROJECT_RESOURCES}
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET figure-designer APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -31,22 +41,26 @@ else()
     if(ANDROID)
         add_library(figure-designer SHARED
             ${PROJECT_SOURCES}
+            ${PROJECT_RESOURCES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(figure-designer
             ${PROJECT_SOURCES}
-            centralwidget.h
-            centralwidget.cpp
-            resources.qrc
-            figurescene.h
-            figurescene.cpp
+            ${PROJECT_RESOURCES}
         )
     endif()
 endif()
 
-target_link_libraries(figure-designer PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+include_directories(${PROJECT_SOURCE_DIR}/figures)
+add_subdirectory(${PROJECT_SOURCE_DIR}/figures)
+
+target_link_libraries(
+    figure-designer
+        PRIVATE
+            Qt${QT_VERSION_MAJOR}::Widgets
+            figures-target)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
