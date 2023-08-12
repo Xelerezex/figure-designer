@@ -37,6 +37,8 @@ else()
     else()
         add_executable(figure-designer
             ${PROJECT_SOURCES}
+            centralwidget.h
+            centralwidget.cpp
         )
     endif()
 endif()
