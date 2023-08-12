@@ -6,6 +6,7 @@
 QT_BEGIN_NAMESPACE
 class QMenu;
 class Square;
+class Rectangle;
 QT_END_NAMESPACE
 
 class FigureScene : public QGraphicsScene
@@ -85,6 +86,11 @@ private:
 	 * \brief Указатель на Квадрат с которым идет взаимодействие
 	 */
 	Square* m_currentSquare;
+
+	/*!
+	 * \brief Указатель на Прямоугольник с которым идет взаимодействие
+	 */
+	Rectangle* m_currentRectangle;
 };
 
 #endif // FIGURESCENE_H

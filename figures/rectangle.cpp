@@ -1,54 +1,49 @@
-#include "square.h"
+#include "rectangle.h"
 
 #include <QPainter>
 
-// DEBUG:
-#include <QDebug>
-
-Square::Square(QGraphicsItem* parent)
+Rectangle::Rectangle(QGraphicsItem* parent)
 	: FigureBase{parent}
-	, m_center{0.0, 0.0}
-	, m_destination{0.0, 0.0}
 {
 }
 
-Square::~Square()
+Rectangle::~Rectangle()
 {
 	// DEBUG:
-	qDebug("Square deleted");
+	qDebug("Rectangle deleted");
 }
 
-QPointF Square::center() const
+QPointF Rectangle::center() const
 {
 	return m_center;
 }
 
-void Square::setCenter(QPointF newCenter)
+void Rectangle::setCenter(QPointF newCenter)
 {
 	m_center = newCenter;
 }
 
-QPointF Square::destination() const
+QPointF Rectangle::destination() const
 {
 	return m_destination;
 }
 
-void Square::setDestination(QPointF newDestination)
+void Rectangle::setDestination(QPointF newDestination)
 {
 	m_destination = newDestination;
 }
 
-QRectF Square::boundingRect() const
+QRectF Rectangle::boundingRect() const
 {
 	return countFigure().normalized();
 }
 
-void Square::paint(QPainter*					   painter,
-				   const QStyleOptionGraphicsItem* option,
-				   QWidget*						   widget)
+void Rectangle::paint(QPainter*						  painter,
+					  const QStyleOptionGraphicsItem* option,
+					  QWidget*						  widget)
 {
 	const qreal penWidth{3};
-	const int	color{13369233};
+	const int	color{4501714};
 
 	// Класс для отрисовки границы фигуры
 	QPen drawingPen;
@@ -83,17 +78,13 @@ void Square::paint(QPainter*					   painter,
 	painter->drawPath(pathTitle.simplified());
 }
 
-QRectF Square::countFigure() const
+QRectF Rectangle::countFigure() const
 {
-	// Линия между центром и второй точкой фигуры
-	QLineF line{m_center, m_destination};
-
 	// Координаты точки в левом верхнем углу
-	QPointF topLeft{m_center.x() - line.length(), m_center.y() - line.length()};
+	QPointF topLeft{m_center.x(), m_center.y()};
 
 	// Координаты точки в правом нижнем углу
-	QPointF bottomRight{m_center.x() + line.length(),
-						m_center.y() + line.length()};
+	QPointF bottomRight{m_destination.x(), m_destination.y()};
 
 	return QRectF{topLeft, bottomRight};
 }

@@ -1,21 +1,21 @@
-#ifndef SQUARE_H
-#define SQUARE_H
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
 
 #include "figurebase.h"
 
-class Square : public FigureBase
+class Rectangle : public FigureBase
 {
 public:
 	/*!
 	 * \brief Основной конструктор
 	 * \param parent - указаетль на родительский класс
 	 */
-	Square(QGraphicsItem* parent = nullptr);
+	explicit Rectangle(QGraphicsItem* parent = nullptr);
 
 	/*!
 	 * \brief Основной деструктор
 	 */
-	~Square();
+	~Rectangle();
 
 	/*!
 	 * \brief Получить координаты точки центра
@@ -79,4 +79,4 @@ private:
 	QPointF m_destination;
 };
 
-#endif // SQUARE_H
+#endif // RECTANGLE_H

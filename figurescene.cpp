@@ -5,6 +5,7 @@
 #include <QGraphicsSceneMouseEvent>
 
 #include "square.h"
+#include "rectangle.h"
 
 // DEBUG:
 #include <QDebug>
@@ -13,6 +14,7 @@ FigureScene::FigureScene(QMenu* itemMenu, QObject* parent)
 	: QGraphicsScene{parent}
 	, m_currentMode{Mode::Modification}
 	, m_currentSquare{nullptr}
+	, m_currentRectangle{nullptr}
 {
 	// Настраиваем сцену
 	setupFigureScene();
@@ -24,14 +26,13 @@ FigureScene::~FigureScene()
 
 FigureScene::Mode FigureScene::currentMode() const
 {
+	// DEBUG:
+	qDebug() << m_currentMode;
 	return m_currentMode;
 }
 
 void FigureScene::setCurrentMode(Mode newCurrentMode)
 {
-	// DEBUG:
-	qDebug() << newCurrentMode;
-
 	m_currentMode = newCurrentMode;
 }
 
@@ -48,6 +49,15 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		m_currentSquare->setDestination(mouseEvent->scenePos()
 										+ QPointF{0.1, 0.1});
 		addItem(m_currentSquare);
+	}
+	else if (m_currentMode == RectangleDraw)
+	{
+		m_currentRectangle = new Rectangle{};
+		m_currentRectangle->startCreating();
+		m_currentRectangle->setCenter(mouseEvent->scenePos());
+		m_currentRectangle->setDestination(mouseEvent->scenePos()
+										   + QPointF{0.1, 0.1});
+		addItem(m_currentRectangle);
 	}
 
 	qDebug("mousePressEvent");
@@ -67,6 +77,11 @@ void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	if (m_currentMode == SquareDraw)
 	{
 		m_currentSquare->setDestination(mouseEvent->scenePos());
+		update();
+	}
+	else if (m_currentMode == RectangleDraw)
+	{
+		m_currentRectangle->setDestination(mouseEvent->scenePos());
 		update();
 	}
 	else if (m_currentMode == Modification)
@@ -89,6 +104,12 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		m_currentSquare->setDestination(mouseEvent->scenePos());
 		m_currentSquare->completeCreating();
 		m_currentSquare->update();
+	}
+	else if (m_currentMode == RectangleDraw)
+	{
+		m_currentRectangle->setDestination(mouseEvent->scenePos());
+		m_currentRectangle->completeCreating();
+		m_currentRectangle->update();
 	}
 
 	qDebug("mouseReleaseEvent");

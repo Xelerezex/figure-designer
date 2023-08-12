@@ -21,6 +21,8 @@ add_library(
             figurebase.cpp
             square.h
             square.cpp
+            rectangle.h
+            rectangle.cpp
 )
 
 target_link_libraries(

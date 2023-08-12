@@ -43,6 +43,13 @@ protected:
 	 */
 	explicit FigureBase(QGraphicsItem* parent = nullptr);
 
+	/*!
+	 * \brief Метод высчитывает границы данного Квадрата относительно центра
+	 *        и второй точки
+	 * \return границы квадрата
+	 */
+	virtual QRectF countFigure() const = 0;
+
 private:
 	/*!
 	 * \brief Жизненый цикл объекта Сцены
