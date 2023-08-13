@@ -3,6 +3,10 @@
 
 #include <QGraphicsItem>
 
+class StartDrawing;
+class ContinueDrawing;
+class CompleteDrawing;
+
 class FigureBase : public QGraphicsItem
 {
 	Q_DISABLE_COPY_MOVE(FigureBase);
@@ -17,6 +21,10 @@ public:
 	 * \brief Дефолтный деструктор
 	 */
 	~FigureBase() override;
+
+	virtual void act(StartDrawing&& startDrawing)	 = 0;
+	virtual void act(ContinueDrawing&& startDrawing) = 0;
+	virtual void act(CompleteDrawing&& startDrawing) = 0;
 
 	/*!
 	 * \brief Метод должен вызываться когда начинается первичное создание

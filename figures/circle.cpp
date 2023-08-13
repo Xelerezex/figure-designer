@@ -5,6 +5,10 @@
 // DEBUG:
 #include <QDebug>
 
+#include "startdrawing.h"
+#include "continuedrawing.h"
+#include "completedrawing.h"
+
 Circle::Circle(QGraphicsItem* parent)
 	: FigureBase{parent}
 	, m_center{0.0, 0.0}
@@ -16,6 +20,21 @@ Circle::~Circle()
 {
 	// DEBUG:
 	qDebug("Circle deleted");
+}
+
+void Circle::act(StartDrawing&& startDrawing)
+{
+	startDrawing.act(this);
+}
+
+void Circle::act(ContinueDrawing&& continueDrawing)
+{
+	continueDrawing.act(this);
+}
+
+void Circle::act(CompleteDrawing&& completeDrawing)
+{
+	completeDrawing.act(this);
 }
 
 QPointF Circle::center() const

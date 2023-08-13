@@ -5,6 +5,10 @@
 // DEBUG:
 #include <QDebug>
 
+#include "startdrawing.h"
+#include "continuedrawing.h"
+#include "completedrawing.h"
+
 Triangle::Triangle(QGraphicsItem* parent)
 	: FigureBase{parent}
 	, m_center{0.0, 0.0}
@@ -16,6 +20,21 @@ Triangle::~Triangle()
 {
 	// DEBUG:
 	qDebug("Triangle deleted");
+}
+
+void Triangle::act(StartDrawing&& startDrawing)
+{
+	startDrawing.act(this);
+}
+
+void Triangle::act(ContinueDrawing&& continueDrawing)
+{
+	continueDrawing.act(this);
+}
+
+void Triangle::act(CompleteDrawing&& completeDrawing)
+{
+	completeDrawing.act(this);
 }
 
 QPointF Triangle::center() const

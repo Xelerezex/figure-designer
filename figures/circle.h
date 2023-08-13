@@ -17,6 +17,10 @@ public:
 	 */
 	~Circle();
 
+	void act(StartDrawing&& startDrawing) override;
+	void act(ContinueDrawing&& continueDrawing) override;
+	void act(CompleteDrawing&& completeDrawing) override;
+
 	/*!
 	 * \brief Получить координаты точки центра
 	 * \return координаты

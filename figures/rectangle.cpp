@@ -2,6 +2,10 @@
 
 #include <QPainter>
 
+#include "startdrawing.h"
+#include "continuedrawing.h"
+#include "completedrawing.h"
+
 Rectangle::Rectangle(QGraphicsItem* parent)
 	: FigureBase{parent}
 	, m_center{0.0, 0.0}
@@ -18,6 +22,21 @@ Rectangle::~Rectangle()
 QPointF Rectangle::center() const
 {
 	return m_center;
+}
+
+void Rectangle::act(StartDrawing&& startDrawing)
+{
+	startDrawing.act(this);
+}
+
+void Rectangle::act(ContinueDrawing&& continueDrawing)
+{
+	continueDrawing.act(this);
+}
+
+void Rectangle::act(CompleteDrawing&& completeDrawing)
+{
+	completeDrawing.act(this);
 }
 
 void Rectangle::setCenter(QPointF newCenter)

@@ -26,6 +26,14 @@ add_library(
             circle.cpp
             triangle.h
             triangle.cpp
+            figureaction.h
+            figureaction.cpp
+            startdrawing.h
+            startdrawing.cpp
+            continuedrawing.h
+            continuedrawing.cpp
+            completedrawing.h
+            completedrawing.cpp
 )
 
 target_link_libraries(

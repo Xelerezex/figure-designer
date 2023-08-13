@@ -9,6 +9,10 @@
 #include "triangle.h"
 #include "rectangle.h"
 
+#include "startdrawing.h"
+#include "continuedrawing.h"
+#include "completedrawing.h"
+
 // DEBUG:
 #include <QDebug>
 
@@ -46,35 +50,25 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	if (m_currentMode == SquareDraw)
 	{
 		m_currentSquare = new Square{};
-		m_currentSquare->startCreating();
-		m_currentSquare->setCenter(mouseEvent->scenePos());
-		m_currentSquare->setDestination(mouseEvent->scenePos()
-										+ QPointF{0.1, 0.1});
+		m_currentSquare->act(StartDrawing{mouseEvent});
 		addItem(m_currentSquare);
 	}
 	else if (m_currentMode == RectangleDraw)
 	{
 		m_currentRectangle = new Rectangle{};
-		m_currentRectangle->startCreating();
-		m_currentRectangle->setCenter(mouseEvent->scenePos());
-		m_currentRectangle->setDestination(mouseEvent->scenePos()
-										   + QPointF{0.1, 0.1});
+		m_currentRectangle->act(StartDrawing{mouseEvent});
 		addItem(m_currentRectangle);
 	}
 	else if (m_currentMode == CircleDraw)
 	{
 		m_currentCircle = new Circle{};
-		m_currentCircle->startCreating();
-		m_currentCircle->setCenter(mouseEvent->scenePos());
-		m_currentCircle->setDestination(mouseEvent->scenePos()
-										+ QPointF{0.1, 0.1});
+		m_currentCircle->act(StartDrawing{mouseEvent});
 		addItem(m_currentCircle);
 	}
 	else if (m_currentMode == TriangleDraw)
 	{
 		m_currentTriangle = new Triangle{};
-		m_currentTriangle->startCreating();
-
+		m_currentTriangle->act(StartDrawing{mouseEvent});
 		addItem(m_currentTriangle);
 	}
 
@@ -94,17 +88,17 @@ void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 	if (m_currentMode == SquareDraw)
 	{
-		m_currentSquare->setDestination(mouseEvent->scenePos());
+		m_currentSquare->act(ContinueDrawing{mouseEvent});
 		update();
 	}
 	else if (m_currentMode == RectangleDraw)
 	{
-		m_currentRectangle->setDestination(mouseEvent->scenePos());
+		m_currentRectangle->act(ContinueDrawing{mouseEvent});
 		update();
 	}
 	else if (m_currentMode == CircleDraw)
 	{
-		m_currentCircle->setDestination(mouseEvent->scenePos());
+		m_currentCircle->act(ContinueDrawing{mouseEvent});
 		update();
 	}
 	else if (m_currentMode == TriangleDraw)
@@ -127,21 +121,15 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 	if (m_currentMode == SquareDraw)
 	{
-		m_currentSquare->setDestination(mouseEvent->scenePos());
-		m_currentSquare->completeCreating();
-		m_currentSquare->update();
+		m_currentSquare->act(CompleteDrawing{mouseEvent});
 	}
 	else if (m_currentMode == RectangleDraw)
 	{
-		m_currentRectangle->setDestination(mouseEvent->scenePos());
-		m_currentRectangle->completeCreating();
-		m_currentRectangle->update();
+		m_currentRectangle->act(CompleteDrawing{mouseEvent});
 	}
 	else if (m_currentMode == CircleDraw)
 	{
-		m_currentCircle->setDestination(mouseEvent->scenePos());
-		m_currentCircle->completeCreating();
-		m_currentCircle->update();
+		m_currentCircle->act(CompleteDrawing{mouseEvent});
 	}
 	else if (m_currentMode == TriangleDraw)
 	{

@@ -5,6 +5,10 @@
 // DEBUG:
 #include <QDebug>
 
+#include "startdrawing.h"
+#include "continuedrawing.h"
+#include "completedrawing.h"
+
 Square::Square(QGraphicsItem* parent)
 	: FigureBase{parent}
 	, m_center{0.0, 0.0}
@@ -16,6 +20,21 @@ Square::~Square()
 {
 	// DEBUG:
 	qDebug("Square deleted");
+}
+
+void Square::act(StartDrawing&& startDrawing)
+{
+	startDrawing.act(this);
+}
+
+void Square::act(ContinueDrawing&& continueDrawing)
+{
+	continueDrawing.act(this);
+}
+
+void Square::act(CompleteDrawing&& completeDrawing)
+{
+	completeDrawing.act(this);
 }
 
 QPointF Square::center() const

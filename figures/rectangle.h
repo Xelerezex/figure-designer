@@ -23,6 +23,10 @@ public:
 	 */
 	QPointF center() const;
 
+	void	act(StartDrawing&& startDrawing) override;
+	void	act(ContinueDrawing&& continueDrawing) override;
+	void	act(CompleteDrawing&& completeDrawing) override;
+
 	/*!
 	 * \brief Установить координаты центра фигуры
 	 * \param newCenter - новые координаты центра
