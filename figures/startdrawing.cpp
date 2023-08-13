@@ -1,8 +1,5 @@
 #include "startdrawing.h"
 
-// DEBUG:
-#include <QDebug>
-
 #include <QGraphicsSceneMouseEvent>
 
 #include "square.h"
@@ -18,8 +15,6 @@ StartDrawing::StartDrawing(QGraphicsSceneMouseEvent* mouseEvent)
 
 StartDrawing::~StartDrawing()
 {
-	// DEBUG:
-	qDebug("StartDrawing deleted");
 	m_mouseEvent = nullptr;
 }
 
@@ -40,6 +35,13 @@ void StartDrawing::act(Square* square)
 void StartDrawing::act(Triangle* triangle)
 {
 	triangle->startCreating();
+	// Обратный порядок, что бы правильно задавался статус отрисовки
+	// треугольника:
+	triangle->setFirst(m_mouseEvent->scenePos());
+	triangle->setSecond(m_mouseEvent->scenePos() + QPointF{0.1, 0.1});
+
+	triangle->setStatus(Triangle::DrawingStatus::FirstPointDrawn);
+	triangle->startDrawingLine();
 }
 
 void StartDrawing::act(Rectangle* rectangle)

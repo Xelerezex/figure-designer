@@ -49,6 +49,12 @@ public:
 	Mode currentMode() const;
 
 	/*!
+	 * \brief Проверка признака нахождения сцены в режиме отрисовки треугольника
+	 * \return true - если сцена находится в режиме отрисовки треугольника
+	 */
+	bool isTriangleMode() const;
+
+	/*!
 	 * \brief Установить текущий режим сцены
 	 * \param newCurrentMode - новый режим
 	 */
@@ -82,6 +88,7 @@ private:
 	void onMouseLeftButtonPressed(QGraphicsSceneMouseEvent* mouseEvent);
 	void onMouseLeftButtonMoved(QGraphicsSceneMouseEvent* mouseEvent);
 	void onMouseLeftButtonReleased(QGraphicsSceneMouseEvent* mouseEvent);
+	void onEmptyMouseMoved(QGraphicsSceneMouseEvent* mouseEvent);
 
 private:
 	/*!
@@ -89,6 +96,7 @@ private:
 	 */
 	Mode m_currentMode;
 
+	// TODO: Сделать FigureHandler с методами типа PaintTriangle
 	/*!
 	 * \brief Указатель на Квадрат с которым идет взаимодействие
 	 */

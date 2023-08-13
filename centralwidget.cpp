@@ -77,7 +77,17 @@ void CentralWidget::setupScene()
 	// TODO: Не забыть вставить сюда Меню
 	m_figureScene = new FigureScene{nullptr, this};
 
+	// TODO: Отнаследоваться от сцены. Либо самостоятельно задать ей флаги
 	m_graphicsView = new QGraphicsView{m_figureScene};
+
+	// Включаем постоянный трекинг мыщи на сцене
+	m_graphicsView->setMouseTracking(true);
+	// Задаем основные флаги для вью сцены
+	m_graphicsView->setRenderHint(QPainter::Antialiasing, true);
+	m_graphicsView->setRenderHint(QPainter::HighQualityAntialiasing, true);
+	m_graphicsView->setRenderHint(QPainter::TextAntialiasing, true);
+	m_graphicsView->setRenderHint(QPainter::SmoothPixmapTransform, true);
+	m_graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
 	// Создание основного лейаута со Сценой
 	QHBoxLayout* mainLayout = new QHBoxLayout;

@@ -1,8 +1,5 @@
 #include "completedrawing.h"
 
-// DEBUG:
-#include <QDebug>
-
 #include <QGraphicsSceneMouseEvent>
 
 #include "square.h"
@@ -18,8 +15,6 @@ CompleteDrawing::CompleteDrawing(QGraphicsSceneMouseEvent* mouseEvent)
 
 CompleteDrawing::~CompleteDrawing()
 {
-	// DEBUG:
-	qDebug("CompleteDrawing deleted");
 	m_mouseEvent = nullptr;
 }
 
@@ -39,6 +34,22 @@ void CompleteDrawing::act(Square* square)
 
 void CompleteDrawing::act(Triangle* triangle)
 {
+	if (triangle->isFirstDrawn())
+	{
+		triangle->setSecond(m_mouseEvent->scenePos());
+		// Третьей точке задается координата, что бы не было разрывов
+		triangle->setThird(m_mouseEvent->scenePos());
+		triangle->setStatus(Triangle::DrawingStatus::SecondPointDrawn);
+		triangle->update();
+	}
+	else if (triangle->isSecondDrawn())
+	{
+		triangle->setThird(m_mouseEvent->scenePos());
+		triangle->setStatus(Triangle::DrawingStatus::ThirdPointDrawn);
+		triangle->stopDrawingLine();
+		triangle->completeCreating();
+		triangle->update();
+	}
 }
 
 void CompleteDrawing::act(Rectangle* rectangle)

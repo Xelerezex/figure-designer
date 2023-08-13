@@ -23,6 +23,7 @@ FigureScene::FigureScene(QMenu* itemMenu, QObject* parent)
 	, m_currentMode{Mode::Modification}
 	, m_currentSquare{nullptr}
 	, m_currentRectangle{nullptr}
+	, m_currentTriangle{nullptr}
 	, m_clickHandler{new ClickTracker{this}}
 {
 	// Настраиваем сцену
@@ -40,6 +41,11 @@ FigureScene::Mode FigureScene::currentMode() const
 	return m_currentMode;
 }
 
+bool FigureScene::isTriangleMode() const
+{
+	return m_currentMode == TriangleDraw;
+}
+
 void FigureScene::setCurrentMode(Mode newCurrentMode)
 {
 	m_currentMode = newCurrentMode;
@@ -49,7 +55,6 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
 	if (mouseEvent->button() == Qt::LeftButton)
 	{
-		m_clickHandler->setLastLeftMouseClick(mouseEvent->scenePos());
 		onMouseLeftButtonPressed(mouseEvent);
 	}
 }
@@ -60,9 +65,17 @@ void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	bool onlyWithLeftButtonMove{
 		static_cast<bool>(mouseEvent->buttons() & Qt::LeftButton)};
 
+	// true - если движение мыщи без зажатых кнопок
+	bool onlyMouseMove{mouseEvent->buttons() == Qt::NoButton};
+
 	if (onlyWithLeftButtonMove)
 	{
 		onMouseLeftButtonMoved(mouseEvent);
+	}
+
+	if (onlyMouseMove && isTriangleMode())
+	{
+		onEmptyMouseMoved(mouseEvent);
 	}
 }
 
@@ -70,8 +83,6 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
 	if (mouseEvent->button() == Qt::LeftButton)
 	{
-		qDebug() << m_clickHandler->isDistClickReleaseLeftMouseOk(
-			mouseEvent->scenePos());
 		onMouseLeftButtonReleased(mouseEvent);
 	}
 }
@@ -87,10 +98,15 @@ void FigureScene::setupFigureScene()
 
 	// Устанавливаем имя объекта класса
 	setObjectName(QLatin1String("FigureScene"));
+
+	// setMouseTracking
 }
 
 void FigureScene::onMouseLeftButtonPressed(QGraphicsSceneMouseEvent* mouseEvent)
 {
+	// Запоминаем место, где произошло нажатие
+	m_clickHandler->setLastLeftMouseClick(mouseEvent->scenePos());
+
 	if (m_currentMode == SquareDraw)
 	{
 		m_currentSquare = new Square{};
@@ -111,9 +127,6 @@ void FigureScene::onMouseLeftButtonPressed(QGraphicsSceneMouseEvent* mouseEvent)
 	}
 	else if (m_currentMode == TriangleDraw)
 	{
-		m_currentTriangle = new Triangle{};
-		m_currentTriangle->act(StartDrawing{mouseEvent});
-		addItem(m_currentTriangle);
 	}
 
 	qDebug("mousePressEvent");
@@ -139,9 +152,6 @@ void FigureScene::onMouseLeftButtonMoved(QGraphicsSceneMouseEvent* mouseEvent)
 		m_currentCircle->act(ContinueDrawing{mouseEvent});
 		update();
 	}
-	else if (m_currentMode == TriangleDraw)
-	{
-	}
 	else if (m_currentMode == Modification)
 	{
 		// TODO: Сделать обновление координат фигуры, в режиме передвижения
@@ -158,21 +168,54 @@ void FigureScene::onMouseLeftButtonReleased(
 	if (m_currentMode == SquareDraw)
 	{
 		m_currentSquare->act(CompleteDrawing{mouseEvent});
+		m_currentSquare = nullptr;
 	}
 	else if (m_currentMode == RectangleDraw)
 	{
 		m_currentRectangle->act(CompleteDrawing{mouseEvent});
+		m_currentRectangle = nullptr;
 	}
 	else if (m_currentMode == CircleDraw)
 	{
 		m_currentCircle->act(CompleteDrawing{mouseEvent});
+		m_currentCircle = nullptr;
 	}
 	else if (m_currentMode == TriangleDraw)
 	{
+		if (m_currentTriangle == nullptr)
+		{
+			m_currentTriangle = new Triangle{};
+			m_currentTriangle->act(StartDrawing{mouseEvent});
+			addItem(m_currentTriangle);
+		}
+		else
+		{
+			m_currentTriangle->act(CompleteDrawing{mouseEvent});
+
+			if (m_currentTriangle->isThirdDrawn())
+			{
+				m_currentTriangle->setSelected(true);
+				m_currentTriangle = nullptr;
+			}
+		}
 	}
 
 	qDebug("mouseReleaseEvent");
 
 	// Вызов метода базового класса
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
+}
+
+void FigureScene::onEmptyMouseMoved(QGraphicsSceneMouseEvent* mouseEvent)
+{
+	if (m_currentMode == TriangleDraw)
+	{
+		if (m_currentTriangle == nullptr)
+		{
+			return;
+		}
+
+		m_currentTriangle->act(ContinueDrawing{mouseEvent});
+		update();
+	}
 }

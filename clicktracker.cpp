@@ -2,9 +2,6 @@
 
 #include <QGraphicsSceneMouseEvent>
 
-// DEBUG:
-#include <QDebug>
-
 ClickTracker::ClickTracker(QObject* parent)
 	: QObject{parent}
 {
@@ -12,7 +9,6 @@ ClickTracker::ClickTracker(QObject* parent)
 
 ClickTracker::~ClickTracker()
 {
-	qDebug("ClickTracker deleted");
 }
 
 QPointF ClickTracker::lastLeftMouseClick() const
@@ -25,6 +21,10 @@ void ClickTracker::setLastLeftMouseClick(QPointF newLastLeftMouseClick)
 	m_lastLeftMouseClick = newLastLeftMouseClick;
 }
 
+// TODO: Потенциально назвать этот метод isClicke и просто описать, что типа
+// кликом считается все то, что не вышло за рамки выделенного нами круга
+// И зделать второй метод, который будет трекать - не слишком ли маленькая
+// фигура отрисовалась
 bool ClickTracker::isDistClickReleaseLeftMouseOk(QPointF newLeftMouseRelease)
 {
 	// Вычисляем так ли далеко была отпущена мыщь относительно места нажатия

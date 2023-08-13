@@ -1,8 +1,5 @@
 #include "continuedrawing.h"
 
-// DEBUG:
-#include <QDebug>
-
 #include <QGraphicsSceneMouseEvent>
 
 #include "square.h"
@@ -18,8 +15,6 @@ ContinueDrawing::ContinueDrawing(QGraphicsSceneMouseEvent* mouseEvent)
 
 ContinueDrawing::~ContinueDrawing()
 {
-	// DEBUG:
-	qDebug("ContinueDrawing deleted");
 	m_mouseEvent = nullptr;
 }
 
@@ -35,6 +30,16 @@ void ContinueDrawing::act(Square* square)
 
 void ContinueDrawing::act(Triangle* triangle)
 {
+	if (triangle->isFirstDrawn() && triangle->isLineDrawing())
+	{
+		triangle->setSecond(m_mouseEvent->scenePos());
+		triangle->update();
+	}
+	else if (triangle->isSecondDrawn() && triangle->isLineDrawing())
+	{
+		triangle->setThird(m_mouseEvent->scenePos());
+		triangle->update();
+	}
 }
 
 void ContinueDrawing::act(Rectangle* rectangle)
