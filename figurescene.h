@@ -78,6 +78,10 @@ private:
 	 */
 	void setupFigureScene();
 
+	void onMouseLeftButtonPressed(QGraphicsSceneMouseEvent* mouseEvent);
+	void onMouseLeftButtonMoved(QGraphicsSceneMouseEvent* mouseEvent);
+	void onMouseLeftButtonReleased(QGraphicsSceneMouseEvent* mouseEvent);
+
 private:
 	/*!
 	 * \brief Режим работы в котором, в данный момент времени, находится сцена

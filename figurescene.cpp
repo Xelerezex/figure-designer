@@ -44,9 +44,47 @@ void FigureScene::setCurrentMode(Mode newCurrentMode)
 
 void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-	if (mouseEvent->button() != Qt::LeftButton)
-		return;
+	if (mouseEvent->button() == Qt::LeftButton)
+	{
+		onMouseLeftButtonPressed(mouseEvent);
+	}
+}
 
+void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
+	// true - только если движение с зажатой левой кнопокой мыщи
+	bool onlyWithLeftButtonMove{
+		static_cast<bool>(mouseEvent->buttons() & Qt::LeftButton)};
+
+	if (onlyWithLeftButtonMove)
+	{
+		onMouseLeftButtonMoved(mouseEvent);
+	}
+}
+
+void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
+	if (mouseEvent->button() == Qt::LeftButton)
+	{
+		onMouseLeftButtonReleased(mouseEvent);
+	}
+}
+
+void FigureScene::setupFigureScene()
+{
+	// Устанавливаем ограничения по Сцене
+	const qreal coordX{0};
+	const qreal coordY{0};
+	const qreal width{5'000};
+	const qreal height{5'000};
+	setSceneRect(QRectF(coordX, coordY, width, height));
+
+	// Устанавливаем имя объекта класса
+	setObjectName(QLatin1String("FigureScene"));
+}
+
+void FigureScene::onMouseLeftButtonPressed(QGraphicsSceneMouseEvent* mouseEvent)
+{
 	if (m_currentMode == SquareDraw)
 	{
 		m_currentSquare = new Square{};
@@ -78,14 +116,8 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
-void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
+void FigureScene::onMouseLeftButtonMoved(QGraphicsSceneMouseEvent* mouseEvent)
 {
-	bool onlyLeftButton = mouseEvent->buttons() & Qt::LeftButton;
-	if (!onlyLeftButton)
-	{
-		return;
-	}
-
 	if (m_currentMode == SquareDraw)
 	{
 		m_currentSquare->act(ContinueDrawing{mouseEvent});
@@ -114,11 +146,9 @@ void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	qDebug("mouseMoveEvent");
 }
 
-void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
+void FigureScene::onMouseLeftButtonReleased(
+	QGraphicsSceneMouseEvent* mouseEvent)
 {
-	if (mouseEvent->button() != Qt::LeftButton)
-		return;
-
 	if (m_currentMode == SquareDraw)
 	{
 		m_currentSquare->act(CompleteDrawing{mouseEvent});
@@ -139,17 +169,4 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 	// Вызов метода базового класса
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
-}
-
-void FigureScene::setupFigureScene()
-{
-	// Устанавливаем ограничения по Сцене
-	const qreal coordX{0};
-	const qreal coordY{0};
-	const qreal width{5'000};
-	const qreal height{5'000};
-	setSceneRect(QRectF(coordX, coordY, width, height));
-
-	// Устанавливаем имя объекта класса
-	setObjectName(QLatin1String("FigureScene"));
 }
