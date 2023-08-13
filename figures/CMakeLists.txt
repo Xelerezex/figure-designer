@@ -9,7 +9,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-
 set(
     SOURCE_TARGET_NAME figures-target
 )
@@ -25,6 +24,8 @@ add_library(
             rectangle.cpp
             circle.h
             circle.cpp
+            triangle.h
+            triangle.cpp
 )
 
 target_link_libraries(

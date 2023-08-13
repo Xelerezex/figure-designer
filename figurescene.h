@@ -7,6 +7,7 @@ QT_BEGIN_NAMESPACE
 class QMenu;
 class Square;
 class Circle;
+class Triangle;
 class Rectangle;
 QT_END_NAMESPACE
 
@@ -97,6 +98,11 @@ private:
 	 * \brief Указатель на Круг с которым идет взаимодействие
 	 */
 	Circle* m_currentCircle;
+
+	/*!
+	 * \brief Указатель на Треугольника с которым идет взаимодействие
+	 */
+	Triangle* m_currentTriangle;
 };
 
 #endif // FIGURESCENE_H

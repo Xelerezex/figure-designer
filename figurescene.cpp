@@ -6,6 +6,7 @@
 
 #include "square.h"
 #include "circle.h"
+#include "triangle.h"
 #include "rectangle.h"
 
 // DEBUG:
@@ -69,6 +70,13 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 										+ QPointF{0.1, 0.1});
 		addItem(m_currentCircle);
 	}
+	else if (m_currentMode == CircleDraw)
+	{
+		m_currentTriangle = new Triangle{};
+		m_currentTriangle->startCreating();
+
+		addItem(m_currentTriangle);
+	}
 
 	qDebug("mousePressEvent");
 
@@ -105,6 +113,9 @@ void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		// Вызов метода базового класса
 		QGraphicsScene::mouseMoveEvent(mouseEvent);
 	}
+	else if (m_currentMode == CircleDraw)
+	{
+	}
 
 	qDebug("mouseMoveEvent");
 }
@@ -131,6 +142,9 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		m_currentCircle->setDestination(mouseEvent->scenePos());
 		m_currentCircle->completeCreating();
 		m_currentCircle->update();
+	}
+	else if (m_currentMode == CircleDraw)
+	{
 	}
 
 	qDebug("mouseReleaseEvent");
