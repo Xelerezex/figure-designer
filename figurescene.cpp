@@ -5,6 +5,7 @@
 #include <QGraphicsSceneMouseEvent>
 
 #include "square.h"
+#include "circle.h"
 #include "rectangle.h"
 
 // DEBUG:
@@ -59,6 +60,15 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 										   + QPointF{0.1, 0.1});
 		addItem(m_currentRectangle);
 	}
+	else if (m_currentMode == CircleDraw)
+	{
+		m_currentCircle = new Circle{};
+		m_currentCircle->startCreating();
+		m_currentCircle->setCenter(mouseEvent->scenePos());
+		m_currentCircle->setDestination(mouseEvent->scenePos()
+										+ QPointF{0.1, 0.1});
+		addItem(m_currentCircle);
+	}
 
 	qDebug("mousePressEvent");
 
@@ -82,6 +92,11 @@ void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	else if (m_currentMode == RectangleDraw)
 	{
 		m_currentRectangle->setDestination(mouseEvent->scenePos());
+		update();
+	}
+	else if (m_currentMode == CircleDraw)
+	{
+		m_currentCircle->setDestination(mouseEvent->scenePos());
 		update();
 	}
 	else if (m_currentMode == Modification)
@@ -110,6 +125,12 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		m_currentRectangle->setDestination(mouseEvent->scenePos());
 		m_currentRectangle->completeCreating();
 		m_currentRectangle->update();
+	}
+	else if (m_currentMode == CircleDraw)
+	{
+		m_currentCircle->setDestination(mouseEvent->scenePos());
+		m_currentCircle->completeCreating();
+		m_currentCircle->update();
 	}
 
 	qDebug("mouseReleaseEvent");

@@ -23,6 +23,8 @@ add_library(
             square.cpp
             rectangle.h
             rectangle.cpp
+            circle.h
+            circle.cpp
 )
 
 target_link_libraries(

@@ -1,51 +1,54 @@
-#include "rectangle.h"
+#include "circle.h"
 
 #include <QPainter>
 
-Rectangle::Rectangle(QGraphicsItem* parent)
+// DEBUG:
+#include <QDebug>
+
+Circle::Circle(QGraphicsItem* parent)
 	: FigureBase{parent}
 	, m_center{0.0, 0.0}
 	, m_destination{0.0, 0.0}
 {
 }
 
-Rectangle::~Rectangle()
+Circle::~Circle()
 {
 	// DEBUG:
-	qDebug("Rectangle deleted");
+	qDebug("Circle deleted");
 }
 
-QPointF Rectangle::center() const
+QPointF Circle::center() const
 {
 	return m_center;
 }
 
-void Rectangle::setCenter(QPointF newCenter)
+void Circle::setCenter(QPointF newCenter)
 {
 	m_center = newCenter;
 }
 
-QPointF Rectangle::destination() const
+QPointF Circle::destination() const
 {
 	return m_destination;
 }
 
-void Rectangle::setDestination(QPointF newDestination)
+void Circle::setDestination(QPointF newDestination)
 {
 	m_destination = newDestination;
 }
 
-QRectF Rectangle::boundingRect() const
+QRectF Circle::boundingRect() const
 {
 	return countFigure().normalized();
 }
 
-void Rectangle::paint(QPainter*						  painter,
-					  const QStyleOptionGraphicsItem* option,
-					  QWidget*						  widget)
+void Circle::paint(QPainter*					   painter,
+				   const QStyleOptionGraphicsItem* option,
+				   QWidget*						   widget)
 {
 	const qreal penWidth{3};
-	const int	color{4501714};
+	const int	color{16752774};
 
 	// Класс для отрисовки границы фигуры
 	QPen drawingPen;
@@ -74,19 +77,30 @@ void Rectangle::paint(QPainter*						  painter,
 	QRectF frameRect = boundingRect();
 	frameRect.setWidth(boundingRect().width() - penWidth);
 	frameRect.setHeight(boundingRect().height() - penWidth);
-	pathTitle.addRect(frameRect);
+	pathTitle.addEllipse(frameRect);
 
 	painter->setPen(drawingPen);
 	painter->drawPath(pathTitle.simplified());
 }
 
-QRectF Rectangle::countFigure() const
+QPainterPath Circle::shape() const
 {
+	QPainterPath path;
+	path.addEllipse(boundingRect());
+	return path;
+}
+
+QRectF Circle::countFigure() const
+{
+	// Линия между центром и второй точкой фигуры
+	QLineF line{m_center, m_destination};
+
 	// Координаты точки в левом верхнем углу
-	QPointF topLeft{m_center.x(), m_center.y()};
+	QPointF topLeft{m_center.x() - line.length(), m_center.y() - line.length()};
 
 	// Координаты точки в правом нижнем углу
-	QPointF bottomRight{m_destination.x(), m_destination.y()};
+	QPointF bottomRight{m_center.x() + line.length(),
+						m_center.y() + line.length()};
 
 	return QRectF{topLeft, bottomRight};
 }
