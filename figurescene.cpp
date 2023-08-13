@@ -70,7 +70,7 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 										+ QPointF{0.1, 0.1});
 		addItem(m_currentCircle);
 	}
-	else if (m_currentMode == CircleDraw)
+	else if (m_currentMode == TriangleDraw)
 	{
 		m_currentTriangle = new Triangle{};
 		m_currentTriangle->startCreating();
@@ -107,14 +107,14 @@ void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		m_currentCircle->setDestination(mouseEvent->scenePos());
 		update();
 	}
+	else if (m_currentMode == TriangleDraw)
+	{
+	}
 	else if (m_currentMode == Modification)
 	{
 		// TODO: Сделать обновление координат фигуры, в режиме передвижения
 		// Вызов метода базового класса
 		QGraphicsScene::mouseMoveEvent(mouseEvent);
-	}
-	else if (m_currentMode == CircleDraw)
-	{
 	}
 
 	qDebug("mouseMoveEvent");
@@ -143,7 +143,7 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		m_currentCircle->completeCreating();
 		m_currentCircle->update();
 	}
-	else if (m_currentMode == CircleDraw)
+	else if (m_currentMode == TriangleDraw)
 	{
 	}
 
