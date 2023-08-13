@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         resources.qrc
         figurescene.h
         figurescene.cpp
+        clicktracker.h
+        clicktracker.cpp
 )
 
 set(PROJECT_RESOURCES

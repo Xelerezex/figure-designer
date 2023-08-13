@@ -4,6 +4,8 @@
 #include <QGraphicsLineItem>
 #include <QGraphicsSceneMouseEvent>
 
+#include "clicktracker.h"
+
 #include "square.h"
 #include "circle.h"
 #include "triangle.h"
@@ -21,6 +23,7 @@ FigureScene::FigureScene(QMenu* itemMenu, QObject* parent)
 	, m_currentMode{Mode::Modification}
 	, m_currentSquare{nullptr}
 	, m_currentRectangle{nullptr}
+	, m_clickHandler{new ClickTracker{this}}
 {
 	// Настраиваем сцену
 	setupFigureScene();
@@ -46,6 +49,7 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
 	if (mouseEvent->button() == Qt::LeftButton)
 	{
+		m_clickHandler->setLastLeftMouseClick(mouseEvent->scenePos());
 		onMouseLeftButtonPressed(mouseEvent);
 	}
 }
@@ -66,6 +70,8 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
 	if (mouseEvent->button() == Qt::LeftButton)
 	{
+		qDebug() << m_clickHandler->isDistClickReleaseLeftMouseOk(
+			mouseEvent->scenePos());
 		onMouseLeftButtonReleased(mouseEvent);
 	}
 }

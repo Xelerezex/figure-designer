@@ -6,6 +6,7 @@ class Square;
 class Triangle;
 class Rectangle;
 
+// TODO: Закомментить все Фигурэкшены
 class FigureAction
 {
 public:

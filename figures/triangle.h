@@ -83,6 +83,14 @@ private:
 	QRectF countFigure() const override;
 
 private:
+	enum DrawingStatus
+	{
+		NotDrawn,
+		FirstPointDrawn,
+		SecondPointDrawn,
+		ThirdPointDrawn,
+	};
+
 	/*!
 	 * \brief Координаты центра фигуры
 	 */

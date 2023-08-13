@@ -9,6 +9,7 @@ class Square;
 class Circle;
 class Triangle;
 class Rectangle;
+class ClickTracker;
 QT_END_NAMESPACE
 
 class FigureScene : public QGraphicsScene
@@ -107,6 +108,11 @@ private:
 	 * \brief Указатель на Треугольника с которым идет взаимодействие
 	 */
 	Triangle* m_currentTriangle;
+
+	/*!
+	 * \brief Указатель на класс трекающий клики кнопок
+	 */
+	ClickTracker* m_clickHandler;
 };
 
 #endif // FIGURESCENE_H
