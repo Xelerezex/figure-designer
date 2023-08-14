@@ -98,6 +98,9 @@ void FigureGraphicsView::onMouseLeftButtonPressed(QMouseEvent* mouseEvent)
 	// Координаты фигуры на Сцене
 	const auto sceneCoord = mapToScene(itemCoord);
 
+	// Была ли нажата кнопка над фигурой
+	const bool clickedOnFigure{itemAt(mouseEvent->pos()) != nullptr};
+
 	// Запоминаем место, где произошло нажатие
 	m_figureHandler->setLastLeftMousePressed(sceneCoord);
 
@@ -113,15 +116,19 @@ void FigureGraphicsView::onMouseLeftButtonPressed(QMouseEvent* mouseEvent)
 	{
 		m_figureHandler->addNewCircle(itemCoord, sceneCoord);
 	}
-	else if (m_currentMode == TriangleDraw)
+	else if (m_currentMode == Modification)
 	{
+		// TODO: Сделать m_modificationHandler
+
+		// DEBUG:
+		qDebug() << "Modification pressed left"
+				 << "On figure" << clickedOnFigure;
+		if (clickedOnFigure)
+		{
+			// Вызов метода базового класса
+			QGraphicsView::mousePressEvent(mouseEvent);
+		}
 	}
-
-	// DEBUG:
-	qDebug("mousePressEvent");
-
-	// Вызов метода базового класса
-	QGraphicsView::mousePressEvent(mouseEvent);
 }
 
 void FigureGraphicsView::onMouseLeftButtonMoved(QMouseEvent* mouseEvent)
@@ -143,12 +150,12 @@ void FigureGraphicsView::onMouseLeftButtonMoved(QMouseEvent* mouseEvent)
 	}
 	else if (m_currentMode == Modification)
 	{
+		// DEBUG:
+		qDebug() << "Modification moved with left";
+
 		// Вызов метода базового класса
 		QGraphicsView::mouseMoveEvent(mouseEvent);
 	}
-
-	// DEBUG:
-	qDebug("mouseMoveEvent");
 }
 
 void FigureGraphicsView::onMouseLeftButtonReleased(QMouseEvent* mouseEvent)
@@ -158,11 +165,17 @@ void FigureGraphicsView::onMouseLeftButtonReleased(QMouseEvent* mouseEvent)
 	// Координаты фигуры на Сцене
 	const auto sceneCoord = mapToScene(itemCoord);
 
+	// Проверка на режим модификации
+	const bool isModificationMode{m_currentMode == Modification};
+	// Проверка на то, произошел ли клик
+	const bool isLeftMouseClicked{
+		m_figureHandler->isLeftMouseClicked(sceneCoord)};
+
 	// Запоминаем место, где произошло отжатие
 	m_figureHandler->setLastLeftMouseReleased(sceneCoord);
 
 	// Проверим произошел ли клик
-	if (m_figureHandler->isLeftMouseClicked(sceneCoord))
+	if (!isModificationMode && isLeftMouseClicked)
 	{
 		m_figureHandler->abortDrawing();
 	}
@@ -185,12 +198,19 @@ void FigureGraphicsView::onMouseLeftButtonReleased(QMouseEvent* mouseEvent)
 		const auto sceneCoord = mapToScene(itemCoord);
 		m_figureHandler->addNewTriangleDot(itemCoord, sceneCoord);
 	}
+	else if (isModificationMode)
+	{
+		// DEBUG:
+		qDebug() << "Modification released"
+				 << "isMode" << isModificationMode << "isClicked"
+				 << isLeftMouseClicked;
 
-	// DEBUG:
-	qDebug("mouseReleaseEvent");
-
-	// Вызов метода базового класса
-	QGraphicsView::mouseReleaseEvent(mouseEvent);
+		if (isLeftMouseClicked)
+		{
+			// Вызов метода базового класса
+			QGraphicsView::mouseReleaseEvent(mouseEvent);
+		}
+	}
 }
 
 void FigureGraphicsView::onEmptyMouseMoved(QMouseEvent* mouseEvent)

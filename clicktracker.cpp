@@ -21,6 +21,9 @@ QPointF ClickTracker::lastLeftMousePressed() const
 void ClickTracker::setLastLeftMousePressed(QPointF newLastLeftMousePressed)
 {
 	m_lastLeftMousePressed = newLastLeftMousePressed;
+
+	// Зануляем координату Отпуска Кнопки
+	m_lastLeftMouseReleased = QPointF{0.0, 0.0};
 }
 
 QPointF ClickTracker::lastLeftMouseReleased() const
