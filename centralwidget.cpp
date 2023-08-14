@@ -104,5 +104,6 @@ QToolButton* CentralWidget::createButton(const QString& iconPath,
 
 void CentralWidget::buttonGroupClicked(int index)
 {
-	m_figureScene->setCurrentMode(static_cast<FigureScene::Mode>(index));
+	m_figureGraphicsView->setCurrentMode(
+		static_cast<FigureGraphicsView::Mode>(index));
 }

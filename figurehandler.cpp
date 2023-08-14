@@ -1,7 +1,7 @@
 #include "figurehandler.h"
 
-#include "figurescene.h"
 #include "clicktracker.h"
+#include "figuregraphicsview.h"
 
 #include "square.h"
 #include "circle.h"
@@ -14,9 +14,9 @@
 
 #include <QGraphicsSceneMouseEvent>
 
-FigureHandler::FigureHandler(FigureScene* parent)
+FigureHandler::FigureHandler(FigureGraphicsView* parent)
 	: QObject{parent}
-	, m_parentScene{parent}
+	, m_parentView{parent}
 	, m_currentSquare{nullptr}
 	, m_currentRectangle{nullptr}
 	, m_currentCircle{nullptr}
@@ -41,21 +41,21 @@ void FigureHandler::addNewSquare(QPointF coordinate)
 {
 	m_currentSquare = new Square{};
 	m_currentSquare->act(StartDrawing{coordinate});
-	m_parentScene->addItem(m_currentSquare);
+	m_parentView->scene()->addItem(m_currentSquare);
 }
 
 void FigureHandler::addNewRectangle(QPointF coordinate)
 {
 	m_currentRectangle = new Rectangle{};
 	m_currentRectangle->act(StartDrawing{coordinate});
-	m_parentScene->addItem(m_currentRectangle);
+	m_parentView->scene()->addItem(m_currentRectangle);
 }
 
 void FigureHandler::addNewCircle(QPointF coordinate)
 {
 	m_currentCircle = new Circle{};
 	m_currentCircle->act(StartDrawing{coordinate});
-	m_parentScene->addItem(m_currentCircle);
+	m_parentView->scene()->addItem(m_currentCircle);
 }
 
 void FigureHandler::addNewTriangleDot(QPointF coordinate)
@@ -64,7 +64,7 @@ void FigureHandler::addNewTriangleDot(QPointF coordinate)
 	{
 		m_currentTriangle = new Triangle{};
 		m_currentTriangle->act(StartDrawing{coordinate});
-		m_parentScene->addItem(m_currentTriangle);
+		m_parentView->scene()->addItem(m_currentTriangle);
 	}
 	else
 	{
@@ -81,19 +81,19 @@ void FigureHandler::addNewTriangleDot(QPointF coordinate)
 void FigureHandler::continueDrawingSquare(QPointF coordinate)
 {
 	m_currentSquare->act(ContinueDrawing{coordinate});
-	m_parentScene->update();
+	m_parentView->scene()->update();
 }
 
 void FigureHandler::continueDrawingRectangle(QPointF coordinate)
 {
 	m_currentRectangle->act(ContinueDrawing{coordinate});
-	m_parentScene->update();
+	m_parentView->scene()->update();
 }
 
 void FigureHandler::continueDrawingCircle(QPointF coordinate)
 {
 	m_currentCircle->act(ContinueDrawing{coordinate});
-	m_parentScene->update();
+	m_parentView->scene()->update();
 }
 
 void FigureHandler::continueDrawingTriangle(QPointF coordinate)
@@ -104,7 +104,7 @@ void FigureHandler::continueDrawingTriangle(QPointF coordinate)
 	}
 
 	m_currentTriangle->act(ContinueDrawing{coordinate});
-	m_parentScene->update();
+	m_parentView->scene()->update();
 }
 
 void FigureHandler::completeSquare(QPointF coordinate)

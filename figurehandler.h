@@ -8,8 +8,8 @@ class Square;
 class Circle;
 class Triangle;
 class Rectangle;
-class FigureScene;
 class ClickTracker;
+class FigureGraphicsView;
 class QGraphicsSceneMouseEvent;
 QT_END_NAMESPACE
 
@@ -28,7 +28,7 @@ public:
 	 * \brief Основной конструктор
 	 * \param parent - указатель на родительский класс
 	 */
-	explicit FigureHandler(FigureScene* parent);
+	explicit FigureHandler(FigureGraphicsView* parent);
 
 	/*!
 	 * \brief Основной деструктор
@@ -115,9 +115,9 @@ public:
 
 private:
 	/*!
-	 * \brief Указатель на сцену родителя
+	 * \brief Указатель на Вьюшку сцены родителя
 	 */
-	FigureScene* m_parentScene;
+	FigureGraphicsView* m_parentView;
 
 	/*!
 	 * \brief Указатель на Квадрат с которым идет взаимодействие

@@ -5,7 +5,6 @@
 
 QT_BEGIN_NAMESPACE
 class QMenu;
-class FigureHandler;
 QT_END_NAMESPACE
 
 class FigureScene : public QGraphicsScene
@@ -28,6 +27,11 @@ public:
 	Q_ENUM(Mode);
 
 	/*!
+	 * \brief Дефолтный удаленный конструктор
+	 */
+	FigureScene() = delete;
+
+	/*!
 	 * \brief Основной конструктор
 	 * \param parent - указатель на родительский класс
 	 */
@@ -39,64 +43,11 @@ public:
 	 */
 	~FigureScene() override;
 
-	/*!
-	 * \brief Вернуть режим, в котором сейчас находится сцена
-	 * \return режим сцены
-	 */
-	[[nodiscard]] Mode currentMode() const;
-
-	/*!
-	 * \brief Проверка признака нахождения сцены в режиме отрисовки треугольника
-	 * \return true - если сцена находится в режиме отрисовки треугольника
-	 */
-	[[nodiscard]] bool isTriangleMode() const;
-
-	/*!
-	 * \brief Установить текущий режим сцены
-	 * \param newCurrentMode - новый режим
-	 */
-	void setCurrentMode(Mode newCurrentMode);
-
-protected:
-	/*!
-	 * \brief Переопределнный метод Нажатия Кнопки Мыщи
-	 * \param mouseEvent - указатель на событие
-	 */
-	void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
-
-	/*!
-	 * \brief Переопределнный метод Движения Мыщи
-	 * \param mouseEvent - указатель на событие
-	 */
-	void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
-
-	/*!
-	 * \brief Переопределнный метод Отжатия Кнопки Мыщи
-	 * \param mouseEvent - указатель на событие
-	 */
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
-
 private:
 	/*!
 	 * \brief Основные настройки данного класса
 	 */
 	void setupFigureScene();
-
-	void onMouseLeftButtonPressed(QGraphicsSceneMouseEvent* mouseEvent);
-	void onMouseLeftButtonMoved(QGraphicsSceneMouseEvent* mouseEvent);
-	void onMouseLeftButtonReleased(QGraphicsSceneMouseEvent* mouseEvent);
-	void onEmptyMouseMoved(QGraphicsSceneMouseEvent* mouseEvent);
-
-private:
-	/*!
-	 * \brief Режим работы в котором, в данный момент времени, находится сцена
-	 */
-	Mode m_currentMode;
-
-	/*!
-	 * \brief Указатель на обработчик взаимодействий с Фигурами
-	 */
-	FigureHandler* m_figureHandler;
 };
 
 #endif // FIGURESCENE_H
