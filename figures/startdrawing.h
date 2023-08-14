@@ -2,10 +2,9 @@
 #define STARTDRAWING_H
 
 #include <QtGlobal>
+#include <QPoint>
 
 #include "figureaction.h"
-
-class QGraphicsSceneMouseEvent;
 
 class StartDrawing : public FigureAction
 {
@@ -13,8 +12,8 @@ class StartDrawing : public FigureAction
 
 public:
 	StartDrawing() = delete;
-	explicit StartDrawing(QGraphicsSceneMouseEvent* mouseEvent);
-	~StartDrawing();
+	explicit StartDrawing(QPointF coordinate);
+	~StartDrawing() override;
 
 	void act(Circle* circle) override;
 	void act(Square* square) override;
@@ -22,7 +21,10 @@ public:
 	void act(Rectangle* rectangle) override;
 
 private:
-	QGraphicsSceneMouseEvent* m_mouseEvent;
+	/*!
+	 * \brief координата, в которой произошло данное действие
+	 */
+	QPointF m_coordinate;
 };
 
 #endif // STARTDRAWING_H

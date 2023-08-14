@@ -5,11 +5,7 @@
 
 QT_BEGIN_NAMESPACE
 class QMenu;
-class Square;
-class Circle;
-class Triangle;
-class Rectangle;
-class ClickTracker;
+class FigureHandler;
 QT_END_NAMESPACE
 
 class FigureScene : public QGraphicsScene
@@ -35,24 +31,25 @@ public:
 	 * \brief Основной конструктор
 	 * \param parent - указатель на родительский класс
 	 */
-	explicit FigureScene(QMenu* itemMenu, QObject* parent = nullptr);
+	// TODO: Не забыть про itemMenu
+	explicit FigureScene(/*QMenu* itemMenu, */ QObject* parent = nullptr);
 
 	/*!
 	 * \brief Основной деструктор
 	 */
-	~FigureScene();
+	~FigureScene() override;
 
 	/*!
 	 * \brief Вернуть режим, в котором сейчас находится сцена
 	 * \return режим сцены
 	 */
-	Mode currentMode() const;
+	[[nodiscard]] Mode currentMode() const;
 
 	/*!
 	 * \brief Проверка признака нахождения сцены в режиме отрисовки треугольника
 	 * \return true - если сцена находится в режиме отрисовки треугольника
 	 */
-	bool isTriangleMode() const;
+	[[nodiscard]] bool isTriangleMode() const;
 
 	/*!
 	 * \brief Установить текущий режим сцены
@@ -96,31 +93,10 @@ private:
 	 */
 	Mode m_currentMode;
 
-	// TODO: Сделать FigureHandler с методами типа PaintTriangle
 	/*!
-	 * \brief Указатель на Квадрат с которым идет взаимодействие
+	 * \brief Указатель на обработчик взаимодействий с Фигурами
 	 */
-	Square* m_currentSquare;
-
-	/*!
-	 * \brief Указатель на Прямоугольник с которым идет взаимодействие
-	 */
-	Rectangle* m_currentRectangle;
-
-	/*!
-	 * \brief Указатель на Круг с которым идет взаимодействие
-	 */
-	Circle* m_currentCircle;
-
-	/*!
-	 * \brief Указатель на Треугольника с которым идет взаимодействие
-	 */
-	Triangle* m_currentTriangle;
-
-	/*!
-	 * \brief Указатель на класс трекающий клики кнопок
-	 */
-	ClickTracker* m_clickHandler;
+	FigureHandler* m_figureHandler;
 };
 
 #endif // FIGURESCENE_H

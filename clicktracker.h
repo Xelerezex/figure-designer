@@ -44,7 +44,7 @@ public:
 	 * \brief Установить координату, где только что была нажата кнопка мыщи
 	 * \param newLastLeftMouseClick - новая координата
 	 */
-	void setLastLeftMouseClick(QPointF newLastLeftMouseClick);
+	void setLastLeftMousePressed(QPointF newLastLeftMouseClick);
 
 	/*!
 	 * \brief Метод проверяет не слишком ли далеко была отжата кнопка мыщи

@@ -2,10 +2,9 @@
 #define COMPLETEDRAWING_H
 
 #include <QtGlobal>
+#include <QPoint>
 
 #include "figureaction.h"
-
-class QGraphicsSceneMouseEvent;
 
 class CompleteDrawing : public FigureAction
 {
@@ -13,8 +12,8 @@ class CompleteDrawing : public FigureAction
 
 public:
 	CompleteDrawing() = delete;
-	explicit CompleteDrawing(QGraphicsSceneMouseEvent* mouseEvent);
-	~CompleteDrawing();
+	explicit CompleteDrawing(QPointF coordinate);
+	~CompleteDrawing() override;
 
 	void act(Circle* circle) override;
 	void act(Square* square) override;
@@ -22,7 +21,10 @@ public:
 	void act(Rectangle* rectangle) override;
 
 private:
-	QGraphicsSceneMouseEvent* m_mouseEvent;
+	/*!
+	 * \brief координата, в которой произошло данное действие
+	 */
+	QPointF m_coordinate;
 };
 
 #endif // COMPLETEDRAWING_H

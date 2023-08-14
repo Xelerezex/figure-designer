@@ -75,7 +75,7 @@ void CentralWidget::setupToolBarButtons()
 void CentralWidget::setupScene()
 {
 	// TODO: Не забыть вставить сюда Меню
-	m_figureScene = new FigureScene{nullptr, this};
+	m_figureScene = new FigureScene{/*nullptr,*/ this};
 
 	// TODO: Отнаследоваться от сцены. Либо самостоятельно задать ей флаги
 	m_graphicsView = new QGraphicsView{m_figureScene};

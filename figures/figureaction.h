@@ -10,6 +10,8 @@ class Rectangle;
 class FigureAction
 {
 public:
+	virtual ~FigureAction();
+
 	virtual void act(class Circle*)	   = 0;
 	virtual void act(class Square*)	   = 0;
 	virtual void act(class Triangle*)  = 0;

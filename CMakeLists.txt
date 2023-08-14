@@ -23,6 +23,8 @@ set(PROJECT_SOURCES
         figurescene.cpp
         clicktracker.h
         clicktracker.cpp
+        figurehandler.h
+        figurehandler.cpp
 )
 
 set(PROJECT_RESOURCES

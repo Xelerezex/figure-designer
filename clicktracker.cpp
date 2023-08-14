@@ -16,7 +16,7 @@ QPointF ClickTracker::lastLeftMouseClick() const
 	return m_lastLeftMouseClick;
 }
 
-void ClickTracker::setLastLeftMouseClick(QPointF newLastLeftMouseClick)
+void ClickTracker::setLastLeftMousePressed(QPointF newLastLeftMouseClick)
 {
 	m_lastLeftMouseClick = newLastLeftMouseClick;
 }

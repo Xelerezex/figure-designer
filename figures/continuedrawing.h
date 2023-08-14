@@ -2,10 +2,9 @@
 #define CONTINUEDRAWING_H
 
 #include <QtGlobal>
+#include <QPoint>
 
 #include "figureaction.h"
-
-class QGraphicsSceneMouseEvent;
 
 class ContinueDrawing : public FigureAction
 {
@@ -13,8 +12,8 @@ class ContinueDrawing : public FigureAction
 
 public:
 	ContinueDrawing() = delete;
-	explicit ContinueDrawing(QGraphicsSceneMouseEvent* mouseEvent);
-	~ContinueDrawing();
+	explicit ContinueDrawing(QPointF coordinate);
+	~ContinueDrawing() override;
 
 	void act(Circle* circle) override;
 	void act(Square* square) override;
@@ -22,7 +21,10 @@ public:
 	void act(Rectangle* rectangle) override;
 
 private:
-	QGraphicsSceneMouseEvent* m_mouseEvent;
+	/*!
+	 * \brief координата, в которой произошло данное действие
+	 */
+	QPointF m_coordinate;
 };
 
 #endif // CONTINUEDRAWING_H

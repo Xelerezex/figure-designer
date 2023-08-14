@@ -1,35 +1,32 @@
 #include "startdrawing.h"
 
-#include <QGraphicsSceneMouseEvent>
-
 #include "square.h"
 #include "circle.h"
 #include "triangle.h"
 #include "rectangle.h"
 
-StartDrawing::StartDrawing(QGraphicsSceneMouseEvent* mouseEvent)
+StartDrawing::StartDrawing(QPointF coordinate)
 	: FigureAction{}
-	, m_mouseEvent{mouseEvent}
+	, m_coordinate{coordinate}
 {
 }
 
 StartDrawing::~StartDrawing()
 {
-	m_mouseEvent = nullptr;
 }
 
 void StartDrawing::act(Circle* circle)
 {
 	circle->startCreating();
-	circle->setCenter(m_mouseEvent->scenePos());
-	circle->setDestination(m_mouseEvent->scenePos() + QPointF{0.1, 0.1});
+	circle->setCenter(m_coordinate);
+	circle->setDestination(m_coordinate + QPointF{0.1, 0.1});
 }
 
 void StartDrawing::act(Square* square)
 {
 	square->startCreating();
-	square->setCenter(m_mouseEvent->scenePos());
-	square->setDestination(m_mouseEvent->scenePos() + QPointF{0.1, 0.1});
+	square->setCenter(m_coordinate);
+	square->setDestination(m_coordinate + QPointF{0.1, 0.1});
 }
 
 void StartDrawing::act(Triangle* triangle)
@@ -37,8 +34,8 @@ void StartDrawing::act(Triangle* triangle)
 	triangle->startCreating();
 	// Обратный порядок, что бы правильно задавался статус отрисовки
 	// треугольника:
-	triangle->setFirst(m_mouseEvent->scenePos());
-	triangle->setSecond(m_mouseEvent->scenePos() + QPointF{0.1, 0.1});
+	triangle->setFirst(m_coordinate);
+	triangle->setSecond(m_coordinate + QPointF{0.1, 0.1});
 
 	triangle->setStatus(Triangle::DrawingStatus::FirstPointDrawn);
 	triangle->startDrawingLine();
@@ -47,6 +44,6 @@ void StartDrawing::act(Triangle* triangle)
 void StartDrawing::act(Rectangle* rectangle)
 {
 	rectangle->startCreating();
-	rectangle->setCenter(m_mouseEvent->scenePos());
-	rectangle->setDestination(m_mouseEvent->scenePos() + QPointF{0.1, 0.1});
+	rectangle->setCenter(m_coordinate);
+	rectangle->setDestination(m_coordinate + QPointF{0.1, 0.1});
 }
