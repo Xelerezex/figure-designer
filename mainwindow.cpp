@@ -9,6 +9,8 @@
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)
+	, m_pCentralWidget{nullptr}
+	, m_pToolBar{nullptr}
 {
 	// Настроить основное окно
 	setupMainWindow();

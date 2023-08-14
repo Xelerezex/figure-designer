@@ -3,8 +3,13 @@
 
 #include "figurebase.h"
 
+/*!
+ * \brief Класс представления фигуры Окружности
+ */
 class Circle : public FigureBase
 {
+	Q_DISABLE_COPY_MOVE(Circle);
+
 public:
 	/*!
 	 * \brief Основной конструктор
@@ -15,17 +20,34 @@ public:
 	/*!
 	 * \brief Основной деструктор
 	 */
-	~Circle();
+	~Circle() override;
 
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
+	 *        Окружности (visitor)
+	 * \param startDrawing - класс действия начала отрисовки Окружности
+	 */
 	void act(StartDrawing&& startDrawing) override;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие продолжения
+	 *        отрисовки Окружности (visitor)
+	 * \param startDrawing - класс действия продолжения отрисовки Окружности
+	 */
 	void act(ContinueDrawing&& continueDrawing) override;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие продолжения
+	 *        отрисовки Окружности (visitor)
+	 * \param startDrawing - класс действия продолжения отрисовки Окружности
+	 */
 	void act(CompleteDrawing&& completeDrawing) override;
 
 	/*!
 	 * \brief Получить координаты точки центра
 	 * \return координаты
 	 */
-	QPointF center() const;
+	[[nodiscard]] QPointF center() const;
 
 	/*!
 	 * \brief Установить координаты центра фигуры
@@ -37,7 +59,7 @@ public:
 	 * \brief Получить координаты второй точки
 	 * \return координаты
 	 */
-	QPointF destination() const;
+	[[nodiscard]] QPointF destination() const;
 
 	/*!
 	 * \brief Установить координаты второй точки фигуры
@@ -49,7 +71,7 @@ public:
 	 * \brief Функция определяет границы фигуры
 	 * \return
 	 */
-	QRectF boundingRect() const override;
+	[[nodiscard]] QRectF boundingRect() const override;
 
 	/*!
 	 * \brief Функция занимается отрисовкой фигуры
@@ -67,7 +89,7 @@ public:
 	 * \brief Метод переопределяющий форму Фигуры
 	 * \return операции на отрисовку
 	 */
-	QPainterPath shape() const override;
+	[[nodiscard]] QPainterPath shape() const override;
 
 private:
 	/*!
@@ -75,12 +97,14 @@ private:
 	 *        и второй точки
 	 * \return границы квадрата
 	 */
-	QRectF countFigure() const override;
+	[[nodiscard]] QRectF countFigure() const override;
 
 private:
 	/*!
 	 * \brief Координаты центра фигуры
 	 */
+	// TODO: Потенциально надо вынести в базовый класс. А для треугольника
+	// высчитывать
 	QPointF m_center;
 
 	/*!

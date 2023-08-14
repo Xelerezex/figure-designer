@@ -28,8 +28,6 @@ FigureHandler::FigureHandler(FigureGraphicsView* parent)
 
 FigureHandler::~FigureHandler()
 {
-	// DEBUG:
-	qDebug("FigureHandler propperly deleted");
 }
 
 void FigureHandler::setLastLeftMousePressed(QPointF pressedCoord)

@@ -11,17 +11,15 @@
 
 Triangle::Triangle(QGraphicsItem* parent)
 	: FigureBase{parent}
-	, m_center{0.0, 0.0}
-	, m_first{0.0, 0.0}
 	, m_currentStatus{NotDrawn}
 	, m_drawingLine{false}
+	, m_center{0.0, 0.0}
+	, m_first{0.0, 0.0}
 {
 }
 
 Triangle::~Triangle()
 {
-	// DEBUG:
-	qDebug("Triangle deleted");
 }
 
 void Triangle::act(StartDrawing&& startDrawing)
@@ -103,6 +101,9 @@ void Triangle::paint(QPainter*						 painter,
 					 const QStyleOptionGraphicsItem* option,
 					 QWidget*						 widget)
 {
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
+
 	if (m_currentStatus == NotDrawn)
 	{
 		return;

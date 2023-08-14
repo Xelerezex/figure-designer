@@ -7,6 +7,9 @@ QT_BEGIN_NAMESPACE
 class QMenu;
 QT_END_NAMESPACE
 
+/*!
+ * \brief Класс Сцены
+ */
 class FigureScene : public QGraphicsScene
 {
 	Q_OBJECT

@@ -3,29 +3,51 @@
 
 #include "figurebase.h"
 
+/*!
+ * \brief Базовый класс представления квадрата
+ */
 class Square : public FigureBase
 {
+	Q_DISABLE_COPY_MOVE(Square);
+
 public:
 	/*!
 	 * \brief Основной конструктор
 	 * \param parent - указаетль на родительский класс
 	 */
-	Square(QGraphicsItem* parent = nullptr);
+	explicit Square(QGraphicsItem* parent = nullptr);
 
 	/*!
 	 * \brief Основной деструктор
 	 */
-	~Square();
+	~Square() override;
 
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
+	 *        квадрата (visitor)
+	 * \param startDrawing - класс действия начала отрисовки квадрата
+	 */
 	void act(StartDrawing&& startDrawing) override;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие продолжения
+	 *        отрисовки квадрата (visitor)
+	 * \param startDrawing - класс действия продолжения отрисовки квадрата
+	 */
 	void act(ContinueDrawing&& continueDrawing) override;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие завершения
+	 *        отрисовки квадрата (visitor)
+	 * \param startDrawing - класс действия завершения отрисовки квадрата
+	 */
 	void act(CompleteDrawing&& completeDrawing) override;
 
 	/*!
 	 * \brief Получить координаты точки центра
 	 * \return координаты
 	 */
-	QPointF center() const;
+	[[nodiscard]] QPointF center() const;
 
 	/*!
 	 * \brief Установить координаты центра фигуры
@@ -37,7 +59,7 @@ public:
 	 * \brief Получить координаты второй точки
 	 * \return координаты
 	 */
-	QPointF destination() const;
+	[[nodiscard]] QPointF destination() const;
 
 	/*!
 	 * \brief Установить координаты второй точки фигуры
@@ -49,7 +71,7 @@ public:
 	 * \brief Функция определяет границы фигуры
 	 * \return
 	 */
-	QRectF boundingRect() const override;
+	[[nodiscard]] QRectF boundingRect() const override;
 
 	/*!
 	 * \brief Функция занимается отрисовкой фигуры
@@ -68,7 +90,7 @@ private:
 	 *        и второй точки
 	 * \return границы квадрата
 	 */
-	QRectF countFigure() const override;
+	[[nodiscard]] QRectF countFigure() const override;
 
 private:
 	/*!

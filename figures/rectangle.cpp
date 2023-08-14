@@ -1,6 +1,7 @@
 #include "rectangle.h"
 
 #include <QPainter>
+
 // DEBUG:
 #include <QDebug>
 
@@ -17,8 +18,6 @@ Rectangle::Rectangle(QGraphicsItem* parent)
 
 Rectangle::~Rectangle()
 {
-	// DEBUG:
-	qDebug("Rectangle deleted");
 }
 
 QPointF Rectangle::center() const
@@ -65,6 +64,9 @@ void Rectangle::paint(QPainter*						  painter,
 					  const QStyleOptionGraphicsItem* option,
 					  QWidget*						  widget)
 {
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
+
 	const qreal penWidth{3};
 	const int	color{4501714};
 

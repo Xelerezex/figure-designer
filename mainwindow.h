@@ -14,17 +14,19 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
+	Q_DISABLE_COPY_MOVE(MainWindow);
+
 public:
 	/*!
 	 * \brief Конструктор
 	 * \param parent - указатель на родительский виджет
 	 */
-	MainWindow(QWidget* parent = nullptr);
+	explicit MainWindow(QWidget* parent = nullptr);
 
 	/*!
 	 * \brief Основной Деструктор
 	 */
-	~MainWindow();
+	~MainWindow() override;
 
 private:
 	/*!

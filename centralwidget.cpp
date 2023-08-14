@@ -25,6 +25,10 @@ CentralWidget::CentralWidget(QWidget* parent)
 	setObjectName(QLatin1String("CentralWidget"));
 }
 
+CentralWidget::~CentralWidget()
+{
+}
+
 QList<QAbstractButton*> CentralWidget::buttons() const
 {
 	return m_toolBarButtonGroup->buttons();
@@ -37,8 +41,8 @@ void CentralWidget::setupToolBarButtons()
 	m_toolBarButtonGroup->setExclusive(true);
 
 	// Добавить кнопку режима Модифкации
-	auto modificationButton = createButton(QLatin1String(":/images/plus.png"),
-										   tr("Modification Mode"));
+	auto* modificationButton = createButton(QLatin1String(":/images/plus.png"),
+											tr("Modification Mode"));
 	modificationButton->setChecked(true);
 	m_toolBarButtonGroup->addButton(modificationButton,
 									int{FigureScene::Modification});
@@ -93,7 +97,7 @@ QToolButton* CentralWidget::createButton(const QString& iconPath,
 {
 	const int buttonSize{65};
 
-	auto	  button = new QToolButton{this};
+	auto*	  button = new QToolButton{this};
 	button->setToolTip(tipText);
 	button->setCheckable(true);
 	button->setIcon(QIcon(QPixmap(iconPath)));

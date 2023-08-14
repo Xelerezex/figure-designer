@@ -31,14 +31,14 @@ public:
 	/*!
 	 * \brief Основной деструктор
 	 */
-	~ClickTracker();
+	~ClickTracker() override;
 
 	/*!
 	 * \brief Получить координату где последний раз была нажата левая кнопка
 	 *        мыщи
 	 * \return координата
 	 */
-	QPointF lastLeftMouseClick() const;
+	[[nodiscard]] QPointF lastLeftMouseClick() const;
 
 	/*!
 	 * \brief Установить координату, где только что была нажата кнопка мыщи

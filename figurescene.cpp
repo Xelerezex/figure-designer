@@ -2,9 +2,6 @@
 
 #include <QMenu>
 
-// DEBUG:
-#include <QDebug>
-
 FigureScene::FigureScene(/*QMenu* itemMenu, */ QObject* parent)
 	: QGraphicsScene{parent}
 {
@@ -14,8 +11,6 @@ FigureScene::FigureScene(/*QMenu* itemMenu, */ QObject* parent)
 
 FigureScene::~FigureScene()
 {
-	// DEBUG:
-	qDebug("Scene deleted");
 }
 
 void FigureScene::setupFigureScene()

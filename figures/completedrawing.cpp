@@ -6,8 +6,7 @@
 #include "rectangle.h"
 
 CompleteDrawing::CompleteDrawing(const QPointF& itemCoord)
-	: FigureAction{}
-	, m_itemCoord{itemCoord}
+	: m_itemCoord{itemCoord}
 {
 }
 

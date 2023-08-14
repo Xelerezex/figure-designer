@@ -6,8 +6,7 @@
 #include "rectangle.h"
 
 StartDrawing::StartDrawing(const QPointF& itemCoord, const QPointF& sceneCoord)
-	: FigureAction{}
-	, m_itemCoord{itemCoord}
+	: m_itemCoord{itemCoord}
 	, m_sceneCoord{sceneCoord}
 	, m_defaultShift{0.1, 0.1}
 {

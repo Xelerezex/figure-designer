@@ -18,8 +18,6 @@ Square::Square(QGraphicsItem* parent)
 
 Square::~Square()
 {
-	// DEBUG:
-	qDebug("Square deleted");
 }
 
 void Square::act(StartDrawing&& startDrawing)
@@ -66,6 +64,9 @@ void Square::paint(QPainter*					   painter,
 				   const QStyleOptionGraphicsItem* option,
 				   QWidget*						   widget)
 {
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
+
 	const qreal penWidth{3};
 	const int	color{13369233};
 

@@ -18,8 +18,6 @@ Circle::Circle(QGraphicsItem* parent)
 
 Circle::~Circle()
 {
-	// DEBUG:
-	qDebug("Circle deleted");
 }
 
 void Circle::act(StartDrawing&& startDrawing)
@@ -66,6 +64,9 @@ void Circle::paint(QPainter*					   painter,
 				   const QStyleOptionGraphicsItem* option,
 				   QWidget*						   widget)
 {
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
+
 	const qreal penWidth{3};
 	const int	color{16752774};
 

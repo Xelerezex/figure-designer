@@ -3,10 +3,13 @@
 
 #include "figurebase.h"
 
-class DrawDot;
-
+/*!
+ * \brief Базовый класс представления треугольника
+ */
 class Triangle : public FigureBase
 {
+	Q_DISABLE_COPY_MOVE(Triangle);
+
 	// Действия над фигурами дружественные классы:
 	friend StartDrawing;
 	friend ContinueDrawing;
@@ -22,17 +25,34 @@ public:
 	/*!
 	 * \brief Основной деструктор
 	 */
-	~Triangle();
+	~Triangle() override;
 
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
+	 *        треугольника (visitor)
+	 * \param startDrawing - класс действия начала отрисовки треугольника
+	 */
 	void act(StartDrawing&& startDrawing) override;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие продолжения
+	 *        отрисовки треугольника (visitor)
+	 * \param startDrawing - класс действия продолжения отрисовки треугольника
+	 */
 	void act(ContinueDrawing&& continueDrawing) override;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие завершения
+	 *        отрисовки треугольника (visitor)
+	 * \param startDrawing - класс действия завершения отрисовки треугольника
+	 */
 	void act(CompleteDrawing&& completeDrawing) override;
 
 	/*!
 	 * \brief Получить координаты точки центра
 	 * \return координаты
 	 */
-	QPointF center() const;
+	[[nodiscard]] QPointF center() const;
 
 	/*!
 	 * \brief Установить координаты центра фигуры
@@ -50,7 +70,7 @@ public:
 	 * \brief Метод проверяет установлена ли первая точка Треугольника
 	 * \return true - если у первой точки уже есть координата
 	 */
-	bool isFirstDrawn() const;
+	[[nodiscard]] bool isFirstDrawn() const;
 
 	/*!
 	 * \brief Установить координаты второй точки фигуры
@@ -62,7 +82,7 @@ public:
 	 * \brief Метод проверяет установлена ли вторая точка Треугольника
 	 * \return true - если у второй точки уже есть координата
 	 */
-	bool isSecondDrawn() const;
+	[[nodiscard]] bool isSecondDrawn() const;
 
 	/*!
 	 * \brief Установить координаты третьей точки фигуры
@@ -74,7 +94,7 @@ public:
 	 * \brief Метод проверяет установлена ли третья точка Треугольника
 	 * \return true - если у третьей точки уже есть координата
 	 */
-	bool isThirdDrawn() const;
+	[[nodiscard]] bool isThirdDrawn() const;
 
 	/*!
 	 * \brief При вызыве метода начинается отрисовка линии, идущей за мышкой
@@ -90,13 +110,13 @@ public:
 	 * \brief Отрисовывается ли сейчас линия
 	 * \return true - если отрисовывается
 	 */
-	bool isLineDrawing() const;
+	[[nodiscard]] bool isLineDrawing() const;
 
 	/*!
 	 * \brief Функция определяет границы фигуры
 	 * \return
 	 */
-	QRectF boundingRect() const override;
+	[[nodiscard]] QRectF boundingRect() const override;
 
 	/*!
 	 * \brief Функция занимается отрисовкой фигуры
@@ -114,7 +134,7 @@ public:
 	 * \brief Метод переопределяющий форму Фигуры
 	 * \return операции на отрисовку
 	 */
-	QPainterPath shape() const override;
+	[[nodiscard]] QPainterPath shape() const override;
 
 private:
 	/*!
@@ -132,14 +152,14 @@ private:
 	 * \brief Метод высчитывает как будет выглядеть полигон для Треугольника
 	 * \return полигон треугольника
 	 */
-	QPolygonF countPolygon() const;
+	[[nodiscard]] QPolygonF countPolygon() const;
 
 	/*!
 	 * \brief Метод высчитывает границы данного Квадрата относительно центра
 	 *        и второй точки
 	 * \return границы квадрата
 	 */
-	QRectF countFigure() const override;
+	[[nodiscard]] QRectF countFigure() const override;
 
 	/*!
 	 * \brief Установить статус отрисовки треугольника

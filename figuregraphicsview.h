@@ -7,6 +7,9 @@ QT_BEGIN_NAMESPACE
 class FigureHandler;
 QT_END_NAMESPACE
 
+/*!
+ * \brief Класс представления для Сцены
+ */
 class FigureGraphicsView : public QGraphicsView
 {
 	Q_OBJECT

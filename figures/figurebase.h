@@ -7,6 +7,9 @@ class StartDrawing;
 class ContinueDrawing;
 class CompleteDrawing;
 
+/*!
+ * \brief Базовый класс представления фигуры
+ */
 class FigureBase : public QGraphicsItem
 {
 	Q_DISABLE_COPY_MOVE(FigureBase);
@@ -22,9 +25,26 @@ public:
 	 */
 	~FigureBase() override;
 
-	virtual void act(StartDrawing&& startDrawing)	 = 0;
-	virtual void act(ContinueDrawing&& startDrawing) = 0;
-	virtual void act(CompleteDrawing&& startDrawing) = 0;
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
+	 *        фигуры (visitor)
+	 * \param startDrawing - класс действия начала отрисовки фигуры
+	 */
+	virtual void act(StartDrawing&& startDrawing) = 0;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие продолжения
+	 *        отрисовки фигуры (visitor)
+	 * \param startDrawing - класс действия продолжения отрисовки фигуры
+	 */
+	virtual void act(ContinueDrawing&& continueDrawing) = 0;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие завершения
+	 *        отрисовки фигуры (visitor)
+	 * \param startDrawing - класс действия завершения отрисовки фигуры
+	 */
+	virtual void act(CompleteDrawing&& completeDrawing) = 0;
 
 	/*!
 	 * \brief Метод должен вызываться когда начинается первичное создание
@@ -42,7 +62,7 @@ public:
 	 * \brief Метод возвращает признак полного создания элемента
 	 * \return true - если создание завершено
 	 */
-	bool isFullyCreated() const;
+	[[nodiscard]] bool isFullyCreated() const;
 
 protected:
 	/*!
@@ -56,7 +76,7 @@ protected:
 	 *        и второй точки
 	 * \return границы квадрата
 	 */
-	virtual QRectF countFigure() const = 0;
+	[[nodiscard]] virtual QRectF countFigure() const = 0;
 
 private:
 	/*!

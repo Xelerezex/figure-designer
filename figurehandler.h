@@ -13,6 +13,9 @@ class FigureGraphicsView;
 class QGraphicsSceneMouseEvent;
 QT_END_NAMESPACE
 
+/*!
+ * \brief Класс прослойка для взаимодействия с объектами фигур.
+ */
 class FigureHandler : public QObject
 {
 	Q_OBJECT

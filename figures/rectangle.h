@@ -3,8 +3,13 @@
 
 #include "figurebase.h"
 
+/*!
+ * \brief Класс представления прямоугольника
+ */
 class Rectangle : public FigureBase
 {
+	Q_DISABLE_COPY_MOVE(Rectangle);
+
 public:
 	/*!
 	 * \brief Основной конструктор
@@ -15,17 +20,34 @@ public:
 	/*!
 	 * \brief Основной деструктор
 	 */
-	~Rectangle();
+	~Rectangle() override;
 
 	/*!
 	 * \brief Получить координаты точки центра
 	 * \return координаты
 	 */
-	QPointF center() const;
+	[[nodiscard]] QPointF center() const;
 
-	void	act(StartDrawing&& startDrawing) override;
-	void	act(ContinueDrawing&& continueDrawing) override;
-	void	act(CompleteDrawing&& completeDrawing) override;
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
+	 *        прямоугольника (visitor)
+	 * \param startDrawing - класс действия начала отрисовки прямоугольника
+	 */
+	void act(StartDrawing&& startDrawing) override;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие продолжения
+	 *        отрисовки прямоугольника (visitor)
+	 * \param startDrawing - класс действия продолжения отрисовки прямоугольника
+	 */
+	void act(ContinueDrawing&& continueDrawing) override;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить действие завершения
+	 *        отрисовки прямоугольника (visitor)
+	 * \param startDrawing - класс действия завершения отрисовки прямоугольника
+	 */
+	void act(CompleteDrawing&& completeDrawing) override;
 
 	/*!
 	 * \brief Установить координаты центра фигуры
@@ -37,7 +59,7 @@ public:
 	 * \brief Получить координаты второй точки
 	 * \return координаты
 	 */
-	QPointF destination() const;
+	[[nodiscard]] QPointF destination() const;
 
 	/*!
 	 * \brief Установить координаты второй точки фигуры
@@ -49,7 +71,7 @@ public:
 	 * \brief Функция определяет границы фигуры
 	 * \return
 	 */
-	QRectF boundingRect() const override;
+	[[nodiscard]] QRectF boundingRect() const override;
 
 	/*!
 	 * \brief Функция занимается отрисовкой фигуры
@@ -69,7 +91,7 @@ private:
 	 *        и второй точки
 	 * \return границы квадрата
 	 */
-	QRectF countFigure() const override;
+	[[nodiscard]] QRectF countFigure() const override;
 
 private:
 	/*!

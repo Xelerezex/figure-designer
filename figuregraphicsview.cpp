@@ -3,6 +3,7 @@
 #include "figurehandler.h"
 
 #include <QMouseEvent>
+
 // DEBUG:
 #include <QDebug>
 
@@ -116,6 +117,7 @@ void FigureGraphicsView::onMouseLeftButtonPressed(QMouseEvent* mouseEvent)
 	{
 	}
 
+	// DEBUG:
 	qDebug("mousePressEvent");
 
 	// Вызов метода базового класса
@@ -146,6 +148,7 @@ void FigureGraphicsView::onMouseLeftButtonMoved(QMouseEvent* mouseEvent)
 		QGraphicsView::mouseMoveEvent(mouseEvent);
 	}
 
+	// DEBUG:
 	qDebug("mouseMoveEvent");
 }
 
@@ -173,6 +176,7 @@ void FigureGraphicsView::onMouseLeftButtonReleased(QMouseEvent* mouseEvent)
 		m_figureHandler->addNewTriangleDot(itemCoord, sceneCoord);
 	}
 
+	// DEBUG:
 	qDebug("mouseReleaseEvent");
 
 	// Вызов метода базового класса

@@ -14,7 +14,14 @@ QT_END_NAMESPACE
 class CentralWidget : public QWidget
 {
 	Q_OBJECT
+	Q_DISABLE_COPY_MOVE(CentralWidget);
+
 public:
+	/*!
+	 * \brief Удаленный дефолтный конструткор
+	 */
+	CentralWidget() = delete;
+
 	/*!
 	 * \brief Основной конструктор
 	 * \param parent - указатель на родительский класс
@@ -22,10 +29,15 @@ public:
 	explicit CentralWidget(QWidget* parent = nullptr);
 
 	/*!
+	 *  \brief Дефолтный деструктор
+	 */
+	~CentralWidget() override;
+
+	/*!
 	 * \brief Вернуть указатели на список кнопок для тулбара
 	 * \return
 	 */
-	QList<QAbstractButton*> buttons() const;
+	[[nodiscard]] QList<QAbstractButton*> buttons() const;
 
 private:
 	/*!
