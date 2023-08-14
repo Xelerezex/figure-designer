@@ -33,10 +33,6 @@ void ClickTracker::setLastLeftMouseReleased(QPointF newLastLeftMouseReleased)
 	m_lastLeftMouseReleased = newLastLeftMouseReleased;
 }
 
-// TODO: Потенциально назвать этот метод isClicke и просто описать, что типа
-// кликом считается все то, что не вышло за рамки выделенного нами круга
-// И зделать второй метод, который будет трекать - не слишком ли маленькая
-// фигура отрисовалась
 bool ClickTracker::isLeftMouseClicked(QPointF newLeftMouseRelease)
 {
 	// Вычисляем так ли далеко была отпущена мыщь относительно места нажатия

@@ -50,11 +50,6 @@ bool FigureGraphicsView::isTriangleMode() const
 	return m_currentMode == TriangleDraw;
 }
 
-void FigureGraphicsView::setCurrentMode(Mode newCurrentMode)
-{
-	m_currentMode = newCurrentMode;
-}
-
 void FigureGraphicsView::mousePressEvent(QMouseEvent* mouseEvent)
 {
 	if (mouseEvent->button() == Qt::LeftButton)
@@ -89,6 +84,11 @@ void FigureGraphicsView::mouseReleaseEvent(QMouseEvent* mouseEvent)
 	{
 		onMouseLeftButtonReleased(mouseEvent);
 	}
+}
+
+void FigureGraphicsView::setCurrentMode(Mode newCurrentMode)
+{
+	m_currentMode = newCurrentMode;
 }
 
 void FigureGraphicsView::onMouseLeftButtonPressed(QMouseEvent* mouseEvent)

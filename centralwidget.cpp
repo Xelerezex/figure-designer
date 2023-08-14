@@ -82,7 +82,6 @@ void CentralWidget::setupScene()
 	// TODO: Не забыть вставить сюда Меню
 	m_figureScene = new FigureScene{/*nullptr,*/ this};
 
-	// TODO: Отнаследоваться от сцены. Либо самостоятельно задать ей флаги
 	m_figureGraphicsView = new FigureGraphicsView{m_figureScene};
 
 	// Создание основного лейаута со Сценой

@@ -5,6 +5,7 @@
 
 QT_BEGIN_NAMESPACE
 class FigureHandler;
+class CentralWidget;
 QT_END_NAMESPACE
 
 /*!
@@ -14,6 +15,9 @@ class FigureGraphicsView : public QGraphicsView
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE(FigureGraphicsView)
+
+	// Разрешает центральному виджету изменять режим работы графической сцены
+	friend CentralWidget;
 
 public:
 	/*!
@@ -59,13 +63,6 @@ public:
 	 */
 	[[nodiscard]] bool isTriangleMode() const;
 
-	/*!
-	 * \brief Установить текущий режим сцены
-	 * \param newCurrentMode - новый режим
-	 */
-	// TODO: перенести в приват
-	void setCurrentMode(Mode newCurrentMode);
-
 protected:
 	/*!
 	 * \brief Переопределнный метод Нажатия Кнопки Мыщи
@@ -87,13 +84,38 @@ protected:
 
 private:
 	/*!
+	 * \brief Установить текущий режим сцены
+	 * \param newCurrentMode - новый режим
+	 */
+	void setCurrentMode(Mode newCurrentMode);
+
+	/*!
 	 * \brief Метод настраивает этот объект Вью
 	 */
 	void setupFigureGraphicsView();
 
+	/*!
+	 * \brief Метод, вызываемый при нажатии на левую кнопку мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
 	void onMouseLeftButtonPressed(QMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при движении с зажатой кнопкой мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
 	void onMouseLeftButtonMoved(QMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при разжатии левой кнопки мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
 	void onMouseLeftButtonReleased(QMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при движении мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
 	void onEmptyMouseMoved(QMouseEvent* mouseEvent);
 
 private:
