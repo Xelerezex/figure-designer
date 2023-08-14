@@ -89,7 +89,6 @@ void FigureHandler::addNewTriangleDot(QPointF itemCoord, QPointF sceneCoord)
 
 		if (m_currentTriangle->isThirdDrawn())
 		{
-			m_currentTriangle->setSelected(true);
 			m_currentTriangle = nullptr;
 		}
 	}

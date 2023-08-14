@@ -18,6 +18,7 @@ void CompleteDrawing::act(Circle* circle)
 {
 	circle->setDestination(m_itemCoord);
 	circle->completeCreating();
+	circle->setSelected(false);
 	circle->update();
 }
 
@@ -25,6 +26,7 @@ void CompleteDrawing::act(Square* square)
 {
 	square->setDestination(m_itemCoord);
 	square->completeCreating();
+	square->setSelected(false);
 	square->update();
 }
 
@@ -45,6 +47,7 @@ void CompleteDrawing::act(Triangle* triangle)
 		triangle->setStatus(Triangle::DrawingStatus::ThirdPointDrawn);
 		triangle->stopDrawingLine();
 		triangle->completeCreating();
+		triangle->setSelected(false);
 		triangle->update();
 	}
 }
@@ -53,5 +56,6 @@ void CompleteDrawing::act(Rectangle* rectangle)
 {
 	rectangle->setDestination(m_itemCoord);
 	rectangle->completeCreating();
+	rectangle->setSelected(false);
 	rectangle->update();
 }
