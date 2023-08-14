@@ -3,6 +3,7 @@
 FigureBase::FigureBase(QGraphicsItem* parent)
 	: QGraphicsItem{parent}
 	, m_currentCycle{NotExisting}
+	, m_center{0.0, 0.0}
 {
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -10,6 +11,16 @@ FigureBase::FigureBase(QGraphicsItem* parent)
 
 FigureBase::~FigureBase()
 {
+}
+
+QPointF FigureBase::center() const
+{
+	return m_center;
+}
+
+void FigureBase::setCenter(QPointF newCenter)
+{
+	m_center = newCenter;
 }
 
 void FigureBase::startCreating()

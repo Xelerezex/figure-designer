@@ -11,18 +11,12 @@
 
 Rectangle::Rectangle(QGraphicsItem* parent)
 	: FigureBase{parent}
-	, m_center{0.0, 0.0}
 	, m_destination{0.0, 0.0}
 {
 }
 
 Rectangle::~Rectangle()
 {
-}
-
-QPointF Rectangle::center() const
-{
-	return m_center;
 }
 
 void Rectangle::act(StartDrawing&& startDrawing)
@@ -38,11 +32,6 @@ void Rectangle::act(ContinueDrawing&& continueDrawing)
 void Rectangle::act(CompleteDrawing&& completeDrawing)
 {
 	completeDrawing.act(this);
-}
-
-void Rectangle::setCenter(QPointF newCenter)
-{
-	m_center = newCenter;
 }
 
 QPointF Rectangle::destination() const
@@ -93,7 +82,7 @@ void Rectangle::paint(QPainter*						  painter,
 
 	// DEBUG:
 	qDebug() << "PAINT RECTANGLE: "
-			 << "center:" << m_center << "destination:" << m_destination
+			 << "center:" << center() << "destination:" << m_destination
 			 << "POSITION ON SCENE:" << pos();
 
 	QPainterPath pathTitle;
@@ -111,7 +100,7 @@ void Rectangle::paint(QPainter*						  painter,
 QRectF Rectangle::countFigure() const
 {
 	// Координаты точки в левом верхнем углу
-	QPointF topLeft{m_center.x(), m_center.y()};
+	QPointF topLeft{center().x(), center().y()};
 
 	// Координаты точки в правом нижнем углу
 	QPointF bottomRight{m_destination.x(), m_destination.y()};

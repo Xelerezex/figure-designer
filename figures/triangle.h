@@ -48,18 +48,6 @@ public:
 	 */
 	void act(CompleteDrawing&& completeDrawing) override;
 
-	/*!
-	 * \brief Получить координаты точки центра
-	 * \return координаты
-	 */
-	[[nodiscard]] QPointF center() const;
-
-	/*!
-	 * \brief Установить координаты центра фигуры
-	 * \param newCenter - новые координаты центра
-	 */
-	void setCenter(QPointF newCenter);
-
 	/* ------------- Методы для взаимодействия с первой точкой ------------- */
 	/*!
 	 * \brief Метод возвращает координаты Первой точки
@@ -187,6 +175,13 @@ private:
 	 * \param newStatus - новый статус
 	 */
 	void setStatus(DrawingStatus newStatus);
+
+	/*!
+	 * \brief Метод высчитывает центр Треугольника.
+	 * \warning Вызывать только, когда заданы все три точки
+	 * \return координаты центра
+	 */
+	QPointF countCenter() const;
 
 private:
 	/*!

@@ -6,7 +6,6 @@ class Square;
 class Triangle;
 class Rectangle;
 
-// TODO: Закомментить все Фигурэкшены
 /*!
  * \brief Базовый класс действия представления фигур
  */

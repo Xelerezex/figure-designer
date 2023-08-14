@@ -11,7 +11,6 @@
 
 Square::Square(QGraphicsItem* parent)
 	: FigureBase{parent}
-	, m_center{0.0, 0.0}
 	, m_destination{0.0, 0.0}
 {
 }
@@ -36,16 +35,6 @@ void Square::act(ContinueDrawing&& continueDrawing)
 void Square::act(CompleteDrawing&& completeDrawing)
 {
 	completeDrawing.act(this);
-}
-
-QPointF Square::center() const
-{
-	return m_center;
-}
-
-void Square::setCenter(QPointF newCenter)
-{
-	m_center = newCenter;
 }
 
 QPointF Square::destination() const
@@ -104,7 +93,7 @@ void Square::paint(QPainter*					   painter,
 
 	// DEBUG:
 	qDebug() << "PAINT SQUARE: "
-			 << "center:" << m_center << "destination:" << m_destination
+			 << "center:" << center() << "destination:" << m_destination
 			 << "POSITION ON SCENE:" << pos();
 
 	painter->setPen(drawingPen);
@@ -114,14 +103,14 @@ void Square::paint(QPainter*					   painter,
 QRectF Square::countFigure() const
 {
 	// Линия между центром и второй точкой фигуры
-	QLineF line{m_center, m_destination};
+	QLineF line{center(), m_destination};
 
 	// Координаты точки в левом верхнем углу
-	QPointF topLeft{m_center.x() - line.length(), m_center.y() - line.length()};
+	QPointF topLeft{center().x() - line.length(), center().y() - line.length()};
 
 	// Координаты точки в правом нижнем углу
-	QPointF bottomRight{m_center.x() + line.length(),
-						m_center.y() + line.length()};
+	QPointF bottomRight{center().x() + line.length(),
+						center().y() + line.length()};
 
 	return QRectF{topLeft, bottomRight};
 }

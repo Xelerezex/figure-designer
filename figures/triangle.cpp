@@ -13,7 +13,6 @@ Triangle::Triangle(QGraphicsItem* parent)
 	: FigureBase{parent}
 	, m_currentStatus{NotDrawn}
 	, m_drawingLine{false}
-	, m_center{0.0, 0.0}
 	, m_first{0.0, 0.0}
 {
 }
@@ -35,16 +34,6 @@ void Triangle::act(ContinueDrawing&& continueDrawing)
 void Triangle::act(CompleteDrawing&& completeDrawing)
 {
 	completeDrawing.act(this);
-}
-
-QPointF Triangle::center() const
-{
-	return m_center;
-}
-
-void Triangle::setCenter(QPointF newCenter)
-{
-	m_center = newCenter;
 }
 
 QPointF Triangle::first() const
@@ -85,6 +74,9 @@ QPointF Triangle::third() const
 void Triangle::setThird(QPointF newThird)
 {
 	m_third = newThird;
+	// Устанавливаем центр фигуры, после того, как узнали координаты третьей
+	// точки
+	setCenter(countCenter());
 }
 
 bool Triangle::isThirdDrawn() const
@@ -159,7 +151,8 @@ void Triangle::paint(QPainter*						 painter,
 	// DEBUG:
 	qDebug() << "PAINT RECTANGLE: "
 			 << "first:" << m_first << "second:" << m_second
-			 << "third:" << m_third << "POSITION ON SCENE:" << pos();
+			 << "third:" << m_third << "center:" << center()
+			 << "POSITION ON SCENE:" << pos();
 
 	painter->setPen(drawingPen);
 	painter->drawPath(pathTitle);
@@ -187,4 +180,12 @@ QRectF Triangle::countFigure() const
 void Triangle::setStatus(DrawingStatus newStatus)
 {
 	m_currentStatus = newStatus;
+}
+
+QPointF Triangle::countCenter() const
+{
+	QPointF center{(m_first.x() + m_second.x() + m_third.x()) / 3,
+				   (m_first.y() + m_second.y() + m_third.y()) / 3};
+
+	return center;
 }

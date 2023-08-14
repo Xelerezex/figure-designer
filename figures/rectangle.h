@@ -23,12 +23,6 @@ public:
 	~Rectangle() override;
 
 	/*!
-	 * \brief Получить координаты точки центра
-	 * \return координаты
-	 */
-	[[nodiscard]] QPointF center() const;
-
-	/*!
 	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
 	 *        прямоугольника (visitor)
 	 * \param startDrawing - класс действия начала отрисовки прямоугольника
@@ -48,12 +42,6 @@ public:
 	 * \param startDrawing - класс действия завершения отрисовки прямоугольника
 	 */
 	void act(CompleteDrawing&& completeDrawing) override;
-
-	/*!
-	 * \brief Установить координаты центра фигуры
-	 * \param newCenter - новые координаты центра
-	 */
-	void setCenter(QPointF newCenter);
 
 	/*!
 	 * \brief Получить координаты второй точки
@@ -94,11 +82,6 @@ private:
 	[[nodiscard]] QRectF countFigure() const override;
 
 private:
-	/*!
-	 * \brief Координаты центра фигуры
-	 */
-	QPointF m_center;
-
 	/*!
 	 * \brief Координаты второй Точки, нужной для построения Фигуры
 	 */

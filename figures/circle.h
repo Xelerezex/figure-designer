@@ -44,18 +44,6 @@ public:
 	void act(CompleteDrawing&& completeDrawing) override;
 
 	/*!
-	 * \brief Получить координаты точки центра
-	 * \return координаты
-	 */
-	[[nodiscard]] QPointF center() const;
-
-	/*!
-	 * \brief Установить координаты центра фигуры
-	 * \param newCenter - новые координаты центра
-	 */
-	void setCenter(QPointF newCenter);
-
-	/*!
 	 * \brief Получить координаты второй точки
 	 * \return координаты
 	 */
@@ -100,13 +88,6 @@ private:
 	[[nodiscard]] QRectF countFigure() const override;
 
 private:
-	/*!
-	 * \brief Координаты центра фигуры
-	 */
-	// TODO: Потенциально надо вынести в базовый класс. А для треугольника
-	// высчитывать
-	QPointF m_center;
-
 	/*!
 	 * \brief Координаты второй Точки, нужной для построения Фигуры
 	 */

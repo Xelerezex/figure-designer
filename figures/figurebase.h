@@ -47,6 +47,18 @@ public:
 	virtual void act(CompleteDrawing&& completeDrawing) = 0;
 
 	/*!
+	 * \brief Получить координаты точки центра
+	 * \return координаты
+	 */
+	[[nodiscard]] QPointF center() const;
+
+	/*!
+	 * \brief Установить координаты центра фигуры
+	 * \param newCenter - новые координаты центра
+	 */
+	void setCenter(QPointF newCenter);
+
+	/*!
 	 * \brief Метод должен вызываться когда начинается первичное создание
 	 *        объекта и его первичная отрисовка.
 	 */
@@ -93,6 +105,11 @@ private:
 	 * \brief Текущий жизненый цикл
 	 */
 	LifeCycle m_currentCycle;
+
+	/*!
+	 * \brief Координаты центра фигуры
+	 */
+	QPointF m_center;
 };
 
 #endif // FIGUREBASE_H
