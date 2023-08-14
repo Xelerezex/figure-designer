@@ -7,12 +7,13 @@
 #include <QAction>
 
 #include "figurescene.h"
+#include "figuregraphicsview.h"
 
 CentralWidget::CentralWidget(QWidget* parent)
 	: QWidget{parent}
-	, m_toolBarButtonGroup{nullptr}
 	, m_figureScene{nullptr}
-	, m_graphicsView{nullptr}
+	, m_figureGraphicsView{nullptr}
+	, m_toolBarButtonGroup{nullptr}
 {
 	// Создать и настроить все кнопки для тулбара
 	setupToolBarButtons();
@@ -78,20 +79,11 @@ void CentralWidget::setupScene()
 	m_figureScene = new FigureScene{/*nullptr,*/ this};
 
 	// TODO: Отнаследоваться от сцены. Либо самостоятельно задать ей флаги
-	m_graphicsView = new QGraphicsView{m_figureScene};
-
-	// Включаем постоянный трекинг мыщи на сцене
-	m_graphicsView->setMouseTracking(true);
-	// Задаем основные флаги для вью сцены
-	m_graphicsView->setRenderHint(QPainter::Antialiasing, true);
-	m_graphicsView->setRenderHint(QPainter::HighQualityAntialiasing, true);
-	m_graphicsView->setRenderHint(QPainter::TextAntialiasing, true);
-	m_graphicsView->setRenderHint(QPainter::SmoothPixmapTransform, true);
-	m_graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+	m_figureGraphicsView = new FigureGraphicsView{m_figureScene};
 
 	// Создание основного лейаута со Сценой
-	QHBoxLayout* mainLayout = new QHBoxLayout;
-	mainLayout->addWidget(m_graphicsView);
+	auto* mainLayout = new QHBoxLayout;
+	mainLayout->addWidget(m_figureGraphicsView);
 
 	setLayout(mainLayout);
 }
@@ -99,11 +91,13 @@ void CentralWidget::setupScene()
 QToolButton* CentralWidget::createButton(const QString& iconPath,
 										 const QString& tipText)
 {
-	auto button = new QToolButton{this};
+	const int buttonSize{65};
+
+	auto	  button = new QToolButton{this};
 	button->setToolTip(tipText);
 	button->setCheckable(true);
 	button->setIcon(QIcon(QPixmap(iconPath)));
-	button->setIconSize(QSize(65, 65));
+	button->setIconSize(QSize(buttonSize, buttonSize));
 
 	return button;
 }

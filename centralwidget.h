@@ -7,8 +7,8 @@ QT_BEGIN_NAMESPACE
 class FigureScene;
 class QToolButton;
 class QButtonGroup;
-class QGraphicsView;
 class QAbstractButton;
+class FigureGraphicsView;
 QT_END_NAMESPACE
 
 class CentralWidget : public QWidget
@@ -62,7 +62,7 @@ private:
 	/*!
 	 * \brief Указатель на основное представление Сцены
 	 */
-	QGraphicsView* m_graphicsView;
+	FigureGraphicsView* m_figureGraphicsView;
 
 	/*!
 	 * \brief Указаетль на основную группу кнопок

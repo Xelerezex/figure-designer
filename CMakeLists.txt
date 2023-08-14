@@ -25,6 +25,8 @@ set(PROJECT_SOURCES
         clicktracker.cpp
         figurehandler.h
         figurehandler.cpp
+        figuregraphicsview.h
+        figuregraphicsview.cpp
 )
 
 set(PROJECT_RESOURCES
