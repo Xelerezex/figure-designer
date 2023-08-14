@@ -16,8 +16,11 @@ Square::Square(QGraphicsItem* parent)
 {
 }
 
+// DEBUG:
+#include <QDebug>
 Square::~Square()
 {
+	qDebug() << "Square deleted";
 }
 
 void Square::act(StartDrawing&& startDrawing)

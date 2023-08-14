@@ -38,26 +38,55 @@ public:
 	 *        мыщи
 	 * \return координата
 	 */
-	[[nodiscard]] QPointF lastLeftMouseClick() const;
+	[[nodiscard]] QPointF lastLeftMousePressed() const;
 
 	/*!
 	 * \brief Установить координату, где только что была нажата кнопка мыщи
 	 * \param newLastLeftMouseClick - новая координата
 	 */
-	void setLastLeftMousePressed(QPointF newLastLeftMouseClick);
+	void setLastLeftMousePressed(QPointF newLastLeftMousePressed);
 
 	/*!
-	 * \brief Метод проверяет не слишком ли далеко была отжата кнопка мыщи
-	 * \param newLeftMouseRelease - координата отжатия мыщи
-	 * \return true - если не очень далеко
+	 * \brief Получить координату где последний раз была отжата левая кнопка
+	 *        мыщи
+	 * \return координата
 	 */
-	bool isDistClickReleaseLeftMouseOk(QPointF newLeftMouseRelease);
+	[[nodiscard]] QPointF lastLeftMouseReleased() const;
+
+	/*!
+	 * \brief Установить координату, где только что была отжата кнопка мыщи
+	 * \param newLastLeftMouseReleased - новая координата
+	 */
+	void setLastLeftMouseReleased(QPointF newLastLeftMouseReleased);
+
+	/*!
+	 * \brief Метод проверяет произошел ли клик левой кнопки мыщи.
+	 *        Кликом считается пара действие - нажатие мыщи и не слишком
+	 *	      далекое, от нажатия, отжатие мыщи
+	 * \param newLeftMouseRelease - координата отжатия мыщи
+	 * \return true - если произошел клик.
+	 */
+	[[nodiscard]] bool isLeftMouseClicked(QPointF newLeftMouseRelease);
+
+	/*!
+	 * \brief Метод проверяет на достаточном удалении находятся ли две точки
+	 *        друг от друга
+	 * \param first - первая точка
+	 * \param second - вторая точка
+	 * \return true - если находятся на короткой дистанции
+	 */
+	[[nodiscard]] static bool isShortDistance(QPointF first, QPointF second);
 
 private:
 	/*!
-	 * \brief Кооридната нажатия на левую кнопку мыщи
+	 * \brief Координата нажатия на левую кнопку мыщи
 	 */
-	QPointF m_lastLeftMouseClick;
+	QPointF m_lastLeftMousePressed;
+
+	/*!
+	 * \brief Координата отжатия левой кнопки мыщи
+	 */
+	QPointF m_lastLeftMouseReleased;
 };
 
 #endif // CLICKTRACKER_H

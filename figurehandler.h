@@ -39,10 +39,25 @@ public:
 	~FigureHandler() override;
 
 	/*!
-	 * \brief Установить координату последнего нажатия левой кнопки мыщи
-	 * \param pressedCoord - координата
+	 * \brief Установить координату, где только что была нажата кнопка мыщи
+	 * \param pressedCoord - новая координата
 	 */
 	void setLastLeftMousePressed(QPointF pressedCoord);
+
+	/*!
+	 * \brief Установить координату, где только что была отжата кнопка мыщи
+	 * \param releasedCoord - новая координата
+	 */
+	void setLastLeftMouseReleased(QPointF releasedCoord);
+
+	/*!
+	 * \brief Метод проверяет произошел ли клик левой кнопки мыщи.
+	 *        Кликом считается пара действие - нажатие мыщи и не слишком
+	 *	      далекое, от нажатия, отжатие мыщи
+	 * \param newLeftMouseRelease - координата отжатия мыщи
+	 * \return true - если произошел клик.
+	 */
+	bool isLeftMouseClicked(QPointF newLeftMouseRelease);
 
 	/*!
 	 * \brief Создать и добавить новую фигуру Квадрата.
@@ -119,6 +134,18 @@ public:
 	 * \param coordinate - координаты фигуры в системе кординат Элемента Сцены
 	 */
 	void completeCircle(QPointF coordinate);
+
+	/*!
+	 * \brief Метод отменяет любую отрисовку Фигуры в данный момент
+	 */
+	void abortDrawing();
+
+private:
+	/*!
+	 * \brief Данный метод позволяет удалить Треугольник со сцены,
+	 *        если точки расположены слигком близко друг к другу
+	 */
+	void handleTriangleRemovement();
 
 private:
 	/*!

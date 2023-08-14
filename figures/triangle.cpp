@@ -47,6 +47,11 @@ void Triangle::setCenter(QPointF newCenter)
 	m_center = newCenter;
 }
 
+QPointF Triangle::first() const
+{
+	return m_first;
+}
+
 void Triangle::setFirst(QPointF newFirst)
 {
 	m_first = newFirst;
@@ -57,6 +62,11 @@ bool Triangle::isFirstDrawn() const
 	return m_currentStatus == FirstPointDrawn;
 }
 
+QPointF Triangle::second() const
+{
+	return m_second;
+}
+
 void Triangle::setSecond(QPointF newSecond)
 {
 	m_second = newSecond;
@@ -65,6 +75,11 @@ void Triangle::setSecond(QPointF newSecond)
 bool Triangle::isSecondDrawn() const
 {
 	return m_currentStatus == SecondPointDrawn;
+}
+
+QPointF Triangle::third() const
+{
+	return m_third;
 }
 
 void Triangle::setThird(QPointF newThird)

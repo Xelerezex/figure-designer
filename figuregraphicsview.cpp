@@ -143,7 +143,6 @@ void FigureGraphicsView::onMouseLeftButtonMoved(QMouseEvent* mouseEvent)
 	}
 	else if (m_currentMode == Modification)
 	{
-		// TODO: Сделать обновление координат фигуры, в режиме передвижения
 		// Вызов метода базового класса
 		QGraphicsView::mouseMoveEvent(mouseEvent);
 	}
@@ -156,6 +155,17 @@ void FigureGraphicsView::onMouseLeftButtonReleased(QMouseEvent* mouseEvent)
 {
 	// Координаты фигуры в системе кординат Элемента Сцены
 	const auto itemCoord = mouseEvent->pos();
+	// Координаты фигуры на Сцене
+	const auto sceneCoord = mapToScene(itemCoord);
+
+	// Запоминаем место, где произошло отжатие
+	m_figureHandler->setLastLeftMouseReleased(sceneCoord);
+
+	// Проверим произошел ли клик
+	if (m_figureHandler->isLeftMouseClicked(sceneCoord))
+	{
+		m_figureHandler->abortDrawing();
+	}
 
 	if (m_currentMode == SquareDraw)
 	{
