@@ -12,7 +12,7 @@ class ContinueDrawing : public FigureAction
 
 public:
 	ContinueDrawing() = delete;
-	explicit ContinueDrawing(QPointF coordinate);
+	explicit ContinueDrawing(const QPointF& itemCoord);
 	~ContinueDrawing() override;
 
 	void act(Circle* circle) override;
@@ -22,9 +22,9 @@ public:
 
 private:
 	/*!
-	 * \brief координата, в которой произошло данное действие
+	 * \brief Координаты фигуры в системе кординат Элемента Сцены
 	 */
-	QPointF m_coordinate;
+	QPointF m_itemCoord;
 };
 
 #endif // CONTINUEDRAWING_H

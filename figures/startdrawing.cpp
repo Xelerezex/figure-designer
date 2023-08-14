@@ -5,9 +5,11 @@
 #include "triangle.h"
 #include "rectangle.h"
 
-StartDrawing::StartDrawing(QPointF coordinate)
+StartDrawing::StartDrawing(const QPointF& itemCoord, const QPointF& sceneCoord)
 	: FigureAction{}
-	, m_coordinate{coordinate}
+	, m_itemCoord{itemCoord}
+	, m_sceneCoord{sceneCoord}
+	, m_defaultShift{0.1, 0.1}
 {
 }
 
@@ -18,15 +20,17 @@ StartDrawing::~StartDrawing()
 void StartDrawing::act(Circle* circle)
 {
 	circle->startCreating();
-	circle->setCenter(m_coordinate);
-	circle->setDestination(m_coordinate + QPointF{0.1, 0.1});
+	circle->setCenter(m_itemCoord);
+	circle->setDestination(m_itemCoord + m_defaultShift);
+	circle->setPos(m_sceneCoord - m_itemCoord);
 }
 
 void StartDrawing::act(Square* square)
 {
 	square->startCreating();
-	square->setCenter(m_coordinate);
-	square->setDestination(m_coordinate + QPointF{0.1, 0.1});
+	square->setCenter(m_itemCoord);
+	square->setDestination(m_itemCoord + m_defaultShift);
+	square->setPos(m_sceneCoord - m_itemCoord);
 }
 
 void StartDrawing::act(Triangle* triangle)
@@ -34,8 +38,9 @@ void StartDrawing::act(Triangle* triangle)
 	triangle->startCreating();
 	// Обратный порядок, что бы правильно задавался статус отрисовки
 	// треугольника:
-	triangle->setFirst(m_coordinate);
-	triangle->setSecond(m_coordinate + QPointF{0.1, 0.1});
+	triangle->setFirst(m_itemCoord);
+	triangle->setSecond(m_itemCoord + m_defaultShift);
+	triangle->setPos(m_sceneCoord - m_itemCoord);
 
 	triangle->setStatus(Triangle::DrawingStatus::FirstPointDrawn);
 	triangle->startDrawingLine();
@@ -44,6 +49,7 @@ void StartDrawing::act(Triangle* triangle)
 void StartDrawing::act(Rectangle* rectangle)
 {
 	rectangle->startCreating();
-	rectangle->setCenter(m_coordinate);
-	rectangle->setDestination(m_coordinate + QPointF{0.1, 0.1});
+	rectangle->setCenter(m_itemCoord);
+	rectangle->setDestination(m_itemCoord + m_defaultShift);
+	rectangle->setPos(m_sceneCoord - m_itemCoord);
 }

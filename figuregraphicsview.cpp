@@ -92,20 +92,25 @@ void FigureGraphicsView::mouseReleaseEvent(QMouseEvent* mouseEvent)
 
 void FigureGraphicsView::onMouseLeftButtonPressed(QMouseEvent* mouseEvent)
 {
+	// Координаты фигуры в системе кординат Элемента Сцены
+	const auto itemCoord = mouseEvent->pos();
+	// Координаты фигуры на Сцене
+	const auto sceneCoord = mapToScene(itemCoord);
+
 	// Запоминаем место, где произошло нажатие
-	m_figureHandler->setLastLeftMousePressed(mapToScene(mouseEvent->pos()));
+	m_figureHandler->setLastLeftMousePressed(sceneCoord);
 
 	if (m_currentMode == SquareDraw)
 	{
-		m_figureHandler->addNewSquare(mapToScene(mouseEvent->pos()));
+		m_figureHandler->addNewSquare(itemCoord, sceneCoord);
 	}
 	else if (m_currentMode == RectangleDraw)
 	{
-		m_figureHandler->addNewRectangle(mapToScene(mouseEvent->pos()));
+		m_figureHandler->addNewRectangle(itemCoord, sceneCoord);
 	}
 	else if (m_currentMode == CircleDraw)
 	{
-		m_figureHandler->addNewCircle(mapToScene(mouseEvent->pos()));
+		m_figureHandler->addNewCircle(itemCoord, sceneCoord);
 	}
 	else if (m_currentMode == TriangleDraw)
 	{
@@ -119,18 +124,20 @@ void FigureGraphicsView::onMouseLeftButtonPressed(QMouseEvent* mouseEvent)
 
 void FigureGraphicsView::onMouseLeftButtonMoved(QMouseEvent* mouseEvent)
 {
+	// Координаты фигуры в системе кординат Элемента Сцены
+	const auto itemCoord = mouseEvent->pos();
+
 	if (m_currentMode == SquareDraw)
 	{
-		m_figureHandler->continueDrawingSquare(mapToScene(mouseEvent->pos()));
+		m_figureHandler->continueDrawingSquare(itemCoord);
 	}
 	else if (m_currentMode == RectangleDraw)
 	{
-		m_figureHandler->continueDrawingRectangle(
-			mapToScene(mouseEvent->pos()));
+		m_figureHandler->continueDrawingRectangle(mouseEvent->pos());
 	}
 	else if (m_currentMode == CircleDraw)
 	{
-		m_figureHandler->continueDrawingCircle(mapToScene(mouseEvent->pos()));
+		m_figureHandler->continueDrawingCircle(mouseEvent->pos());
 	}
 	else if (m_currentMode == Modification)
 	{
@@ -144,21 +151,26 @@ void FigureGraphicsView::onMouseLeftButtonMoved(QMouseEvent* mouseEvent)
 
 void FigureGraphicsView::onMouseLeftButtonReleased(QMouseEvent* mouseEvent)
 {
+	// Координаты фигуры в системе кординат Элемента Сцены
+	const auto itemCoord = mouseEvent->pos();
+
 	if (m_currentMode == SquareDraw)
 	{
-		m_figureHandler->completeSquare(mapToScene(mouseEvent->pos()));
+		m_figureHandler->completeSquare(itemCoord);
 	}
 	else if (m_currentMode == RectangleDraw)
 	{
-		m_figureHandler->completeRectangle(mapToScene(mouseEvent->pos()));
+		m_figureHandler->completeRectangle(itemCoord);
 	}
 	else if (m_currentMode == CircleDraw)
 	{
-		m_figureHandler->completeCircle(mapToScene(mouseEvent->pos()));
+		m_figureHandler->completeCircle(itemCoord);
 	}
 	else if (m_currentMode == TriangleDraw)
 	{
-		m_figureHandler->addNewTriangleDot(mapToScene(mouseEvent->pos()));
+		// Координаты фигуры на Сцене
+		const auto sceneCoord = mapToScene(itemCoord);
+		m_figureHandler->addNewTriangleDot(itemCoord, sceneCoord);
 	}
 
 	qDebug("mouseReleaseEvent");
@@ -171,6 +183,6 @@ void FigureGraphicsView::onEmptyMouseMoved(QMouseEvent* mouseEvent)
 {
 	if (m_currentMode == TriangleDraw)
 	{
-		m_figureHandler->continueDrawingTriangle(mapToScene(mouseEvent->pos()));
+		m_figureHandler->continueDrawingTriangle(mouseEvent->pos());
 	}
 }

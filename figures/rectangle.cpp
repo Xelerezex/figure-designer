@@ -1,6 +1,8 @@
 #include "rectangle.h"
 
 #include <QPainter>
+// DEBUG:
+#include <QDebug>
 
 #include "startdrawing.h"
 #include "continuedrawing.h"
@@ -86,6 +88,11 @@ void Rectangle::paint(QPainter*						  painter,
 			= {Qt::black, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin};
 		painter->setBrush(QBrush(color));
 	}
+
+	// DEBUG:
+	qDebug() << "PAINT RECTANGLE: "
+			 << "center:" << m_center << "destination:" << m_destination
+			 << "POSITION ON SCENE:" << pos();
 
 	QPainterPath pathTitle;
 	pathTitle.setFillRule(Qt::OddEvenFill);

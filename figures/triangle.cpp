@@ -140,6 +140,11 @@ void Triangle::paint(QPainter*						 painter,
 		painter->setBrush(QBrush(color));
 	}
 
+	// DEBUG:
+	qDebug() << "PAINT RECTANGLE: "
+			 << "first:" << m_first << "second:" << m_second
+			 << "third:" << m_third << "POSITION ON SCENE:" << pos();
+
 	painter->setPen(drawingPen);
 	painter->drawPath(pathTitle);
 }

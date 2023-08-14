@@ -98,6 +98,11 @@ void Square::paint(QPainter*					   painter,
 	frameRect.setHeight(boundingRect().height() - penWidth);
 	pathTitle.addRect(frameRect);
 
+	// DEBUG:
+	qDebug() << "PAINT SQUARE: "
+			 << "center:" << m_center << "destination:" << m_destination
+			 << "POSITION ON SCENE:" << pos();
+
 	painter->setPen(drawingPen);
 	painter->drawPath(pathTitle.simplified());
 }

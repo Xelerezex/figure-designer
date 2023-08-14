@@ -12,7 +12,7 @@ class CompleteDrawing : public FigureAction
 
 public:
 	CompleteDrawing() = delete;
-	explicit CompleteDrawing(QPointF coordinate);
+	explicit CompleteDrawing(const QPointF& itemCoord);
 	~CompleteDrawing() override;
 
 	void act(Circle* circle) override;
@@ -22,9 +22,9 @@ public:
 
 private:
 	/*!
-	 * \brief координата, в которой произошло данное действие
+	 * \brief Координаты фигуры в системе кординат Элемента Сцены
 	 */
-	QPointF m_coordinate;
+	QPointF m_itemCoord;
 };
 
 #endif // COMPLETEDRAWING_H

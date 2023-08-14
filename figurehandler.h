@@ -44,72 +44,76 @@ public:
 	/*!
 	 * \brief Создать и добавить новую фигуру Квадрата.
 	 *        Также после вызова этого метода начинается отрисовка фигуры.
-	 * \param coordinate - координата сцены, где происходит событие
+	 * \param itemCoord - координаты фигуры в системе кординат Элемента Сцены
+	 * \param sceneCoord - координата фигуры на Сцене
 	 */
-	void addNewSquare(QPointF coordinate);
+	void addNewSquare(QPointF itemCoord, QPointF sceneCoord);
 
 	/*!
 	 * \brief Создать и добавить новую фигуру Прямоугольника.
 	 *        Также после вызова этого метода начинается отрисовка фигуры.
-	 * \param coordinate - координата сцены, где происходит событие
+	 * \param itemCoord - координаты фигуры в системе кординат Элемента Сцены
+	 * \param sceneCoord - координата фигуры на Сцене
 	 */
-	void addNewRectangle(QPointF coordinate);
+	void addNewRectangle(QPointF itemCoord, QPointF sceneCoord);
 
 	/*!
 	 * \brief Создать и добавить новую фигуру Круга.
 	 *        Также после вызова этого метода начинается отрисовка фигуры.
-	 * \param coordinate - координата сцены, где происходит событие
+	 * \param itemCoord - координаты фигуры в системе кординат Элемента Сцены
+	 * \param sceneCoord - координата фигуры на Сцене
 	 */
-	void addNewCircle(QPointF coordinate);
+	void addNewCircle(QPointF itemCoord, QPointF sceneCoord);
 
 	/*!
 	 * \brief Создать и добавить новую точку для Треугольлник.
 	 *        Также после вызова этого метода начинается отрисовка линии.
 	 *        Если нарисована третья точка Треугольника - метод завершит
 	 *        отрисовку фигуры.
-	 * \param coordinate - координата сцены, где происходит событие
+	 * \param itemCoord - координаты фигуры в системе кординат Элемента Сцены
+	 * \param sceneCoord - координата фигуры на Сцене
 	 */
-	void addNewTriangleDot(QPointF coordinate);
+	void addNewTriangleDot(QPointF itemCoord, QPointF sceneCoord);
 
 	/*!
 	 * \brief Метод позволяющий продолжить отрисовку Квадрата
-	 * \param coordinate - координата сцены, где происходит событие
+	 * \param coordinate - координаты фигуры в системе кординат Элемента Сцены
 	 */
-	void continueDrawingSquare(QPointF coordinate);
+	void continueDrawingSquare(QPointF itemCoord);
 
 	/*!
 	 * \brief Метод позволяющий продолжить отрисовку Прямоугольника
-	 * \param coordinate - координата сцены, где происходит событие
+	 * \param coordinate - координаты фигуры в системе кординат Элемента Сцены
 	 */
 	void continueDrawingRectangle(QPointF coordinate);
 
 	/*!
 	 * \brief Метод позволяющий продолжить отрисовку Круга
-	 * \param coordinate - координата сцены, где происходит событие
+	 * \param coordinate - координаты фигуры в системе кординат Элемента Сцены
 	 */
 	void continueDrawingCircle(QPointF coordinate);
 
 	/*!
 	 * \brief Метод позволяющий продолжить отрисовку Треугольника
-	 * \param coordinate - координата сцены, где происходит событие
+	 * \param coordinate - координаты фигуры в системе кординат Элемента Сцены
 	 */
 	void continueDrawingTriangle(QPointF coordinate);
 
 	/*!
 	 * \brief Завершить отрисовку Квадрата
-	 * \param coordinate - координата сцены, где происходит событие
+	 * \param coordinate - координаты фигуры в системе кординат Элемента Сцены
 	 */
 	void completeSquare(QPointF coordinate);
 
 	/*!
 	 * \brief Завершить отрисовку Прямоугольника
-	 * \param coordinate - координата сцены, где происходит событие
+	 * \param coordinate - координаты фигуры в системе кординат Элемента Сцены
 	 */
 	void completeRectangle(QPointF coordinate);
 
 	/*!
 	 * \brief Завершить отрисовку Круга
-	 * \param coordinate - координата сцены, где происходит событие
+	 * \param coordinate - координаты фигуры в системе кординат Элемента Сцены
 	 */
 	void completeCircle(QPointF coordinate);
 

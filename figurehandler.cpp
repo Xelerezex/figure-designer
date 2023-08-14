@@ -37,38 +37,38 @@ void FigureHandler::setLastLeftMousePressed(QPointF pressedCoord)
 	m_clickHandler->setLastLeftMousePressed(pressedCoord);
 }
 
-void FigureHandler::addNewSquare(QPointF coordinate)
+void FigureHandler::addNewSquare(QPointF itemCoord, QPointF sceneCoord)
 {
 	m_currentSquare = new Square{};
-	m_currentSquare->act(StartDrawing{coordinate});
+	m_currentSquare->act(StartDrawing{itemCoord, sceneCoord});
 	m_parentView->scene()->addItem(m_currentSquare);
 }
 
-void FigureHandler::addNewRectangle(QPointF coordinate)
+void FigureHandler::addNewRectangle(QPointF itemCoord, QPointF sceneCoord)
 {
 	m_currentRectangle = new Rectangle{};
-	m_currentRectangle->act(StartDrawing{coordinate});
+	m_currentRectangle->act(StartDrawing{itemCoord, sceneCoord});
 	m_parentView->scene()->addItem(m_currentRectangle);
 }
 
-void FigureHandler::addNewCircle(QPointF coordinate)
+void FigureHandler::addNewCircle(QPointF itemCoord, QPointF sceneCoord)
 {
 	m_currentCircle = new Circle{};
-	m_currentCircle->act(StartDrawing{coordinate});
+	m_currentCircle->act(StartDrawing{itemCoord, sceneCoord});
 	m_parentView->scene()->addItem(m_currentCircle);
 }
 
-void FigureHandler::addNewTriangleDot(QPointF coordinate)
+void FigureHandler::addNewTriangleDot(QPointF itemCoord, QPointF sceneCoord)
 {
 	if (m_currentTriangle == nullptr)
 	{
 		m_currentTriangle = new Triangle{};
-		m_currentTriangle->act(StartDrawing{coordinate});
+		m_currentTriangle->act(StartDrawing{itemCoord, sceneCoord});
 		m_parentView->scene()->addItem(m_currentTriangle);
 	}
 	else
 	{
-		m_currentTriangle->act(CompleteDrawing{coordinate});
+		m_currentTriangle->act(CompleteDrawing{itemCoord});
 
 		if (m_currentTriangle->isThirdDrawn())
 		{
@@ -78,9 +78,9 @@ void FigureHandler::addNewTriangleDot(QPointF coordinate)
 	}
 }
 
-void FigureHandler::continueDrawingSquare(QPointF coordinate)
+void FigureHandler::continueDrawingSquare(QPointF itemCoord)
 {
-	m_currentSquare->act(ContinueDrawing{coordinate});
+	m_currentSquare->act(ContinueDrawing{itemCoord});
 	m_parentView->scene()->update();
 }
 

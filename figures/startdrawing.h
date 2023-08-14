@@ -12,7 +12,7 @@ class StartDrawing : public FigureAction
 
 public:
 	StartDrawing() = delete;
-	explicit StartDrawing(QPointF coordinate);
+	explicit StartDrawing(const QPointF& itemCoord, const QPointF& sceneCoord);
 	~StartDrawing() override;
 
 	void act(Circle* circle) override;
@@ -22,9 +22,19 @@ public:
 
 private:
 	/*!
-	 * \brief координата, в которой произошло данное действие
+	 * \brief Координаты фигуры в системе кординат Элемента Сцены
 	 */
-	QPointF m_coordinate;
+	QPointF m_itemCoord;
+
+	/*!
+	 * \brief Координаты фигуры на Сцене
+	 */
+	QPointF m_sceneCoord;
+
+	/*!
+	 * \brief Дефолтный сдвиг для первичной отрисовки фигуры
+	 */
+	const QPointF m_defaultShift;
 };
 
 #endif // STARTDRAWING_H

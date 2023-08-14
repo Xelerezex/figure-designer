@@ -5,9 +5,9 @@
 #include "triangle.h"
 #include "rectangle.h"
 
-ContinueDrawing::ContinueDrawing(QPointF coordinate)
+ContinueDrawing::ContinueDrawing(const QPointF& itemCoord)
 	: FigureAction{}
-	, m_coordinate{coordinate}
+	, m_itemCoord{itemCoord}
 {
 }
 
@@ -17,29 +17,29 @@ ContinueDrawing::~ContinueDrawing()
 
 void ContinueDrawing::act(Circle* circle)
 {
-	circle->setDestination(m_coordinate);
+	circle->setDestination(m_itemCoord);
 }
 
 void ContinueDrawing::act(Square* square)
 {
-	square->setDestination(m_coordinate);
+	square->setDestination(m_itemCoord);
 }
 
 void ContinueDrawing::act(Triangle* triangle)
 {
 	if (triangle->isFirstDrawn() && triangle->isLineDrawing())
 	{
-		triangle->setSecond(m_coordinate);
+		triangle->setSecond(m_itemCoord);
 		triangle->update();
 	}
 	else if (triangle->isSecondDrawn() && triangle->isLineDrawing())
 	{
-		triangle->setThird(m_coordinate);
+		triangle->setThird(m_itemCoord);
 		triangle->update();
 	}
 }
 
 void ContinueDrawing::act(Rectangle* rectangle)
 {
-	rectangle->setDestination(m_coordinate);
+	rectangle->setDestination(m_itemCoord);
 }

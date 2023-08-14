@@ -90,6 +90,11 @@ void Circle::paint(QPainter*					   painter,
 		painter->setBrush(QBrush(color));
 	}
 
+	// DEBUG:
+	qDebug() << "PAINT CIRCLE: "
+			 << "center:" << m_center << "destination:" << m_destination
+			 << "POSITION ON SCENE:" << pos();
+
 	QPainterPath pathTitle;
 	pathTitle.setFillRule(Qt::OddEvenFill);
 
