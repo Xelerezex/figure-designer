@@ -57,11 +57,18 @@ bool FigureGraphicsView::isTriangleMode() const
 void FigureGraphicsView::mousePressEvent(QMouseEvent* mouseEvent)
 {
 	// Нажата ли Левая кнопка мыщи
-	const bool isLeftButton{mouseEvent->button() == Qt::LeftButton};
+	const bool isLeftButtonPressed{mouseEvent->button() == Qt::LeftButton};
+	// Нажата ли Правая кнопка мыщи
+	const bool isRightButtonPressed{mouseEvent->button() == Qt::RightButton};
 
-	if (isLeftButton)
+	if (isLeftButtonPressed)
 	{
 		onMouseLeftButtonPressed(mouseEvent);
+	}
+	else if (isRightButtonPressed)
+	{
+		// Прокидываем нажатие Правой кнопки на сцену
+		QGraphicsView::mousePressEvent(mouseEvent);
 	}
 }
 
@@ -70,6 +77,9 @@ void FigureGraphicsView::mouseMoveEvent(QMouseEvent* mouseEvent)
 	// true - только если движение с зажатой левой кнопокой мыщи
 	bool onlyWithLeftButtonMove{
 		static_cast<bool>(mouseEvent->buttons() & Qt::LeftButton)};
+	// true - только если движение с зажатой правой кнопокой мыщи
+	bool onlyWithRightButtonMove{
+		static_cast<bool>(mouseEvent->buttons() & Qt::RightButton)};
 
 	// true - если движение мыщи без зажатых кнопок
 	bool onlyMouseMove{mouseEvent->buttons() == Qt::NoButton};
@@ -77,6 +87,11 @@ void FigureGraphicsView::mouseMoveEvent(QMouseEvent* mouseEvent)
 	if (onlyWithLeftButtonMove)
 	{
 		onMouseLeftButtonMoved(mouseEvent);
+	}
+	else if (onlyWithRightButtonMove)
+	{
+		// Прокидываем зажатие + движение Правой кнопки на сцену
+		QGraphicsView::mouseMoveEvent(mouseEvent);
 	}
 
 	if (onlyMouseMove && isTriangleMode())

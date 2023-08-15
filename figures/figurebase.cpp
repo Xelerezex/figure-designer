@@ -7,6 +7,7 @@ FigureBase::FigureBase(QGraphicsItem* parent)
 {
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
+	// setFlag(QGraphicsItem::ItemSendsScenePositionChanges, true);
 }
 
 FigureBase::~FigureBase()

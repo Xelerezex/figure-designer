@@ -10,6 +10,8 @@
 // DEBUG:
 #include <QDebug>
 
+#include "rectangle.h"
+
 FigureScene::FigureScene(/*QMenu* itemMenu, */ QObject* parent)
 	: QGraphicsScene{parent}
 	, m_currentMode{Mode::Modification}
@@ -40,10 +42,23 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 	// Нажата ли Левая кнопка мыщи
 	const bool isLeftButton{mouseEvent->button() == Qt::LeftButton};
+	// Нажата ли Правая кнопка мыщи
+	const bool isRightButtonPressed{mouseEvent->button() == Qt::RightButton};
 
 	if (isLeftButton)
 	{
 		onLeftMousePressEvent(mouseEvent);
+	}
+	else if (isRightButtonPressed)
+	{
+		// Указатель на фигуру
+		Rectangle* figure = qgraphicsitem_cast<Rectangle*>(
+			itemAt(mouseEvent->scenePos(), QTransform{}));
+		if (figure != nullptr)
+		{
+			figure->setTransformOriginPoint(figure->center());
+			qDebug("Right button pressed");
+		}
 	}
 }
 
@@ -57,10 +72,26 @@ void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	// true - только если движение с зажатой левой кнопокой мыщи
 	bool onlyWithLeftButtonMove{
 		static_cast<bool>(mouseEvent->buttons() & Qt::LeftButton)};
+	// true - только если движение с зажатой правой кнопокой мыщи
+	bool onlyWithRightButtonMove{
+		static_cast<bool>(mouseEvent->buttons() & Qt::RightButton)};
 
 	if (onlyWithLeftButtonMove)
 	{
 		onLeftMouseMoveEvent(mouseEvent);
+	}
+	else if (onlyWithRightButtonMove)
+	{
+		// Указатель на фигуру
+		Rectangle* figure = qgraphicsitem_cast<Rectangle*>(
+			itemAt(mouseEvent->scenePos(), QTransform{}));
+		if (figure != nullptr)
+		{
+			figure->setRotation(-45); //(figure->center());
+			qDebug("Right button pressed");
+		}
+		//  Прокидываем зажатие + движение Правой кнопки на сцену
+		qDebug("Right button pressed & move");
 	}
 
 	QGraphicsScene::mouseMoveEvent(mouseEvent);
