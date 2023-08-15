@@ -10,7 +10,6 @@ class Triangle;
 class Rectangle;
 class ClickTracker;
 class FigureGraphicsView;
-class QGraphicsSceneMouseEvent;
 QT_END_NAMESPACE
 
 /*!
@@ -31,33 +30,13 @@ public:
 	 * \brief Основной конструктор
 	 * \param parent - указатель на родительский класс
 	 */
-	explicit FigureHandler(FigureGraphicsView* parent);
+	explicit FigureHandler(FigureGraphicsView* parent,
+						   ClickTracker*	   clickTracker);
 
 	/*!
 	 * \brief Основной деструктор
 	 */
 	~FigureHandler() override;
-
-	/*!
-	 * \brief Установить координату, где только что была нажата кнопка мыщи
-	 * \param pressedCoord - новая координата
-	 */
-	void setLastLeftMousePressed(QPointF pressedCoord);
-
-	/*!
-	 * \brief Установить координату, где только что была отжата кнопка мыщи
-	 * \param releasedCoord - новая координата
-	 */
-	void setLastLeftMouseReleased(QPointF releasedCoord);
-
-	/*!
-	 * \brief Метод проверяет произошел ли клик левой кнопки мыщи.
-	 *        Кликом считается пара действие - нажатие мыщи и не слишком
-	 *	      далекое, от нажатия, отжатие мыщи
-	 * \param newLeftMouseRelease - координата отжатия мыщи
-	 * \return true - если произошел клик.
-	 */
-	bool isLeftMouseClicked(QPointF newLeftMouseRelease);
 
 	/*!
 	 * \brief Создать и добавить новую фигуру Квадрата.
@@ -176,7 +155,7 @@ private:
 	/*!
 	 * \brief Указатель на класс трекающий клики кнопок
 	 */
-	ClickTracker* m_clickHandler;
+	ClickTracker* m_clickTracker;
 };
 
 #endif // FIGUREHANDLER_H

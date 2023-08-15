@@ -14,35 +14,21 @@
 
 #include <QGraphicsSceneMouseEvent>
 
-FigureHandler::FigureHandler(FigureGraphicsView* parent)
+FigureHandler::FigureHandler(FigureGraphicsView* parent,
+							 ClickTracker*		 clickTracker)
 	: QObject{parent}
 	, m_parentView{parent}
 	, m_currentSquare{nullptr}
 	, m_currentRectangle{nullptr}
 	, m_currentCircle{nullptr}
 	, m_currentTriangle{nullptr}
-	, m_clickHandler{new ClickTracker{this}}
+	, m_clickTracker{clickTracker}
 
 {
 }
 
 FigureHandler::~FigureHandler()
 {
-}
-
-void FigureHandler::setLastLeftMousePressed(QPointF pressedCoord)
-{
-	m_clickHandler->setLastLeftMousePressed(pressedCoord);
-}
-
-void FigureHandler::setLastLeftMouseReleased(QPointF releasedCoord)
-{
-	m_clickHandler->setLastLeftMouseReleased(releasedCoord);
-}
-
-bool FigureHandler::isLeftMouseClicked(QPointF newLeftMouseRelease)
-{
-	return m_clickHandler->isLeftMouseClicked(newLeftMouseRelease);
 }
 
 void FigureHandler::addNewSquare(QPointF itemCoord, QPointF sceneCoord)
@@ -179,7 +165,7 @@ void FigureHandler::handleTriangleRemovement()
 
 	// Координаты метса, гед отпустили мышку в системе координат Фигуры
 	QPointF leftMouseReleaseCoordItem
-		= m_parentView->mapFromScene(m_clickHandler->lastLeftMouseReleased());
+		= m_parentView->mapFromScene(m_clickTracker->lastLeftMouseReleased());
 
 	bool isFirstDrawn = m_currentTriangle->isFirstDrawn();
 	if (isFirstDrawn)
