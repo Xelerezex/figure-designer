@@ -1,6 +1,7 @@
 #include "figuregraphicsview.h"
 
 #include "figurehandler.h"
+#include "modificationhandler.h"
 
 #include <QMouseEvent>
 
@@ -11,6 +12,7 @@ FigureGraphicsView::FigureGraphicsView(QGraphicsScene* scene, QWidget* parent)
 	: QGraphicsView{scene, parent}
 	, m_currentMode{Mode::Modification}
 	, m_figureHandler{new FigureHandler{this}}
+	, m_moificationHandler{new ModificationHandler{this}}
 {
 	// Проведем основную настройку объекта:
 	setupFigureGraphicsView();

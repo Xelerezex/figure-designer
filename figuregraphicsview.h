@@ -6,6 +6,7 @@
 QT_BEGIN_NAMESPACE
 class FigureHandler;
 class CentralWidget;
+class ModificationHandler;
 QT_END_NAMESPACE
 
 /*!
@@ -128,6 +129,11 @@ private:
 	 * \brief Указатель на обработчик взаимодействий с Фигурами
 	 */
 	FigureHandler* m_figureHandler;
+
+	/*!
+	 * \brief Указатель на обработчик модификации объектов фигур
+	 */
+	ModificationHandler* m_moificationHandler;
 };
 
 #endif // FIGUREGRAPHICSVIEW_H
