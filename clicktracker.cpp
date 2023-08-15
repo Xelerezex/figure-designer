@@ -6,6 +6,9 @@ ClickTracker::ClickTracker(QObject* parent)
 	: QObject{parent}
 	, m_lastLeftMousePressed{0.0, 0.0}
 	, m_lastLeftMouseReleased{0.0, 0.0}
+	, m_lastRightMousePressed{0.0, 0.0}
+	, m_lastRightMouseReleased{0.0, 0.0}
+
 {
 }
 
@@ -78,4 +81,24 @@ bool ClickTracker::isShortDistance(const QPointF& first, const QPointF& second)
 			 << "LENGTH:" << line.length() << "TRASH:" << trashHoldDistance;
 
 	return line.length() < trashHoldDistance;
+}
+
+QPointF ClickTracker::lastRightMousePressed() const
+{
+	return m_lastRightMousePressed;
+}
+
+void ClickTracker::setLastRightMousePressed(QPointF newLastRightMousePressed)
+{
+	m_lastRightMousePressed = newLastRightMousePressed;
+}
+
+QPointF ClickTracker::lastRightMouseReleased() const
+{
+	return m_lastRightMouseReleased;
+}
+
+void ClickTracker::setLastRightMouseReleased(QPointF newLastRightMouseReleased)
+{
+	m_lastRightMouseReleased = newLastRightMouseReleased;
 }

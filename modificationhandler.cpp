@@ -10,6 +10,7 @@
 
 #include <QGraphicsItem>
 #include <QApplication>
+#include <QtMath>
 // DEBUG:
 #include <QDebug>
 
@@ -49,6 +50,16 @@ void ModificationHandler::modificateOnLeftMousePressed(
 	// Устанавливаем координату последнего нажатия левой кнопки мыши
 	m_clickTracker->setLastLeftMousePressed(sceneCoord);
 
+	// Указатель на фигуру
+	QGraphicsItem* figure = m_parentScene->itemAt(sceneCoord, QTransform{});
+	// Устанавливаем выбранную площадь
+	if (figure != nullptr)
+	{
+		// QPainterPath selectionPath;
+		// selectionPath.addRect(figure->boundingRect());
+		// m_parentScene->setSelectionArea(selectionPath, QTransform{});
+	}
+
 	// DEBUG:
 	qDebug() << "Pressed at:" << sceneCoord;
 }
@@ -80,6 +91,7 @@ void ModificationHandler::selectAllItemsInList(
 
 void ModificationHandler::unselectAllItems() const
 {
+	// m_parentScene->setSelectionArea({}, QTransform{});
 	foreach (const auto item, m_parentScene->items())
 	{
 		item->setSelected(false);
@@ -127,6 +139,10 @@ void ModificationHandler::completeDrawingSelectionRectangle(
 
 	m_selectionRect->act(CompleteDrawing{sceneCoord});
 
+	// QPainterPath selectionPath;
+	// selectionPath.addRect(m_selectionRect->boundingRect());
+	// m_parentScene->setSelectionArea(selectionPath, QTransform{});
+
 	// Получаем все элементы, которые пересекаются с Прямоугольником
 	// Выделения
 	const auto& listWithItems
@@ -156,4 +172,73 @@ void ModificationHandler::updateAllItems() const
 	{
 		item->update();
 	}
+}
+
+void ModificationHandler::startRotation(const QPoint& coordinate)
+{
+	// m_currentRectangle
+	//	= qgraphicsitem_cast<Rectangle*>(m_parentView->itemAt(coordinate));
+	//
+	// if (m_currentRectangle != nullptr)
+	//{
+	//	m_currentRectangle->setTransformOriginPoint(
+	//		m_currentRectangle->center());
+	//	// DEBUG:
+	//	qDebug() << "center" << m_currentRectangle->center();
+	// }
+
+	m_clickTracker->setLastRightMousePressed(coordinate);
+}
+
+// TODO: В сцене modHandler скорее всегобудетназывать selectionHandler
+void ModificationHandler::continueRotation(const QPoint& coordinate)
+{
+	QPointF	   lastRightPressedCoord{m_clickTracker->lastRightMousePressed()};
+
+	QPointF	   center = getUnitedSelectedCenter();
+	QTransform transform;
+	transform.translate(center.x(), center.y());
+
+	qreal angle = qAtan2(lastRightPressedCoord.y() - coordinate.y(),
+						 lastRightPressedCoord.x() - coordinate.x());
+
+	transform.rotate(angle);
+	transform.translate(-center.x(), -center.y());
+
+	foreach (QGraphicsItem* item, m_parentScene->selectedItems())
+	{
+		item->setPos(transform.map(item->pos()));
+		item->setRotation(item->rotation() + angle);
+	}
+
+	// QPointF lastRightPressedCoord{m_clickTracker->lastRightMousePressed()};
+	//
+	// qreal	angle = qAtan2(lastRightPressedCoord.y() - coordinate.y(),
+	//					 lastRightPressedCoord.x() - coordinate.x());
+	//// angle * 180 / PI
+	//
+	//	   // DEBUG:
+	// qDebug() << qRadiansToDegrees(angle);
+	// m_currentRectangle->setRotation(qRadiansToDegrees(angle));
+}
+
+void ModificationHandler::stopRotation(const QPoint& coordinate)
+{
+}
+
+QRectF ModificationHandler::getUnitedSelectedBoundingRect() const
+{
+	QRectF				  selectedBoundingRect;
+	QList<QGraphicsItem*> selectedItems = m_parentScene->selectedItems();
+	foreach (QGraphicsItem* current, selectedItems)
+	{
+		selectedBoundingRect
+			= selectedBoundingRect.united(current->sceneBoundingRect());
+	}
+	return selectedBoundingRect;
+}
+
+QPointF ModificationHandler::getUnitedSelectedCenter() const
+{
+	return getUnitedSelectedBoundingRect().center();
 }

@@ -51,14 +51,21 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	}
 	else if (isRightButtonPressed)
 	{
-		// Указатель на фигуру
-		Rectangle* figure = qgraphicsitem_cast<Rectangle*>(
-			itemAt(mouseEvent->scenePos(), QTransform{}));
-		if (figure != nullptr)
-		{
-			figure->setTransformOriginPoint(figure->center());
-			qDebug("Right button pressed");
-		}
+		//	// Указатель на фигуру
+		//	Rectangle* figure = qgraphicsitem_cast<Rectangle*>(
+		//		itemAt(mouseEvent->scenePos(), QTransform{}));
+		//	if (figure != nullptr)
+		//	{
+		//		figure->setTransformOriginPoint(figure->center());
+		//		qDebug("Right button pressed");
+		//	}
+
+		// Координаты Сцены
+		const auto sceneCoord = mouseEvent->screenPos();
+
+		m_clickTracker->setLastRightMousePressed(sceneCoord);
+
+		m_modificationHandler->startRotation(sceneCoord);
 	}
 }
 
@@ -82,16 +89,23 @@ void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	}
 	else if (onlyWithRightButtonMove)
 	{
-		// Указатель на фигуру
-		Rectangle* figure = qgraphicsitem_cast<Rectangle*>(
-			itemAt(mouseEvent->scenePos(), QTransform{}));
-		if (figure != nullptr)
-		{
-			figure->setRotation(-45); //(figure->center());
-			qDebug("Right button pressed");
-		}
-		//  Прокидываем зажатие + движение Правой кнопки на сцену
-		qDebug("Right button pressed & move");
+		//	// Указатель на фигуру
+		//	Rectangle* figure = qgraphicsitem_cast<Rectangle*>(
+		//		itemAt(mouseEvent->scenePos(), QTransform{}));
+		//	if (figure != nullptr)
+		//	{
+		//		qDebug() << "WHAT" << mouseEvent->pos();
+		//		// figure->setRotation(mouseEvent->scenePos());
+		//		// //(figure->center());
+		//		qDebug("Right button pressed");
+		//	}
+		//	//  Прокидываем зажатие + движение Правой кнопки на сцену
+		//	qDebug("Right button pressed & move");
+
+		// Координаты фигуры в системе кординат Элемента Сцены
+		const auto scemeCoord = mouseEvent->screenPos();
+
+		m_modificationHandler->continueRotation(scemeCoord);
 	}
 
 	QGraphicsScene::mouseMoveEvent(mouseEvent);
@@ -107,9 +121,19 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	// Отжата ли Левая кнопка мыщи
 	const bool isLeftButtonReleased{mouseEvent->button() == Qt::LeftButton};
 
+	// true - только если движение с зажатой правой кнопокой мыщи
+	bool isRightButtonReleased{mouseEvent->button() == Qt::RightButton};
+
 	if (isLeftButtonReleased)
 	{
 		onLeftMouseReleaseEvent(mouseEvent);
+	}
+	else if (isRightButtonReleased)
+	{
+		// Координаты фигуры в системе кординат Элемента Сцены
+		const auto scemeCoord = mouseEvent->screenPos();
+
+		m_modificationHandler->stopRotation(scemeCoord);
 	}
 
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);

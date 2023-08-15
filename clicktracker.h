@@ -91,6 +91,12 @@ public:
 	[[nodiscard]] static bool isShortDistance(const QPointF& first,
 											  const QPointF& second);
 
+	QPointF lastRightMousePressed() const;
+	void setLastRightMousePressed(QPointF newLastRightMousePressed);
+
+	QPointF lastRightMouseReleased() const;
+	void setLastRightMouseReleased(QPointF newLastRightMouseReleased);
+
 private:
 	/*!
 	 * \brief Координата нажатия на левую кнопку мыщи
@@ -101,6 +107,16 @@ private:
 	 * \brief Координата отжатия левой кнопки мыщи
 	 */
 	QPointF m_lastLeftMouseReleased;
+
+	/*!
+	 * \brief Координата нажатия на левую кнопку мыщи
+	 */
+	QPointF m_lastRightMousePressed;
+
+	/*!
+	 * \brief Координата отжатия левой кнопки мыщи
+	 */
+	QPointF m_lastRightMouseReleased;
 };
 
 #endif // CLICKTRACKER_H

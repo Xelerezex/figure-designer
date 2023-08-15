@@ -14,6 +14,10 @@
 
 #include <QGraphicsSceneMouseEvent>
 
+// DEBUG:
+#include <QDebug>
+#include <QtMath>
+
 FigureHandler::FigureHandler(FigureGraphicsView* parent,
 							 ClickTracker*		 clickTracker)
 	: QObject{parent}

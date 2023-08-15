@@ -93,7 +93,17 @@ public:
 	/*!
 	 * \brief Метод обновляет все отрисованные фигуры
 	 */
-	void updateAllItems() const;
+	void	updateAllItems() const;
+
+	void	startRotation(const QPoint& coordinate);
+
+	void	continueRotation(const QPoint& coordinate);
+
+	void	stopRotation(const QPoint& coordinate);
+
+	QRectF	getUnitedSelectedBoundingRect() const;
+
+	QPointF getUnitedSelectedCenter() const;
 
 private:
 	/*!
