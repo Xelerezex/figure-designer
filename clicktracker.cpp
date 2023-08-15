@@ -51,6 +51,19 @@ bool ClickTracker::isLeftMouseClicked(const QPointF& newLeftMouseRelease)
 	return distanceSpace < trashHoldDistance;
 }
 
+bool ClickTracker::isLeftMouseClicked()
+{
+	// Вычисляем так ли далеко была отпущена мыщь относительно места нажатия
+	const QPointF distance = m_lastLeftMouseReleased - m_lastLeftMousePressed;
+	const qreal	  trashHold{10};
+
+	const qreal	  distanceSpace{distance.x() * distance.x()
+								+ distance.y() * distance.y()};
+	const qreal	  trashHoldDistance{trashHold * trashHold};
+
+	return distanceSpace < trashHoldDistance;
+}
+
 // DEBUG:
 #include <QDebug>
 

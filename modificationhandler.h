@@ -4,8 +4,8 @@
 #include <QObject>
 
 QT_BEGIN_NAMESPACE
+class FigureScene;
 class ClickTracker;
-class FigureGraphicsView;
 QT_END_NAMESPACE
 
 /*!
@@ -27,8 +27,8 @@ public:
 	 * \param scene - указатель на сцену
 	 * \param parent - указатель на родительский класс
 	 */
-	explicit ModificationHandler(FigureGraphicsView* parent,
-								 ClickTracker*		 clickTracker);
+	explicit ModificationHandler(FigureScene*  parent,
+								 ClickTracker* clickTracker);
 
 	/*!
 	 * \brief Основной деструктор
@@ -36,23 +36,10 @@ public:
 	~ModificationHandler() override;
 
 	/*!
-	 * \brief Действия проводимые над фигурами, при нажатии на левую кнопку мыщи
-	 * \param coordPress - координата, где была нажата левая кнопка мыщи
+	 * \brief Применение модификаций к Фигурам по отпуску левой кнопки мыши
+	 * \param sceneCoord - координата сцены, где произошел евент
 	 */
-	void modificateOnLeftButtonPressed(const QPoint& coordPress);
-
-	/*!
-	 * \brief Действия проводимые над фигурами, при нажатии на левую кнопку мыщи
-	 * \param coordPress - координата, где была нажата левая кнопка мыщи
-	 */
-	void modificateOnLeftButtonClicked(const QPoint& coordPress);
-
-	/*!
-	 * \brief Действия проводимые над фигурами, при нажатии на левую кнопку мыщи
-	 *        с CTRL
-	 * \param coordPress - координата, где была нажата левая кнопка мыщи
-	 */
-	void modificateOnLeftMouseAndCtrl(const QPoint& coordPress);
+	void modificateOnLeftMouseReleased(const QPointF& sceneCoord);
 
 private:
 	/*!
@@ -62,9 +49,9 @@ private:
 
 private:
 	/*!
-	 * \brief Указатель на Вьюшку сцены родителя
+	 * \brief Указатель на Сцену
 	 */
-	FigureGraphicsView* m_parentView;
+	FigureScene* m_parentScene;
 
 	/*!
 	 * \brief Указатель на класс трекающий клики кнопок

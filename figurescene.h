@@ -5,7 +5,9 @@
 
 QT_BEGIN_NAMESPACE
 class QMenu;
+class ClickTracker;
 class CentralWidget;
+class ModificationHandler;
 QT_END_NAMESPACE
 
 /*!
@@ -91,6 +93,16 @@ private:
 	 * \brief Режим работы в котором, в данный момент времени, находится сцена
 	 */
 	Mode m_currentMode;
+
+	/*!
+	 * \brief Указатель на класс трекающий клики кнопок
+	 */
+	ClickTracker* m_clickTracker;
+
+	/*!
+	 * \brief Указатель на обработчик модификации объектов фигур
+	 */
+	ModificationHandler* m_modificationHandler;
 };
 
 #endif // FIGURESCENE_H

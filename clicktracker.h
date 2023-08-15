@@ -64,9 +64,22 @@ public:
 	 *        Кликом считается пара действие - нажатие мыщи и не слишком
 	 *	      далекое, от нажатия, отжатие мыщи
 	 * \param newLeftMouseRelease - координата отжатия мыщи
+	 * \warning Для правильной отработки функции надо вызвать
+	 *          setLastLeftMousePressed()
 	 * \return true - если произошел клик.
 	 */
 	[[nodiscard]] bool isLeftMouseClicked(const QPointF& newLeftMouseRelease);
+
+	/*!
+	 * \brief Перегрузка метода проверки на клик. Отличие в том, что
+	 *        подставляется не вторая координата, а сверяется
+	 *        m_lastLeftMousePressed и m_lastLeftMouseReleased
+	 * \warning Для правильной отработки функции сначла надо вызвать
+	 *          setLastLeftMousePressed(), а потом обязательно
+	 *          setLastLeftMouseReleased()
+	 * \return true - если произошел клик.
+	 */
+	[[nodiscard]] bool isLeftMouseClicked();
 
 	/*!
 	 * \brief Метод проверяет на достаточном удалении находятся ли две точки

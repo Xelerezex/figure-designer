@@ -2,7 +2,6 @@
 
 #include "clicktracker.h"
 #include "figurehandler.h"
-#include "modificationhandler.h"
 
 #include <QMouseEvent>
 #include <QGuiApplication>
@@ -15,7 +14,6 @@ FigureGraphicsView::FigureGraphicsView(QGraphicsScene* scene, QWidget* parent)
 	, m_currentMode{Mode::Modification}
 	, m_clickTracker{new ClickTracker{this}}
 	, m_figureHandler{new FigureHandler{this, m_clickTracker}}
-	, m_modificationHandler{new ModificationHandler{this, m_clickTracker}}
 {
 	// Проведем основную настройку объекта:
 	setupFigureGraphicsView();

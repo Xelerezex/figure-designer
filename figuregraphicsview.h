@@ -7,7 +7,6 @@ QT_BEGIN_NAMESPACE
 class ClickTracker;
 class FigureHandler;
 class CentralWidget;
-class ModificationHandler;
 QT_END_NAMESPACE
 
 /*!
@@ -141,11 +140,6 @@ private:
 	 * \brief Указатель на обработчик взаимодействий с Фигурами
 	 */
 	FigureHandler* m_figureHandler;
-
-	/*!
-	 * \brief Указатель на обработчик модификации объектов фигур
-	 */
-	ModificationHandler* m_modificationHandler;
 };
 
 #endif // FIGUREGRAPHICSVIEW_H

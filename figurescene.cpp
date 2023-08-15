@@ -1,12 +1,19 @@
 #include "figurescene.h"
 
+#include "clicktracker.h"
+#include "modificationhandler.h"
+
 #include <QMenu>
+#include <QGraphicsItem>
+#include <QGraphicsSceneMouseEvent>
 // DEBUG:
 #include <QDebug>
 
 FigureScene::FigureScene(/*QMenu* itemMenu, */ QObject* parent)
 	: QGraphicsScene{parent}
 	, m_currentMode{Mode::Modification}
+	, m_clickTracker{new ClickTracker{this}}
+	, m_modificationHandler{new ModificationHandler{this, m_clickTracker}}
 {
 	// Настраиваем сцену
 	setupFigureScene();
@@ -25,25 +32,41 @@ FigureScene::Mode FigureScene::currentMode() const
 
 void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+	const QPointF  sceneCoord = mouseEvent->scenePos();
+
+	QGraphicsItem* figure = itemAt(sceneCoord, QTransform{});
+
 	if (m_currentMode == Modification)
 	{
-		QGraphicsScene::mousePressEvent(mouseEvent);
+		m_clickTracker->setLastLeftMousePressed(sceneCoord);
+		qDebug() << "Pressed at:" << sceneCoord;
+
+		if (figure != nullptr)
+		{
+			qDebug() << "Item at" << sceneCoord << "is" << figure->type();
+			QGraphicsScene::mousePressEvent(mouseEvent);
+		}
 	}
 }
 
 void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+	const QPointF sceneCoord = mouseEvent->scenePos();
+
 	if (m_currentMode == Modification)
 	{
-		qDebug() << "emitted";
+		qDebug() << "Moved to:" << sceneCoord;
 		QGraphicsScene::mouseMoveEvent(mouseEvent);
 	}
 }
 
 void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+	const QPointF sceneCoord = mouseEvent->scenePos();
+
 	if (m_currentMode == Modification)
 	{
+		m_modificationHandler->modificateOnLeftMouseReleased(sceneCoord);
 		QGraphicsScene::mouseReleaseEvent(mouseEvent);
 	}
 }
