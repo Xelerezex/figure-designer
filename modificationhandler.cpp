@@ -111,6 +111,11 @@ void ModificationHandler::continueDrawingSelectionRectangle(
 void ModificationHandler::completeDrawingSelectionRectangle(
 	const QPointF& sceneCoord)
 {
+	if (m_selectionRect == nullptr)
+	{
+		return;
+	}
+
 	// Если не зажат Ctrl - то снимаем выделение со всех Фигур
 	const bool isCtrlNotPressed{
 		(QApplication::keyboardModifiers() & Qt::ControlModifier) == 0};
@@ -120,25 +125,21 @@ void ModificationHandler::completeDrawingSelectionRectangle(
 		unselectAllItems();
 	}
 
-	if (m_selectionRect != nullptr)
-	{
-		m_selectionRect->act(CompleteDrawing{sceneCoord});
+	m_selectionRect->act(CompleteDrawing{sceneCoord});
 
-		// Получаем все элементы, которые пересекаются с Прямоугольником
-		// Выделения
-		const auto& listWithItems
-			= m_parentScene->items(m_selectionRect->boundingRect());
-		selectAllItemsInList(listWithItems);
+	// Получаем все элементы, которые пересекаются с Прямоугольником
+	// Выделения
+	const auto& listWithItems
+		= m_parentScene->items(m_selectionRect->boundingRect());
+	selectAllItemsInList(listWithItems);
 
-		// DEBUG:
-		qDebug() << "Selected items:" << listWithItems.size();
+	// DEBUG:
+	qDebug() << "Selected items:" << listWithItems.size();
 
-		// Удаляем со сцены Прямоугольник
-		m_parentScene->removeItem(m_selectionRect);
-		delete m_selectionRect;
-		m_selectionRect = nullptr;
-	}
-	// m_parentScene->update();
+	// Удаляем со сцены Прямоугольник
+	m_parentScene->removeItem(m_selectionRect);
+	delete m_selectionRect;
+	m_selectionRect = nullptr;
 }
 
 void ModificationHandler::updateSelectedItems() const

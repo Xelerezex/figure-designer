@@ -87,10 +87,10 @@ void FigureGraphicsView::mouseMoveEvent(QMouseEvent* mouseEvent)
 
 void FigureGraphicsView::mouseReleaseEvent(QMouseEvent* mouseEvent)
 {
-	// Нажата ли Левая кнопка мыщи
-	const bool isLeftButton{mouseEvent->button() == Qt::LeftButton};
+	// Отжата ли Левая кнопка мыщи
+	const bool isLeftButtonReleased{mouseEvent->button() == Qt::LeftButton};
 
-	if (isLeftButton)
+	if (isLeftButtonReleased)
 	{
 		onMouseLeftButtonReleased(mouseEvent);
 	}

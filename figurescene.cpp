@@ -38,22 +38,12 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		return;
 	}
 
-	update();
+	// Нажата ли Левая кнопка мыщи
+	const bool isLeftButton{mouseEvent->button() == Qt::LeftButton};
 
-	// Координаты эвента на Сцене
-	const QPointF sceneCoord = mouseEvent->scenePos();
-
-	// Произвести действие по нажатию левой кнопки мыщи
-	m_modificationHandler->modificateOnLeftMousePressed(sceneCoord);
-
-	// Пробросить дальше эвент, если нажатие произошло над фигурой
-	if (!m_modificationHandler->isOnFigure(sceneCoord))
+	if (isLeftButton)
 	{
-		m_modificationHandler->addNewSelectionRectangle(sceneCoord);
-	}
-	else
-	{
-		QGraphicsScene::mousePressEvent(mouseEvent);
+		onLeftMousePressEvent(mouseEvent);
 	}
 }
 
@@ -64,15 +54,13 @@ void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		return;
 	}
 
-	update();
+	// true - только если движение с зажатой левой кнопокой мыщи
+	bool onlyWithLeftButtonMove{
+		static_cast<bool>(mouseEvent->buttons() & Qt::LeftButton)};
 
-	// Координаты эвента на Сцене
-	const QPointF sceneCoord = mouseEvent->scenePos();
-
-	if (!m_modificationHandler->isOnFigure(sceneCoord))
+	if (onlyWithLeftButtonMove)
 	{
-		// Продолжать отрисовку Прямоугольника выделения
-		m_modificationHandler->continueDrawingSelectionRectangle(sceneCoord);
+		onLeftMouseMoveEvent(mouseEvent);
 	}
 
 	QGraphicsScene::mouseMoveEvent(mouseEvent);
@@ -85,15 +73,12 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		return;
 	}
 
-	// Координаты эвента на Сцене
-	const QPointF sceneCoord = mouseEvent->scenePos();
+	// Отжата ли Левая кнопка мыщи
+	const bool isLeftButtonReleased{mouseEvent->button() == Qt::LeftButton};
 
-	// Завершить отрисовку прямоугольника выделения, если он создан
-	m_modificationHandler->completeDrawingSelectionRectangle(sceneCoord);
-
-	if (!m_modificationHandler->isOnFigure(sceneCoord))
+	if (isLeftButtonReleased)
 	{
-		m_modificationHandler->modificateOnLeftMouseReleased(sceneCoord);
+		onLeftMouseReleaseEvent(mouseEvent);
 	}
 
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
@@ -133,6 +118,54 @@ void FigureScene::setCurrentMode(Mode newCurrentMode)
 	m_currentMode = newCurrentMode;
 	// При переключении Режимов - выбор Фигур должен спадать
 	m_modificationHandler->unselectAllItems();
+}
+
+void FigureScene::onLeftMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
+	// Обновляем отрисовку сцены
+	update();
+
+	// Координаты эвента на Сцене
+	const QPointF sceneCoord = mouseEvent->scenePos();
+
+	// Произвести действие по нажатию левой кнопки мыщи
+	m_modificationHandler->modificateOnLeftMousePressed(sceneCoord);
+
+	// Пробросить дальше эвент, если нажатие произошло над фигурой
+	if (!m_modificationHandler->isOnFigure(sceneCoord))
+	{
+		m_modificationHandler->addNewSelectionRectangle(sceneCoord);
+	}
+	else
+	{
+		QGraphicsScene::mousePressEvent(mouseEvent);
+	}
+}
+
+void FigureScene::onLeftMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
+	// Обновляем отрисовку сцены
+	update();
+
+	// Координаты эвента на Сцене
+	const QPointF sceneCoord = mouseEvent->scenePos();
+
+	//  Продолжать отрисовку Прямоугольника выделения
+	m_modificationHandler->continueDrawingSelectionRectangle(sceneCoord);
+}
+
+void FigureScene::onLeftMouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
+	// Координаты эвента на Сцене
+	const QPointF sceneCoord = mouseEvent->scenePos();
+
+	// Завершить отрисовку прямоугольника выделения, если он создан
+	m_modificationHandler->completeDrawingSelectionRectangle(sceneCoord);
+
+	if (!m_modificationHandler->isOnFigure(sceneCoord))
+	{
+		m_modificationHandler->modificateOnLeftMouseReleased(sceneCoord);
+	}
 }
 
 void FigureScene::handleSelectedDelete()
