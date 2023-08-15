@@ -118,6 +118,7 @@ void FigureScene::handleSelectedDelete()
 	foreach (auto* item, selectedItems())
 	{
 		removeItem(item);
+		delete item;
 	}
 
 	// DEBUG:

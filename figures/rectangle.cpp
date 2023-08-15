@@ -17,6 +17,8 @@ Rectangle::Rectangle(QGraphicsItem* parent)
 
 Rectangle::~Rectangle()
 {
+	// DEBUG:
+	qDebug("Rectangle deleted");
 }
 
 int Rectangle::type() const

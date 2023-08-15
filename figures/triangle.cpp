@@ -19,6 +19,8 @@ Triangle::Triangle(QGraphicsItem* parent)
 
 Triangle::~Triangle()
 {
+	// DEBUG:
+	qDebug("Triangle deleted");
 }
 
 int Triangle::type() const

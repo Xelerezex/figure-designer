@@ -17,6 +17,8 @@ Circle::Circle(QGraphicsItem* parent)
 
 Circle::~Circle()
 {
+	// DEBUG:
+	qDebug("Circle deleted");
 }
 
 int Circle::type() const

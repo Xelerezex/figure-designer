@@ -31,7 +31,7 @@ public:
 	 * \brief Возвращает тип фигуры
 	 * \return тип фигуры
 	 */
-	int type () const override;
+	[[nodiscard]] int type() const override;
 
 	/*!
 	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
@@ -142,7 +142,6 @@ public:
 	 */
 	void paint(QPainter*					   painter,
 			   const QStyleOptionGraphicsItem* option,
-
 			   QWidget*						   widget) override;
 
 	/*!
