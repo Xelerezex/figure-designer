@@ -5,6 +5,7 @@
 
 QT_BEGIN_NAMESPACE
 class QMenu;
+class CentralWidget;
 QT_END_NAMESPACE
 
 /*!
@@ -14,6 +15,8 @@ class FigureScene : public QGraphicsScene
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE(FigureScene)
+	// Разрешает центральному виджету изменять режим работы графической сцены
+	friend CentralWidget;
 
 public:
 	/*!
@@ -46,11 +49,48 @@ public:
 	 */
 	~FigureScene() override;
 
+	/*!
+	 * \brief Вернуть режим, в котором сейчас находится сцена
+	 * \return режим сцены
+	 */
+	[[nodiscard]] Mode currentMode() const;
+
+protected:
+	/*!
+	 * \brief Переопределнный метод Нажатия Кнопки Мыщи
+	 * \param mouseEvent - указатель на событие
+	 */
+	void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+
+	/*!
+	 * \brief Переопределнный метод Движения Мыщи
+	 * \param mouseEvent - указатель на событие
+	 */
+	void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+
+	/*!
+	 * \brief Переопределнный метод Отжатия Кнопки Мыщи
+	 * \param mouseEvent - указатель на событие
+	 */
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+
 private:
 	/*!
 	 * \brief Основные настройки данного класса
 	 */
 	void setupFigureScene();
+
+	/*!
+	 * \brief Установить текущий режим сцены
+	 * \param newCurrentMode - новый режим
+	 */
+	void setCurrentMode(Mode newCurrentMode);
+
+private:
+	/*!
+	 * \brief Режим работы в котором, в данный момент времени, находится сцена
+	 */
+	Mode m_currentMode;
 };
 
 #endif // FIGURESCENE_H

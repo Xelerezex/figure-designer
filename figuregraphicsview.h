@@ -84,6 +84,10 @@ protected:
 	 */
 	void mouseReleaseEvent(QMouseEvent* mouseEvent) override;
 
+	/*!
+	 * \brief Переопределнный метод двойного клика Кнопки Мыщи
+	 * \param mouseEvent - указатель на событие
+	 */
 	void mouseDoubleClickEvent(QMouseEvent* mouseEvent) override;
 
 private:

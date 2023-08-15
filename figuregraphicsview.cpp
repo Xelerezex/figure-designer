@@ -64,14 +64,6 @@ void FigureGraphicsView::mousePressEvent(QMouseEvent* mouseEvent)
 	{
 		onMouseLeftButtonPressed(mouseEvent);
 	}
-
-	// // Нажата ли клавиша CTRL
-	// const bool isCtrlPressed{
-	// 	QGuiApplication::keyboardModifiers().testFlag(Qt::ControlModifier)};
-	// if (isLeftButton && isCtrlPressed)
-	// {
-	// 	onLeftButtonPressedWithCtrl(mouseEvent);
-	// }
 }
 
 void FigureGraphicsView::mouseMoveEvent(QMouseEvent* mouseEvent)
@@ -107,6 +99,7 @@ void FigureGraphicsView::mouseReleaseEvent(QMouseEvent* mouseEvent)
 
 void FigureGraphicsView::mouseDoubleClickEvent(QMouseEvent* mouseEvent)
 {
+	// Блокируем все эвенты с двойным нажатием Мыщи по все йерархии
 	Q_UNUSED(mouseEvent);
 }
 
@@ -137,10 +130,10 @@ void FigureGraphicsView::onMouseLeftButtonPressed(QMouseEvent* mouseEvent)
 	{
 		m_figureHandler->addNewCircle(itemCoord, sceneCoord);
 	}
-	// else if (m_currentMode == Modification)
-	// {
-	// 	// m_modificationHandler->modificateOnLeftButtonPressed(itemCoord);
-	// }
+	else if (m_currentMode == Modification)
+	{
+		QGraphicsView::mousePressEvent(mouseEvent);
+	}
 }
 
 void FigureGraphicsView::onMouseLeftButtonMoved(QMouseEvent* mouseEvent)
@@ -160,14 +153,10 @@ void FigureGraphicsView::onMouseLeftButtonMoved(QMouseEvent* mouseEvent)
 	{
 		m_figureHandler->continueDrawingCircle(mouseEvent->pos());
 	}
-	// else if (m_currentMode == Modification)
-	//{
-	//	// DEBUG:
-	//	// qDebug() << "Modification moved with left";
-
-	//	// Вызов метода базового класса
-	//	// QGraphicsView::mouseMoveEvent(mouseEvent);
-	//}
+	else if (m_currentMode == Modification)
+	{
+		QGraphicsView::mouseMoveEvent(mouseEvent);
+	}
 }
 
 void FigureGraphicsView::onMouseLeftButtonReleased(QMouseEvent* mouseEvent)
@@ -208,10 +197,10 @@ void FigureGraphicsView::onMouseLeftButtonReleased(QMouseEvent* mouseEvent)
 	{
 		m_figureHandler->addNewTriangleDot(itemCoord, sceneCoord);
 	}
-	// else if (isModificationMode)
-	// {
-	// 	// m_modificationHandler->modificateOnLeftButtonClicked(itemCoord);
-	// }
+	else if (m_currentMode == Modification)
+	{
+		QGraphicsView::mouseReleaseEvent(mouseEvent);
+	}
 }
 
 void FigureGraphicsView::onEmptyMouseMoved(QMouseEvent* mouseEvent)
