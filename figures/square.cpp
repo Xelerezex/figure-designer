@@ -15,11 +15,8 @@ Square::Square(QGraphicsItem* parent)
 {
 }
 
-// DEBUG:
-#include <QDebug>
 Square::~Square()
 {
-	qDebug() << "Square deleted";
 }
 
 int Square::type() const

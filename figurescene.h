@@ -76,6 +76,12 @@ protected:
 	 */
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
 
+	/*!
+	 * \brief Переопределнный метод Отжатия кнопки
+	 * \param event - указатель на событие
+	 */
+	void keyReleaseEvent(QKeyEvent* event) override;
+
 private:
 	/*!
 	 * \brief Основные настройки данного класса
@@ -87,6 +93,11 @@ private:
 	 * \param newCurrentMode - новый режим
 	 */
 	void setCurrentMode(Mode newCurrentMode);
+
+	/*!
+	 * \brief Метод для удаления всех выделенных фигур
+	 */
+	void handleSelectedDelete();
 
 private:
 	/*!

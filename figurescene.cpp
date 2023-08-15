@@ -4,6 +4,7 @@
 #include "modificationhandler.h"
 
 #include <QMenu>
+#include <QKeyEvent>
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 // DEBUG:
@@ -71,6 +72,19 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	}
 }
 
+void FigureScene::keyReleaseEvent(QKeyEvent* event)
+{
+	if (m_currentMode != Modification)
+	{
+		return;
+	}
+
+	if (event->key() == Qt::Key_D)
+	{
+		handleSelectedDelete();
+	}
+}
+
 void FigureScene::setupFigureScene()
 {
 	// Устанавливаем ограничения по Сцене
@@ -87,4 +101,18 @@ void FigureScene::setupFigureScene()
 void FigureScene::setCurrentMode(Mode newCurrentMode)
 {
 	m_currentMode = newCurrentMode;
+}
+
+void FigureScene::handleSelectedDelete()
+{
+	// DEBUG:
+	qDebug() << "Deleted" << selectedItems().size() << "items";
+
+	foreach (auto* item, selectedItems())
+	{
+		removeItem(item);
+	}
+
+	// DEBUG:
+	qDebug() << "Elements remained" << items().size();
 }
