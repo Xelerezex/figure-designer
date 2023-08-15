@@ -36,12 +36,24 @@ public:
 	~ModificationHandler() override;
 
 	/*!
+	 * \brief Метод проверяет, есть ли по данным координатам какой-то объект
+	 * \param sceneCoord - координаты сцены
+	 * \return true - если сцена не пуста и объект есть
+	 */
+	bool isOnFigure(const QPointF& sceneCoord) const;
+
+	/*!
+	 * \brief Применение модификаций к Фигурам по нажатию левой кнопки мыши
+	 * \param sceneCoord - координата сцены, где произошел евент
+	 */
+	void modificateOnLeftMousePressed(const QPointF& sceneCoord);
+
+	/*!
 	 * \brief Применение модификаций к Фигурам по отпуску левой кнопки мыши
 	 * \param sceneCoord - координата сцены, где произошел евент
 	 */
 	void modificateOnLeftMouseReleased(const QPointF& sceneCoord);
 
-private:
 	/*!
 	 * \brief Метод убирает выделение со всех объектов сцены
 	 */

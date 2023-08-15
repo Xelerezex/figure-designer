@@ -15,6 +15,7 @@ FigureScene::FigureScene(/*QMenu* itemMenu, */ QObject* parent)
 	, m_currentMode{Mode::Modification}
 	, m_clickTracker{new ClickTracker{this}}
 	, m_modificationHandler{new ModificationHandler{this, m_clickTracker}}
+	, m_selectionRect{nullptr}
 {
 	// Настраиваем сцену
 	setupFigureScene();
@@ -33,43 +34,47 @@ FigureScene::Mode FigureScene::currentMode() const
 
 void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-	const QPointF  sceneCoord = mouseEvent->scenePos();
-
-	QGraphicsItem* figure = itemAt(sceneCoord, QTransform{});
-
-	if (m_currentMode == Modification)
+	if (m_currentMode != Modification)
 	{
-		m_clickTracker->setLastLeftMousePressed(sceneCoord);
-		qDebug() << "Pressed at:" << sceneCoord;
+		return;
+	}
 
-		if (figure != nullptr)
-		{
-			qDebug() << "Item at" << sceneCoord << "is" << figure->type();
-			QGraphicsScene::mousePressEvent(mouseEvent);
-		}
+	const QPointF sceneCoord = mouseEvent->scenePos();
+
+	// Произвести действие по нажатию левой кнопки мыщи
+	m_modificationHandler->modificateOnLeftMousePressed(sceneCoord);
+
+	// Пробросить дальше эвент, если нажатие произошло над фигурой
+	if (m_modificationHandler->isOnFigure(sceneCoord))
+	{
+		QGraphicsScene::mousePressEvent(mouseEvent);
 	}
 }
 
 void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+	if (m_currentMode != Modification)
+	{
+		return;
+	}
+
 	const QPointF sceneCoord = mouseEvent->scenePos();
 
-	if (m_currentMode == Modification)
-	{
-		qDebug() << "Moved to:" << sceneCoord;
-		QGraphicsScene::mouseMoveEvent(mouseEvent);
-	}
+	qDebug() << "Moved to:" << sceneCoord;
+	QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
 void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+	if (m_currentMode != Modification)
+	{
+		return;
+	}
+
 	const QPointF sceneCoord = mouseEvent->scenePos();
 
-	if (m_currentMode == Modification)
-	{
-		m_modificationHandler->modificateOnLeftMouseReleased(sceneCoord);
-		QGraphicsScene::mouseReleaseEvent(mouseEvent);
-	}
+	m_modificationHandler->modificateOnLeftMouseReleased(sceneCoord);
+	QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
 void FigureScene::keyReleaseEvent(QKeyEvent* event)
@@ -101,6 +106,8 @@ void FigureScene::setupFigureScene()
 void FigureScene::setCurrentMode(Mode newCurrentMode)
 {
 	m_currentMode = newCurrentMode;
+	// При переключении Режимов - выбор Фигур должен спадать
+	m_modificationHandler->unselectAllItems();
 }
 
 void FigureScene::handleSelectedDelete()

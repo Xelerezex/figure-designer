@@ -34,6 +34,8 @@ add_library(
             continuedrawing.cpp
             completedrawing.h
             completedrawing.cpp
+            selectionrectangle.h
+            selectionrectangle.cpp
 )
 
 target_link_libraries(

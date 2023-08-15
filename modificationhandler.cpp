@@ -19,21 +19,40 @@ ModificationHandler::~ModificationHandler()
 {
 }
 
+bool ModificationHandler::isOnFigure(const QPointF& sceneCoord) const
+{
+	// Указатель на фигуру
+	QGraphicsItem* figure = m_parentScene->itemAt(sceneCoord, QTransform{});
+
+	// DEBUG:
+	if (figure != nullptr)
+	{
+		qDebug() << "Item at" << sceneCoord << "is" << figure->type();
+	}
+
+	return figure != nullptr;
+}
+
+void ModificationHandler::modificateOnLeftMousePressed(
+	const QPointF& sceneCoord)
+{
+	// Устанавливаем координату последнего нажатия левой кнопки мыши
+	m_clickTracker->setLastLeftMousePressed(sceneCoord);
+
+	// DEBUG:
+	qDebug() << "Pressed at:" << sceneCoord;
+}
+
 void ModificationHandler::modificateOnLeftMouseReleased(
 	const QPointF& sceneCoord)
 {
 	// Устанавливаем координату последнего отпуска левой кнопки мыши
 	m_clickTracker->setLastLeftMouseReleased(sceneCoord);
 
-	// Указатель на фигуру
-	QGraphicsItem* figure = m_parentScene->itemAt(sceneCoord, QTransform{});
-
 	// Произошел ли клик
 	const bool isClicked{m_clickTracker->isLeftMouseClicked()};
-	// Произошел ли отпуск левой кнопки мыши над фигурой
-	const bool isOnFigure{figure != nullptr};
 
-	if (isClicked && !isOnFigure)
+	if (isClicked && !isOnFigure(sceneCoord))
 	{
 		qDebug() << "Clicked at:" << sceneCoord;
 		unselectAllItems();
