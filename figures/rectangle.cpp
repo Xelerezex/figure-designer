@@ -19,6 +19,11 @@ Rectangle::~Rectangle()
 {
 }
 
+int Rectangle::type() const
+{
+	return FigureBase::Rectangle;
+}
+
 void Rectangle::act(StartDrawing&& startDrawing)
 {
 	startDrawing.act(this);

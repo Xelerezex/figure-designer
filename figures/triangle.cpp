@@ -21,6 +21,11 @@ Triangle::~Triangle()
 {
 }
 
+int Triangle::type() const
+{
+	return FigureBase::Triangle;
+}
+
 void Triangle::act(StartDrawing&& startDrawing)
 {
 	startDrawing.act(this);

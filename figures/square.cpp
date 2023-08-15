@@ -22,6 +22,11 @@ Square::~Square()
 	qDebug() << "Square deleted";
 }
 
+int Square::type() const
+{
+	return FigureBase::Square;
+}
+
 void Square::act(StartDrawing&& startDrawing)
 {
 	startDrawing.act(this);

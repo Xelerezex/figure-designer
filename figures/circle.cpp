@@ -19,6 +19,11 @@ Circle::~Circle()
 {
 }
 
+int Circle::type() const
+{
+	return FigureBase::Circle;
+}
+
 void Circle::act(StartDrawing&& startDrawing)
 {
 	startDrawing.act(this);

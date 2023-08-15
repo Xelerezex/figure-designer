@@ -23,6 +23,12 @@ public:
 	~Square() override;
 
 	/*!
+	 * \brief Возвращает тип фигуры
+	 * \return тип фигуры
+	 */
+	int type () const override;
+
+	/*!
 	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
 	 *        квадрата (visitor)
 	 * \param startDrawing - класс действия начала отрисовки квадрата

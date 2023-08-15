@@ -28,6 +28,12 @@ public:
 	~Triangle() override;
 
 	/*!
+	 * \brief Возвращает тип фигуры
+	 * \return тип фигуры
+	 */
+	int type () const override;
+
+	/*!
 	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
 	 *        треугольника (visitor)
 	 * \param startDrawing - класс действия начала отрисовки треугольника
