@@ -33,6 +33,11 @@ void FigureBase::completeCreating()
 	m_currentCycle = FullyCreated;
 }
 
+bool FigureBase::isNotExisting() const
+{
+	return m_currentCycle == NotExisting;
+}
+
 bool FigureBase::isFullyCreated() const
 {
 	return m_currentCycle == FullyCreated;

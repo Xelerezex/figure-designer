@@ -46,5 +46,11 @@ void ContinueDrawing::act(Rectangle* rectangle)
 
 void ContinueDrawing::act(SelectionRectangle* selectRect)
 {
+	// Если на этом этапе метода еще не существует - начинаем его создание
+	if (selectRect->isNotExisting())
+	{
+		selectRect->startCreating();
+	}
+
 	selectRect->setDestination(m_itemCoord);
 }

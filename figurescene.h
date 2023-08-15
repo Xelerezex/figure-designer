@@ -95,6 +95,23 @@ private:
 	void setCurrentMode(Mode newCurrentMode);
 
 	/*!
+	 * \brief Метод, вызываемый при нажатии на левую кнопку мыши
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при движении мыши
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при разжатии левой кнопки мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onMouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
+	/*!
 	 * \brief Метод для удаления всех выделенных фигур
 	 */
 	void handleSelectedDelete();

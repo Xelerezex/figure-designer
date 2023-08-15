@@ -83,6 +83,12 @@ public:
 	void completeCreating();
 
 	/*!
+	 * \brief Метод возвращает признак отсутсвия объекта на сцене
+	 * \return true - метод отсутсвует
+	 */
+	[[nodiscard]] bool isNotExisting() const;
+
+	/*!
 	 * \brief Метод возвращает признак полного создания элемента
 	 * \return true - если создание завершено
 	 */

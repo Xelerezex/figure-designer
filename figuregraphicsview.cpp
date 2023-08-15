@@ -33,6 +33,7 @@ void FigureGraphicsView::setupFigureGraphicsView()
 	setRenderHint(QPainter::HighQualityAntialiasing, true);
 	setRenderHint(QPainter::TextAntialiasing, true);
 	setRenderHint(QPainter::SmoothPixmapTransform, true);
+	setCacheMode(QGraphicsView::CacheBackground);
 
 	// Задаем основные режимы работы Вью:
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);

@@ -37,6 +37,9 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	{
 		return;
 	}
+
+	update();
+
 	// Координаты эвента на Сцене
 	const QPointF sceneCoord = mouseEvent->scenePos();
 
@@ -44,7 +47,11 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	m_modificationHandler->modificateOnLeftMousePressed(sceneCoord);
 
 	// Пробросить дальше эвент, если нажатие произошло над фигурой
-	if (m_modificationHandler->isOnFigure(sceneCoord))
+	if (!m_modificationHandler->isOnFigure(sceneCoord))
+	{
+		m_modificationHandler->addNewSelectionRectangle(sceneCoord);
+	}
+	else
 	{
 		QGraphicsScene::mousePressEvent(mouseEvent);
 	}
@@ -57,9 +64,17 @@ void FigureScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		return;
 	}
 
+	update();
+
+	// Координаты эвента на Сцене
 	const QPointF sceneCoord = mouseEvent->scenePos();
 
-	qDebug() << "Moved to:" << sceneCoord;
+	if (!m_modificationHandler->isOnFigure(sceneCoord))
+	{
+		// Продолжать отрисовку Прямоугольника выделения
+		m_modificationHandler->continueDrawingSelectionRectangle(sceneCoord);
+	}
+
 	QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
@@ -70,9 +85,17 @@ void FigureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		return;
 	}
 
+	// Координаты эвента на Сцене
 	const QPointF sceneCoord = mouseEvent->scenePos();
 
-	m_modificationHandler->modificateOnLeftMouseReleased(sceneCoord);
+	// Завершить отрисовку прямоугольника выделения, если он создан
+	m_modificationHandler->completeDrawingSelectionRectangle(sceneCoord);
+
+	if (!m_modificationHandler->isOnFigure(sceneCoord))
+	{
+		m_modificationHandler->modificateOnLeftMouseReleased(sceneCoord);
+	}
+
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
@@ -91,6 +114,9 @@ void FigureScene::keyReleaseEvent(QKeyEvent* event)
 
 void FigureScene::setupFigureScene()
 {
+	// DEBUG:
+	setItemIndexMethod(QGraphicsScene::NoIndex);
+
 	// Устанавливаем ограничения по Сцене
 	const qreal coordX{0};
 	const qreal coordY{0};

@@ -60,6 +60,12 @@ void SelectionRectangle::paint(QPainter*					   painter,
 							   const QStyleOptionGraphicsItem* option,
 							   QWidget*						   widget)
 {
+	// Не рисуем метод, если не задан режим отрисовки
+	if (isNotExisting())
+	{
+		return;
+	}
+
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
 

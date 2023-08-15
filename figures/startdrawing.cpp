@@ -56,7 +56,6 @@ void StartDrawing::act(Rectangle* rectangle)
 
 void StartDrawing::act(SelectionRectangle* selectRect)
 {
-	selectRect->startCreating();
 	selectRect->setCenter(m_itemCoord);
 	selectRect->setDestination(m_itemCoord + m_defaultShift);
 	selectRect->setPos(m_sceneCoord - m_itemCoord);

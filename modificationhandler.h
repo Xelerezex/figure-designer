@@ -6,6 +6,7 @@
 QT_BEGIN_NAMESPACE
 class FigureScene;
 class ClickTracker;
+class QGraphicsItem;
 class SelectionRectangle;
 QT_END_NAMESPACE
 
@@ -41,7 +42,7 @@ public:
 	 * \param sceneCoord - координаты сцены
 	 * \return true - если сцена не пуста и объект есть
 	 */
-	bool isOnFigure(const QPointF& sceneCoord) const;
+	[[nodiscard]] bool isOnFigure(const QPointF& sceneCoord) const;
 
 	/*!
 	 * \brief Применение модификаций к Фигурам по нажатию левой кнопки мыши
@@ -56,9 +57,43 @@ public:
 	void modificateOnLeftMouseReleased(const QPointF& sceneCoord);
 
 	/*!
+	 * \brief Выделить все элементы сцены, переданные в параметр
+	 * \param list - элементы на выделение
+	 */
+	void selectAllItemsInList(const QList<QGraphicsItem*>& list);
+
+	/*!
 	 * \brief Метод убирает выделение со всех объектов сцены
 	 */
 	void unselectAllItems() const;
+
+	/*!
+	 * \brief Метод начинает отрисовку прямоугольника для выбора фигур
+	 * \param sceneCoord - координата сцены, где произошел евент
+	 */
+	void addNewSelectionRectangle(const QPointF& sceneCoord);
+
+	/*!
+	 * \brief Метод продолжает отрисовку прямоугольника для выбора фигур
+	 * \param sceneCoord - координата сцены, где произошел евент
+	 */
+	void continueDrawingSelectionRectangle(const QPointF& sceneCoord);
+
+	/*!
+	 * \brief Метод продолжает отрисовку прямоугольника для выбора фигур
+	 * \param sceneCoord - координата сцены, где произошел евент
+	 */
+	void completeDrawingSelectionRectangle(const QPointF& sceneCoord);
+
+	/*!
+	 * \brief Метод обновляет все выделенные отрисованные фигуры
+	 */
+	void updateSelectedItems() const;
+
+	/*!
+	 * \brief Метод обновляет все отрисованные фигуры
+	 */
+	void updateAllItems() const;
 
 private:
 	/*!
