@@ -41,12 +41,12 @@ void Circle::act(CompleteDrawing&& completeDrawing)
 	completeDrawing.act(this);
 }
 
-QPointF Circle::destination() const
+const QPointF& Circle::destination() const
 {
 	return m_destination;
 }
 
-void Circle::setDestination(QPointF newDestination)
+void Circle::setDestination(const QPointF& newDestination)
 {
 	m_destination = newDestination;
 }

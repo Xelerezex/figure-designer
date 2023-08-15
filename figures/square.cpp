@@ -41,12 +41,12 @@ void Square::act(CompleteDrawing&& completeDrawing)
 	completeDrawing.act(this);
 }
 
-QPointF Square::destination() const
+const QPointF& Square::destination() const
 {
 	return m_destination;
 }
 
-void Square::setDestination(QPointF newDestination)
+void Square::setDestination(const QPointF& newDestination)
 {
 	m_destination = newDestination;
 }

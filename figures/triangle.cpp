@@ -43,12 +43,12 @@ void Triangle::act(CompleteDrawing&& completeDrawing)
 	completeDrawing.act(this);
 }
 
-QPointF Triangle::first() const
+const QPointF& Triangle::first() const
 {
 	return m_first;
 }
 
-void Triangle::setFirst(QPointF newFirst)
+void Triangle::setFirst(const QPointF& newFirst)
 {
 	m_first = newFirst;
 }
@@ -58,12 +58,12 @@ bool Triangle::isFirstDrawn() const
 	return m_currentStatus == FirstPointDrawn;
 }
 
-QPointF Triangle::second() const
+const QPointF& Triangle::second() const
 {
 	return m_second;
 }
 
-void Triangle::setSecond(QPointF newSecond)
+void Triangle::setSecond(const QPointF& newSecond)
 {
 	m_second = newSecond;
 }
@@ -73,12 +73,12 @@ bool Triangle::isSecondDrawn() const
 	return m_currentStatus == SecondPointDrawn;
 }
 
-QPointF Triangle::third() const
+const QPointF& Triangle::third() const
 {
 	return m_third;
 }
 
-void Triangle::setThird(QPointF newThird)
+void Triangle::setThird(const QPointF& newThird)
 {
 	m_third = newThird;
 	// Устанавливаем центр фигуры, после того, как узнали координаты третьей

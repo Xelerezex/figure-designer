@@ -62,13 +62,13 @@ public:
 	 * \brief Получить координаты точки центра
 	 * \return координаты
 	 */
-	[[nodiscard]] QPointF center() const;
+	[[nodiscard]] const QPointF& center() const;
 
 	/*!
 	 * \brief Установить координаты центра фигуры
 	 * \param newCenter - новые координаты центра
 	 */
-	void setCenter(QPointF newCenter);
+	void setCenter(const QPointF& newCenter);
 
 	/*!
 	 * \brief Метод должен вызываться когда начинается первичное создание

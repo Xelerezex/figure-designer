@@ -41,14 +41,27 @@ void SelectionRectangle::act(CompleteDrawing&& completeDrawing)
 	completeDrawing.act(this);
 }
 
-QPointF SelectionRectangle::destination() const
+const QPointF& SelectionRectangle::leftTop()
+{
+	return m_leftTop;
+}
+
+void SelectionRectangle::setLeftTop(const QPointF& newLeftTop)
+{
+	m_leftTop = newLeftTop;
+}
+
+const QPointF& SelectionRectangle::destination() const
 {
 	return m_destination;
 }
 
-void SelectionRectangle::setDestination(QPointF newDestination)
+void SelectionRectangle::setDestination(const QPointF& newDestination)
 {
 	m_destination = newDestination;
+
+	// Сохранить позицию центра, после отрисовки второй точки
+	setCenter(boundingRect().center());
 }
 
 QRectF SelectionRectangle::boundingRect() const
@@ -94,11 +107,5 @@ void SelectionRectangle::paint(QPainter*					   painter,
 
 QRectF SelectionRectangle::countFigure() const
 {
-	// Координаты точки в левом верхнем углу
-	QPointF topLeft{center().x(), center().y()};
-
-	// Координаты точки в правом нижнем углу
-	QPointF bottomRight{m_destination.x(), m_destination.y()};
-
-	return QRectF{topLeft, bottomRight};
+	return QRectF{m_leftTop, m_destination};
 }

@@ -53,13 +53,13 @@ public:
 	 * \brief Получить координаты второй точки
 	 * \return координаты
 	 */
-	[[nodiscard]] QPointF destination() const;
+	[[nodiscard]] const QPointF& destination() const;
 
 	/*!
 	 * \brief Установить координаты второй точки фигуры
 	 * \param newCenter - новые координаты второй точки
 	 */
-	void setDestination(QPointF newDestination);
+	void setDestination(const QPointF& newDestination);
 
 	/*!
 	 * \brief Функция определяет границы фигуры

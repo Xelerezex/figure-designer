@@ -7,19 +7,19 @@ FigureBase::FigureBase(QGraphicsItem* parent)
 {
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
-	// setFlag(QGraphicsItem::ItemSendsScenePositionChanges, true);
+	setFlag(QGraphicsItem::ItemSendsScenePositionChanges, true);
 }
 
 FigureBase::~FigureBase()
 {
 }
 
-QPointF FigureBase::center() const
+const QPointF& FigureBase::center() const
 {
 	return m_center;
 }
 
-void FigureBase::setCenter(QPointF newCenter)
+void FigureBase::setCenter(const QPointF& newCenter)
 {
 	m_center = newCenter;
 }
