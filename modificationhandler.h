@@ -6,6 +6,7 @@
 QT_BEGIN_NAMESPACE
 class FigureScene;
 class ClickTracker;
+class SelectionRectangle;
 QT_END_NAMESPACE
 
 /*!
@@ -69,6 +70,11 @@ private:
 	 * \brief Указатель на класс трекающий клики кнопок
 	 */
 	ClickTracker* m_clickTracker;
+
+	/*!
+	 * \brief Указатель на класс прямоугольника выделения
+	 */
+	SelectionRectangle* m_selectionRect;
 };
 
 #endif // MODIFICATIONHANDLER_H

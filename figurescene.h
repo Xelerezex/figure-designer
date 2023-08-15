@@ -7,7 +7,6 @@ QT_BEGIN_NAMESPACE
 class QMenu;
 class ClickTracker;
 class CentralWidget;
-class SelectionRectangle;
 class ModificationHandler;
 QT_END_NAMESPACE
 
@@ -115,11 +114,6 @@ private:
 	 * \brief Указатель на обработчик модификации объектов фигур
 	 */
 	ModificationHandler* m_modificationHandler;
-
-	/*!
-	 * \brief Указатель на класс прямоугольника выделения
-	 */
-	SelectionRectangle* m_selectionRect;
 };
 
 #endif // FIGURESCENE_H

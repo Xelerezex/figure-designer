@@ -4,6 +4,7 @@
 #include "circle.h"
 #include "triangle.h"
 #include "rectangle.h"
+#include "selectionrectangle.h"
 
 CompleteDrawing::CompleteDrawing(const QPointF& itemCoord)
 	: m_itemCoord{itemCoord}
@@ -58,4 +59,12 @@ void CompleteDrawing::act(Rectangle* rectangle)
 	rectangle->completeCreating();
 	rectangle->setSelected(false);
 	rectangle->update();
+}
+
+void CompleteDrawing::act(SelectionRectangle* selectRect)
+{
+	selectRect->setDestination(m_itemCoord);
+	selectRect->completeCreating();
+	selectRect->setSelected(false);
+	selectRect->update();
 }

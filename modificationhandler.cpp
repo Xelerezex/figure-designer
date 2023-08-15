@@ -2,6 +2,11 @@
 
 #include "clicktracker.h"
 #include "figurescene.h"
+#include "selectionrectangle.h"
+
+#include "startdrawing.h"
+#include "continuedrawing.h"
+#include "completedrawing.h"
 
 #include <QGraphicsItem>
 // DEBUG:
@@ -12,6 +17,7 @@ ModificationHandler::ModificationHandler(FigureScene*  parent,
 	: QObject{parent}
 	, m_parentScene{parent}
 	, m_clickTracker{clickTracker}
+	, m_selectionRect{nullptr}
 {
 }
 

@@ -4,6 +4,7 @@
 #include "circle.h"
 #include "triangle.h"
 #include "rectangle.h"
+#include "selectionrectangle.h"
 
 StartDrawing::StartDrawing(const QPointF& itemCoord, const QPointF& sceneCoord)
 	: m_itemCoord{itemCoord}
@@ -51,4 +52,12 @@ void StartDrawing::act(Rectangle* rectangle)
 	rectangle->setCenter(m_itemCoord);
 	rectangle->setDestination(m_itemCoord + m_defaultShift);
 	rectangle->setPos(m_sceneCoord - m_itemCoord);
+}
+
+void StartDrawing::act(SelectionRectangle* selectRect)
+{
+	selectRect->startCreating();
+	selectRect->setCenter(m_itemCoord);
+	selectRect->setDestination(m_itemCoord + m_defaultShift);
+	selectRect->setPos(m_sceneCoord - m_itemCoord);
 }

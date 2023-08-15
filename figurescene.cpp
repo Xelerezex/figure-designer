@@ -15,7 +15,6 @@ FigureScene::FigureScene(/*QMenu* itemMenu, */ QObject* parent)
 	, m_currentMode{Mode::Modification}
 	, m_clickTracker{new ClickTracker{this}}
 	, m_modificationHandler{new ModificationHandler{this, m_clickTracker}}
-	, m_selectionRect{nullptr}
 {
 	// Настраиваем сцену
 	setupFigureScene();
@@ -38,7 +37,7 @@ void FigureScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	{
 		return;
 	}
-
+	// Координаты эвента на Сцене
 	const QPointF sceneCoord = mouseEvent->scenePos();
 
 	// Произвести действие по нажатию левой кнопки мыщи

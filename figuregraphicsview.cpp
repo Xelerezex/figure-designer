@@ -145,11 +145,11 @@ void FigureGraphicsView::onMouseLeftButtonMoved(QMouseEvent* mouseEvent)
 	}
 	else if (m_currentMode == RectangleDraw)
 	{
-		m_figureHandler->continueDrawingRectangle(mouseEvent->pos());
+		m_figureHandler->continueDrawingRectangle(itemCoord);
 	}
 	else if (m_currentMode == CircleDraw)
 	{
-		m_figureHandler->continueDrawingCircle(mouseEvent->pos());
+		m_figureHandler->continueDrawingCircle(itemCoord);
 	}
 	else if (m_currentMode == Modification)
 	{

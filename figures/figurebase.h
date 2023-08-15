@@ -24,6 +24,7 @@ public:
 		Rectangle = UserType + 2, /*! Прямоугольник <*/
 		Triangle  = UserType + 3, /*! Треугольник <*/
 		Circle	  = UserType + 4, /*! Окружность <*/
+		SelectionRectangle = UserType + 5, /*! Прямоугольник выделения <*/
 	};
 
 	/*!

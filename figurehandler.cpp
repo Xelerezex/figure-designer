@@ -82,6 +82,7 @@ void FigureHandler::addNewTriangleDot(QPointF itemCoord, QPointF sceneCoord)
 
 void FigureHandler::continueDrawingSquare(QPointF itemCoord)
 {
+	// TODO: try to added m_currentSquare != nullptr
 	m_currentSquare->act(ContinueDrawing{itemCoord});
 	m_parentView->scene()->update();
 }
