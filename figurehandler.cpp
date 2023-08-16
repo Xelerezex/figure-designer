@@ -171,10 +171,7 @@ void FigureHandler::abortDrawing()
 
 void FigureHandler::cloneSelectedItems()
 {
-	const auto& items = m_parentView->scene()->selectedItems();
-
-	// Убираем старые выделения фигур
-	unselectAllItems();
+	const auto items = m_parentView->scene()->selectedItems();
 
 	foreach (const auto& item, items)
 	{
@@ -195,6 +192,14 @@ void FigureHandler::cloneSelectedItems()
 			m_parentView->scene()->addItem(FigureCloner::cloneCircle(item));
 		}
 	}
+
+	// Убираем старые выделения фигур
+	// unselectAllItems();
+
+	// foreach (const auto& item, items)
+	//{
+	//	item->setSelected(true);
+	// }
 }
 
 void FigureHandler::handleTriangleRemovement()

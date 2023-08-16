@@ -148,7 +148,7 @@ private:
 	 * \param sceneCoord - координаты сцены
 	 * \return true - если сцена не пуста и объект есть
 	 */
-	[[nodiscard]] bool isOnFigure(const QPointF& sceneCoord) const;
+	[[nodiscard]] bool isOnSelectedFigure(const QPointF& sceneCoord) const;
 
 	/*!
 	 * \brief Метод для дебага
