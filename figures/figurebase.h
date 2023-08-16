@@ -16,6 +16,18 @@ class FigureBase : public QGraphicsItem
 
 public:
 	/*!
+	 *  \brief Типы графических элементов
+	 */
+	enum
+	{
+		Square	  = UserType + 1, /*! Квадрат <*/
+		Rectangle = UserType + 2, /*! Прямоугольник <*/
+		Triangle  = UserType + 3, /*! Треугольник <*/
+		Circle	  = UserType + 4, /*! Окружность <*/
+		SelectionRectangle = UserType + 5, /*! Прямоугольник выделения <*/
+	};
+
+	/*!
 	 * \brief Удаленный дефолтный конструктор
 	 */
 	FigureBase() = delete;
@@ -50,13 +62,13 @@ public:
 	 * \brief Получить координаты точки центра
 	 * \return координаты
 	 */
-	[[nodiscard]] QPointF center() const;
+	[[nodiscard]] const QPointF& center() const;
 
 	/*!
 	 * \brief Установить координаты центра фигуры
 	 * \param newCenter - новые координаты центра
 	 */
-	void setCenter(QPointF newCenter);
+	void setCenter(const QPointF& newCenter);
 
 	/*!
 	 * \brief Метод должен вызываться когда начинается первичное создание
@@ -69,6 +81,12 @@ public:
 	 *        настрйоки объекта
 	 */
 	void completeCreating();
+
+	/*!
+	 * \brief Метод возвращает признак отсутсвия объекта на сцене
+	 * \return true - метод отсутсвует
+	 */
+	[[nodiscard]] bool isNotExisting() const;
 
 	/*!
 	 * \brief Метод возвращает признак полного создания элемента

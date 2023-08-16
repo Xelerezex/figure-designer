@@ -52,6 +52,12 @@ public:
 	 */
 	void act(Rectangle* rectangle) override;
 
+	/*!
+	 * \brief Действие начала отрисовки для класса представления
+	 *        Прямоугольника Выделения
+	 */
+	void act(class SelectionRectangle* selectRect) override;
+
 private:
 	/*!
 	 * \brief Координаты фигуры в системе кординат Элемента Сцены

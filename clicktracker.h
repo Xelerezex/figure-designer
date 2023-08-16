@@ -38,35 +38,48 @@ public:
 	 *        мыщи
 	 * \return координата
 	 */
-	[[nodiscard]] QPointF lastLeftMousePressed() const;
+	[[nodiscard]] const QPointF& lastLeftMousePressed() const;
 
 	/*!
 	 * \brief Установить координату, где только что была нажата кнопка мыщи
 	 * \param newLastLeftMouseClick - новая координата
 	 */
-	void setLastLeftMousePressed(QPointF newLastLeftMousePressed);
+	void setLastLeftMousePressed(const QPointF& newLastLeftMousePressed);
 
 	/*!
 	 * \brief Получить координату где последний раз была отжата левая кнопка
 	 *        мыщи
 	 * \return координата
 	 */
-	[[nodiscard]] QPointF lastLeftMouseReleased() const;
+	[[nodiscard]] const QPointF& lastLeftMouseReleased() const;
 
 	/*!
 	 * \brief Установить координату, где только что была отжата кнопка мыщи
 	 * \param newLastLeftMouseReleased - новая координата
 	 */
-	void setLastLeftMouseReleased(QPointF newLastLeftMouseReleased);
+	void setLastLeftMouseReleased(const QPointF& newLastLeftMouseReleased);
 
 	/*!
 	 * \brief Метод проверяет произошел ли клик левой кнопки мыщи.
 	 *        Кликом считается пара действие - нажатие мыщи и не слишком
 	 *	      далекое, от нажатия, отжатие мыщи
 	 * \param newLeftMouseRelease - координата отжатия мыщи
+	 * \warning Для правильной отработки функции надо вызвать
+	 *          setLastLeftMousePressed()
 	 * \return true - если произошел клик.
 	 */
-	[[nodiscard]] bool isLeftMouseClicked(QPointF newLeftMouseRelease);
+	[[nodiscard]] bool isLeftMouseClicked(const QPointF& newLeftMouseRelease);
+
+	/*!
+	 * \brief Перегрузка метода проверки на клик. Отличие в том, что
+	 *        подставляется не вторая координата, а сверяется
+	 *        m_lastLeftMousePressed и m_lastLeftMouseReleased
+	 * \warning Для правильной отработки функции сначла надо вызвать
+	 *          setLastLeftMousePressed(), а потом обязательно
+	 *          setLastLeftMouseReleased()
+	 * \return true - если произошел клик.
+	 */
+	[[nodiscard]] bool isLeftMouseClicked();
 
 	/*!
 	 * \brief Метод проверяет на достаточном удалении находятся ли две точки
@@ -75,7 +88,14 @@ public:
 	 * \param second - вторая точка
 	 * \return true - если находятся на короткой дистанции
 	 */
-	[[nodiscard]] static bool isShortDistance(QPointF first, QPointF second);
+	[[nodiscard]] static bool isShortDistance(const QPointF& first,
+											  const QPointF& second);
+
+	QPointF lastRightMousePressed() const;
+	void setLastRightMousePressed(QPointF newLastRightMousePressed);
+
+	QPointF lastRightMouseReleased() const;
+	void setLastRightMouseReleased(QPointF newLastRightMouseReleased);
 
 private:
 	/*!
@@ -87,6 +107,16 @@ private:
 	 * \brief Координата отжатия левой кнопки мыщи
 	 */
 	QPointF m_lastLeftMouseReleased;
+
+	/*!
+	 * \brief Координата нажатия на левую кнопку мыщи
+	 */
+	QPointF m_lastRightMousePressed;
+
+	/*!
+	 * \brief Координата отжатия левой кнопки мыщи
+	 */
+	QPointF m_lastRightMouseReleased;
 };
 
 #endif // CLICKTRACKER_H

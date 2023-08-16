@@ -1,26 +1,26 @@
-#ifndef SQUARE_H
-#define SQUARE_H
+#ifndef SELECTIONRECTANGLE_H
+#define SELECTIONRECTANGLE_H
 
 #include "figurebase.h"
 
 /*!
- * \brief Базовый класс представления квадрата
+ * \brief Класс представления прямоугольника выделения фигур
  */
-class Square : public FigureBase
+class SelectionRectangle : public FigureBase
 {
-	Q_DISABLE_COPY_MOVE(Square);
+	Q_DISABLE_COPY_MOVE(SelectionRectangle);
 
 public:
 	/*!
 	 * \brief Основной конструктор
 	 * \param parent - указаетль на родительский класс
 	 */
-	explicit Square(QGraphicsItem* parent = nullptr);
+	explicit SelectionRectangle(QGraphicsItem* parent = nullptr);
 
 	/*!
 	 * \brief Основной деструктор
 	 */
-	~Square() override;
+	~SelectionRectangle() override;
 
 	/*!
 	 * \brief Возвращает тип фигуры
@@ -30,24 +30,36 @@ public:
 
 	/*!
 	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
-	 *        квадрата (visitor)
-	 * \param startDrawing - класс действия начала отрисовки квадрата
+	 *        прямоугольника (visitor)
+	 * \param startDrawing - класс действия начала отрисовки прямоугольника
 	 */
 	void act(StartDrawing&& startDrawing) override;
 
 	/*!
 	 * \brief Метод вызываемый, когда нужно совершить действие продолжения
-	 *        отрисовки квадрата (visitor)
-	 * \param startDrawing - класс действия продолжения отрисовки квадрата
+	 *        отрисовки прямоугольника (visitor)
+	 * \param startDrawing - класс действия продолжения отрисовки прямоугольника
 	 */
 	void act(ContinueDrawing&& continueDrawing) override;
 
 	/*!
 	 * \brief Метод вызываемый, когда нужно совершить действие завершения
-	 *        отрисовки квадрата (visitor)
-	 * \param startDrawing - класс действия завершения отрисовки квадрата
+	 *        отрисовки прямоугольника (visitor)
+	 * \param startDrawing - класс действия завершения отрисовки прямоугольника
 	 */
 	void act(CompleteDrawing&& completeDrawing) override;
+
+	/*!
+	 * \brief Возвращает начальную точку, от которой началась отрисовка
+	 * \return координата
+	 */
+	[[nodiscard]] const QPointF& leftTop();
+
+	/*!
+	 * \brief Установить первую точку для начала отрисовки
+	 * \param newLeftTop - новая координата
+	 */
+	void setLeftTop(const QPointF& newLeftTop);
 
 	/*!
 	 * \brief Получить координаты второй точки
@@ -88,9 +100,14 @@ private:
 
 private:
 	/*!
+	 * \brief Коориднаты левой верхней точки, от которой начинается отрисовка
+	 */
+	QPointF m_leftTop;
+
+	/*!
 	 * \brief Координаты второй Точки, нужной для построения Фигуры
 	 */
 	QPointF m_destination;
 };
 
-#endif // SQUARE_H
+#endif // SELECTIONRECTANGLE_H

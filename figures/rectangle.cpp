@@ -2,21 +2,24 @@
 
 #include <QPainter>
 
-// DEBUG:
-#include <QDebug>
-
 #include "startdrawing.h"
 #include "continuedrawing.h"
 #include "completedrawing.h"
 
 Rectangle::Rectangle(QGraphicsItem* parent)
 	: FigureBase{parent}
+	, m_leftTop{0.0, 0.0}
 	, m_destination{0.0, 0.0}
 {
 }
 
 Rectangle::~Rectangle()
 {
+}
+
+int Rectangle::type() const
+{
+	return FigureBase::Rectangle;
 }
 
 void Rectangle::act(StartDrawing&& startDrawing)
@@ -34,14 +37,27 @@ void Rectangle::act(CompleteDrawing&& completeDrawing)
 	completeDrawing.act(this);
 }
 
-QPointF Rectangle::destination() const
+const QPointF& Rectangle::leftTop()
+{
+	return m_leftTop;
+}
+
+void Rectangle::setLeftTop(const QPointF& newLeftTop)
+{
+	m_leftTop = newLeftTop;
+}
+
+const QPointF& Rectangle::destination() const
 {
 	return m_destination;
 }
 
-void Rectangle::setDestination(QPointF newDestination)
+void Rectangle::setDestination(const QPointF& newDestination)
 {
 	m_destination = newDestination;
+
+	// Сохранить позицию центра, после отрисовки второй точки
+	setCenter(boundingRect().center());
 }
 
 QRectF Rectangle::boundingRect() const
@@ -80,11 +96,6 @@ void Rectangle::paint(QPainter*						  painter,
 		painter->setBrush(QBrush(color));
 	}
 
-	// DEBUG:
-	qDebug() << "PAINT RECTANGLE: "
-			 << "center:" << center() << "destination:" << m_destination
-			 << "POSITION ON SCENE:" << pos();
-
 	QPainterPath pathTitle;
 	pathTitle.setFillRule(Qt::OddEvenFill);
 
@@ -99,11 +110,5 @@ void Rectangle::paint(QPainter*						  painter,
 
 QRectF Rectangle::countFigure() const
 {
-	// Координаты точки в левом верхнем углу
-	QPointF topLeft{center().x(), center().y()};
-
-	// Координаты точки в правом нижнем углу
-	QPointF bottomRight{m_destination.x(), m_destination.y()};
-
-	return QRectF{topLeft, bottomRight};
+	return QRectF{m_leftTop, m_destination};
 }

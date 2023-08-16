@@ -28,6 +28,12 @@ public:
 	~Triangle() override;
 
 	/*!
+	 * \brief Возвращает тип фигуры
+	 * \return тип фигуры
+	 */
+	[[nodiscard]] int type() const override;
+
+	/*!
 	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
 	 *        треугольника (visitor)
 	 * \param startDrawing - класс действия начала отрисовки треугольника
@@ -53,13 +59,13 @@ public:
 	 * \brief Метод возвращает координаты Первой точки
 	 * \return координаты точки
 	 */
-	[[nodiscard]] QPointF first() const;
+	[[nodiscard]] const QPointF& first() const;
 
 	/*!
 	 * \brief Установить координаты первой точки фигуры
 	 * \param newCenter - новые координаты первой точки
 	 */
-	void setFirst(QPointF newFirst);
+	void setFirst(const QPointF& newFirst);
 
 	/*!
 	 * \brief Метод проверяет установлена ли первая точка Треугольника
@@ -72,13 +78,13 @@ public:
 	 * \brief Метод возвращает координаты Второй точки
 	 * \return координаты точки
 	 */
-	[[nodiscard]] QPointF second() const;
+	[[nodiscard]] const QPointF& second() const;
 
 	/*!
 	 * \brief Установить координаты второй точки фигуры
 	 * \param newCenter - новые координаты второй точки
 	 */
-	void setSecond(QPointF newSecond);
+	void setSecond(const QPointF& newSecond);
 
 	/*!
 	 * \brief Метод проверяет установлена ли вторая точка Треугольника
@@ -91,13 +97,13 @@ public:
 	 * \brief Метод возвращает координаты Третьей точки
 	 * \return координаты точки
 	 */
-	[[nodiscard]] QPointF third() const;
+	[[nodiscard]] const QPointF& third() const;
 
 	/*!
 	 * \brief Установить координаты третьей точки фигуры
 	 * \param newCenter - новые координаты третьей точки
 	 */
-	void setThird(QPointF newThird);
+	void setThird(const QPointF& newThird);
 
 	/*!
 	 * \brief Метод проверяет установлена ли третья точка Треугольника
@@ -136,7 +142,6 @@ public:
 	 */
 	void paint(QPainter*					   painter,
 			   const QStyleOptionGraphicsItem* option,
-
 			   QWidget*						   widget) override;
 
 	/*!

@@ -1,5 +1,6 @@
 #include "figurehandler.h"
 
+#include "figurecloner.h"
 #include "clicktracker.h"
 #include "figuregraphicsview.h"
 
@@ -14,35 +15,23 @@
 
 #include <QGraphicsSceneMouseEvent>
 
-FigureHandler::FigureHandler(FigureGraphicsView* parent)
+#include <QtMath>
+
+FigureHandler::FigureHandler(FigureGraphicsView* parent,
+							 ClickTracker*		 clickTracker)
 	: QObject{parent}
 	, m_parentView{parent}
 	, m_currentSquare{nullptr}
 	, m_currentRectangle{nullptr}
 	, m_currentCircle{nullptr}
 	, m_currentTriangle{nullptr}
-	, m_clickHandler{new ClickTracker{this}}
+	, m_clickTracker{clickTracker}
 
 {
 }
 
 FigureHandler::~FigureHandler()
 {
-}
-
-void FigureHandler::setLastLeftMousePressed(QPointF pressedCoord)
-{
-	m_clickHandler->setLastLeftMousePressed(pressedCoord);
-}
-
-void FigureHandler::setLastLeftMouseReleased(QPointF releasedCoord)
-{
-	m_clickHandler->setLastLeftMouseReleased(releasedCoord);
-}
-
-bool FigureHandler::isLeftMouseClicked(QPointF newLeftMouseRelease)
-{
-	return m_clickHandler->isLeftMouseClicked(newLeftMouseRelease);
 }
 
 void FigureHandler::addNewSquare(QPointF itemCoord, QPointF sceneCoord)
@@ -96,31 +85,38 @@ void FigureHandler::addNewTriangleDot(QPointF itemCoord, QPointF sceneCoord)
 
 void FigureHandler::continueDrawingSquare(QPointF itemCoord)
 {
-	m_currentSquare->act(ContinueDrawing{itemCoord});
-	m_parentView->scene()->update();
+	if (m_currentSquare != nullptr)
+	{
+		m_currentSquare->act(ContinueDrawing{itemCoord});
+		m_parentView->scene()->update();
+	}
 }
 
 void FigureHandler::continueDrawingRectangle(QPointF coordinate)
 {
-	m_currentRectangle->act(ContinueDrawing{coordinate});
-	m_parentView->scene()->update();
+	if (m_currentRectangle != nullptr)
+	{
+		m_currentRectangle->act(ContinueDrawing{coordinate});
+		m_parentView->scene()->update();
+	}
 }
 
 void FigureHandler::continueDrawingCircle(QPointF coordinate)
 {
-	m_currentCircle->act(ContinueDrawing{coordinate});
-	m_parentView->scene()->update();
+	if (m_currentCircle != nullptr)
+	{
+		m_currentCircle->act(ContinueDrawing{coordinate});
+		m_parentView->scene()->update();
+	}
 }
 
 void FigureHandler::continueDrawingTriangle(QPointF coordinate)
 {
-	if (m_currentTriangle == nullptr)
+	if (m_currentTriangle != nullptr)
 	{
-		return;
+		m_currentTriangle->act(ContinueDrawing{coordinate});
+		m_parentView->scene()->update();
 	}
-
-	m_currentTriangle->act(ContinueDrawing{coordinate});
-	m_parentView->scene()->update();
 }
 
 void FigureHandler::completeSquare(QPointF coordinate)
@@ -173,13 +169,46 @@ void FigureHandler::abortDrawing()
 	}
 }
 
+void FigureHandler::cloneSelectedItems()
+{
+	const auto items = m_parentView->scene()->selectedItems();
+
+	foreach (const auto& item, items)
+	{
+		if (item->type() == FigureBase::Square)
+		{
+			m_parentView->scene()->addItem(FigureCloner::cloneSquare(item));
+		}
+		else if (item->type() == FigureBase::Rectangle)
+		{
+			m_parentView->scene()->addItem(FigureCloner::cloneRectangle(item));
+		}
+		else if (item->type() == FigureBase::Triangle)
+		{
+			m_parentView->scene()->addItem(FigureCloner::cloneTriangle(item));
+		}
+		else if (item->type() == FigureBase::Circle)
+		{
+			m_parentView->scene()->addItem(FigureCloner::cloneCircle(item));
+		}
+	}
+
+	// Убираем старые выделения фигур
+	// unselectAllItems();
+
+	// foreach (const auto& item, items)
+	//{
+	//	item->setSelected(true);
+	// }
+}
+
 void FigureHandler::handleTriangleRemovement()
 {
 	bool isShort{false};
 
 	// Координаты метса, гед отпустили мышку в системе координат Фигуры
 	QPointF leftMouseReleaseCoordItem
-		= m_parentView->mapFromScene(m_clickHandler->lastLeftMouseReleased());
+		= m_parentView->mapFromScene(m_clickTracker->lastLeftMouseReleased());
 
 	bool isFirstDrawn = m_currentTriangle->isFirstDrawn();
 	if (isFirstDrawn)
@@ -199,5 +228,13 @@ void FigureHandler::handleTriangleRemovement()
 	{
 		m_currentTriangle->stopDrawingLine();
 		m_parentView->scene()->removeItem(m_currentTriangle);
+	}
+}
+
+void FigureHandler::unselectAllItems() const
+{
+	foreach (const auto item, m_parentView->scene()->items())
+	{
+		item->setSelected(false);
 	}
 }

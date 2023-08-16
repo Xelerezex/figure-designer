@@ -23,6 +23,12 @@ public:
 	~Rectangle() override;
 
 	/*!
+	 * \brief Возвращает тип фигуры
+	 * \return тип фигуры
+	 */
+	[[nodiscard]] int type() const override;
+
+	/*!
 	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
 	 *        прямоугольника (visitor)
 	 * \param startDrawing - класс действия начала отрисовки прямоугольника
@@ -44,16 +50,28 @@ public:
 	void act(CompleteDrawing&& completeDrawing) override;
 
 	/*!
+	 * \brief Возвращает начальную точку, от которой началась отрисовка
+	 * \return координата
+	 */
+	[[nodiscard]] const QPointF& leftTop();
+
+	/*!
+	 * \brief Установить первую точку для начала отрисовки
+	 * \param newLeftTop - новая координата
+	 */
+	void setLeftTop(const QPointF& newLeftTop);
+
+	/*!
 	 * \brief Получить координаты второй точки
 	 * \return координаты
 	 */
-	[[nodiscard]] QPointF destination() const;
+	[[nodiscard]] const QPointF& destination() const;
 
 	/*!
 	 * \brief Установить координаты второй точки фигуры
 	 * \param newCenter - новые координаты второй точки
 	 */
-	void setDestination(QPointF newDestination);
+	void setDestination(const QPointF& newDestination);
 
 	/*!
 	 * \brief Функция определяет границы фигуры
@@ -70,7 +88,6 @@ public:
 	 */
 	void paint(QPainter*					   painter,
 			   const QStyleOptionGraphicsItem* option,
-
 			   QWidget*						   widget) override;
 
 private:
@@ -82,6 +99,11 @@ private:
 	[[nodiscard]] QRectF countFigure() const override;
 
 private:
+	/*!
+	 * \brief Коориднаты левой верхней точки, от которой начинается отрисовка
+	 */
+	QPointF m_leftTop;
+
 	/*!
 	 * \brief Координаты второй Точки, нужной для построения Фигуры
 	 */

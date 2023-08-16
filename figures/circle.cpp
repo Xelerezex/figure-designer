@@ -2,9 +2,6 @@
 
 #include <QPainter>
 
-// DEBUG:
-#include <QDebug>
-
 #include "startdrawing.h"
 #include "continuedrawing.h"
 #include "completedrawing.h"
@@ -17,6 +14,11 @@ Circle::Circle(QGraphicsItem* parent)
 
 Circle::~Circle()
 {
+}
+
+int Circle::type() const
+{
+	return FigureBase::Circle;
 }
 
 void Circle::act(StartDrawing&& startDrawing)
@@ -34,12 +36,12 @@ void Circle::act(CompleteDrawing&& completeDrawing)
 	completeDrawing.act(this);
 }
 
-QPointF Circle::destination() const
+const QPointF& Circle::destination() const
 {
 	return m_destination;
 }
 
-void Circle::setDestination(QPointF newDestination)
+void Circle::setDestination(const QPointF& newDestination)
 {
 	m_destination = newDestination;
 }
@@ -79,11 +81,6 @@ void Circle::paint(QPainter*					   painter,
 			= {Qt::black, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin};
 		painter->setBrush(QBrush(color));
 	}
-
-	// DEBUG:
-	qDebug() << "PAINT CIRCLE: "
-			 << "center:" << center() << "destination:" << m_destination
-			 << "POSITION ON SCENE:" << pos();
 
 	QPainterPath pathTitle;
 	pathTitle.setFillRule(Qt::OddEvenFill);

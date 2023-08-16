@@ -2,9 +2,6 @@
 
 #include <QPainter>
 
-// DEBUG:
-#include <QDebug>
-
 #include "startdrawing.h"
 #include "continuedrawing.h"
 #include "completedrawing.h"
@@ -15,11 +12,13 @@ Square::Square(QGraphicsItem* parent)
 {
 }
 
-// DEBUG:
-#include <QDebug>
 Square::~Square()
 {
-	qDebug() << "Square deleted";
+}
+
+int Square::type() const
+{
+	return FigureBase::Square;
 }
 
 void Square::act(StartDrawing&& startDrawing)
@@ -37,12 +36,12 @@ void Square::act(CompleteDrawing&& completeDrawing)
 	completeDrawing.act(this);
 }
 
-QPointF Square::destination() const
+const QPointF& Square::destination() const
 {
 	return m_destination;
 }
 
-void Square::setDestination(QPointF newDestination)
+void Square::setDestination(const QPointF& newDestination)
 {
 	m_destination = newDestination;
 }
@@ -90,11 +89,6 @@ void Square::paint(QPainter*					   painter,
 	frameRect.setWidth(boundingRect().width() - penWidth);
 	frameRect.setHeight(boundingRect().height() - penWidth);
 	pathTitle.addRect(frameRect);
-
-	// DEBUG:
-	qDebug() << "PAINT SQUARE: "
-			 << "center:" << center() << "destination:" << m_destination
-			 << "POSITION ON SCENE:" << pos();
 
 	painter->setPen(drawingPen);
 	painter->drawPath(pathTitle.simplified());

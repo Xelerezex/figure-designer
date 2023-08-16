@@ -23,6 +23,12 @@ public:
 	~Circle() override;
 
 	/*!
+	 * \brief Возвращает тип фигуры
+	 * \return тип фигуры
+	 */
+	[[nodiscard]] int type() const override;
+
+	/*!
 	 * \brief Метод вызываемый, когда нужно совершить действие начала отрисовки
 	 *        Окружности (visitor)
 	 * \param startDrawing - класс действия начала отрисовки Окружности
@@ -47,13 +53,13 @@ public:
 	 * \brief Получить координаты второй точки
 	 * \return координаты
 	 */
-	[[nodiscard]] QPointF destination() const;
+	[[nodiscard]] const QPointF& destination() const;
 
 	/*!
 	 * \brief Установить координаты второй точки фигуры
 	 * \param newCenter - новые координаты второй точки
 	 */
-	void setDestination(QPointF newDestination);
+	void setDestination(const QPointF& newDestination);
 
 	/*!
 	 * \brief Функция определяет границы фигуры
@@ -70,7 +76,6 @@ public:
 	 */
 	void paint(QPainter*					   painter,
 			   const QStyleOptionGraphicsItem* option,
-
 			   QWidget*						   widget) override;
 
 	/*!

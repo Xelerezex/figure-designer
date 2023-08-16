@@ -4,6 +4,7 @@
 #include "circle.h"
 #include "triangle.h"
 #include "rectangle.h"
+#include "selectionrectangle.h"
 
 ContinueDrawing::ContinueDrawing(const QPointF& itemCoord)
 	: m_itemCoord{itemCoord}
@@ -41,4 +42,15 @@ void ContinueDrawing::act(Triangle* triangle)
 void ContinueDrawing::act(Rectangle* rectangle)
 {
 	rectangle->setDestination(m_itemCoord);
+}
+
+void ContinueDrawing::act(SelectionRectangle* selectRect)
+{
+	// Если на этом этапе метода еще не существует - начинаем его создание
+	if (selectRect->isNotExisting())
+	{
+		selectRect->startCreating();
+	}
+
+	selectRect->setDestination(m_itemCoord);
 }

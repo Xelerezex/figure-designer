@@ -2,9 +2,6 @@
 
 #include <QPainter>
 
-// DEBUG:
-#include <QDebug>
-
 #include "startdrawing.h"
 #include "continuedrawing.h"
 #include "completedrawing.h"
@@ -19,6 +16,11 @@ Triangle::Triangle(QGraphicsItem* parent)
 
 Triangle::~Triangle()
 {
+}
+
+int Triangle::type() const
+{
+	return FigureBase::Triangle;
 }
 
 void Triangle::act(StartDrawing&& startDrawing)
@@ -36,12 +38,12 @@ void Triangle::act(CompleteDrawing&& completeDrawing)
 	completeDrawing.act(this);
 }
 
-QPointF Triangle::first() const
+const QPointF& Triangle::first() const
 {
 	return m_first;
 }
 
-void Triangle::setFirst(QPointF newFirst)
+void Triangle::setFirst(const QPointF& newFirst)
 {
 	m_first = newFirst;
 }
@@ -51,12 +53,12 @@ bool Triangle::isFirstDrawn() const
 	return m_currentStatus == FirstPointDrawn;
 }
 
-QPointF Triangle::second() const
+const QPointF& Triangle::second() const
 {
 	return m_second;
 }
 
-void Triangle::setSecond(QPointF newSecond)
+void Triangle::setSecond(const QPointF& newSecond)
 {
 	m_second = newSecond;
 }
@@ -66,12 +68,12 @@ bool Triangle::isSecondDrawn() const
 	return m_currentStatus == SecondPointDrawn;
 }
 
-QPointF Triangle::third() const
+const QPointF& Triangle::third() const
 {
 	return m_third;
 }
 
-void Triangle::setThird(QPointF newThird)
+void Triangle::setThird(const QPointF& newThird)
 {
 	m_third = newThird;
 	// Устанавливаем центр фигуры, после того, как узнали координаты третьей
@@ -147,12 +149,6 @@ void Triangle::paint(QPainter*						 painter,
 		pathTitle.addPolygon(countPolygon());
 		painter->setBrush(QBrush(color));
 	}
-
-	// DEBUG:
-	qDebug() << "PAINT RECTANGLE: "
-			 << "first:" << m_first << "second:" << m_second
-			 << "third:" << m_third << "center:" << center()
-			 << "POSITION ON SCENE:" << pos();
 
 	painter->setPen(drawingPen);
 	painter->drawPath(pathTitle);

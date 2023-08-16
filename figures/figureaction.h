@@ -5,6 +5,7 @@ class Circle;
 class Square;
 class Triangle;
 class Rectangle;
+class SelectionRectangle;
 
 /*!
  * \brief Базовый класс действия представления фигур
@@ -49,6 +50,11 @@ public:
 	 * \brief Действие для класса представления Прямоугольника
 	 */
 	virtual void act(class Rectangle*) = 0;
+
+	/*!
+	 * \brief Действие для класса представления Прямоугольника Выделения
+	 */
+	virtual void act(class SelectionRectangle*) = 0;
 };
 
 #endif // FIGUREACTION_H

@@ -5,6 +5,9 @@
 
 QT_BEGIN_NAMESPACE
 class QMenu;
+class ClickTracker;
+class CentralWidget;
+class ModificationHandler;
 QT_END_NAMESPACE
 
 /*!
@@ -14,6 +17,8 @@ class FigureScene : public QGraphicsScene
 {
 	Q_OBJECT
 	Q_DISABLE_COPY_MOVE(FigureScene)
+	// Разрешает центральному виджету изменять режим работы графической сцены
+	friend CentralWidget;
 
 public:
 	/*!
@@ -46,11 +51,99 @@ public:
 	 */
 	~FigureScene() override;
 
+	/*!
+	 * \brief Вернуть режим, в котором сейчас находится сцена
+	 * \return режим сцены
+	 */
+	[[nodiscard]] Mode currentMode() const;
+
+protected:
+	/*!
+	 * \brief Переопределнный метод Нажатия Кнопки Мыщи
+	 * \param mouseEvent - указатель на событие
+	 */
+	void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+
+	/*!
+	 * \brief Переопределнный метод Движения Мыщи
+	 * \param mouseEvent - указатель на событие
+	 */
+	void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+
+	/*!
+	 * \brief Переопределнный метод Отжатия Кнопки Мыщи
+	 * \param mouseEvent - указатель на событие
+	 */
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+
+	/*!
+	 * \brief Переопределнный метод Отжатия кнопки
+	 * \param event - указатель на событие
+	 */
+	void keyReleaseEvent(QKeyEvent* event) override;
+
 private:
 	/*!
 	 * \brief Основные настройки данного класса
 	 */
 	void setupFigureScene();
+
+	/*!
+	 * \brief Установить текущий режим сцены
+	 * \param newCurrentMode - новый режим
+	 */
+	void setCurrentMode(Mode newCurrentMode);
+
+	/*!
+	 * \brief Метод, вызываемый при нажатии на левую кнопку мыши
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onLeftMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при движении мыши
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onLeftMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при разжатии левой кнопки мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onLeftMouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при нажатии на правую кнопку мыши
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onRightMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при движении с зажатой правой кнопокой мыши
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onRightMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод для удаления всех выделенных фигур
+	 */
+	void handleSelectedDelete();
+
+private:
+	/*!
+	 * \brief Режим работы в котором, в данный момент времени, находится сцена
+	 */
+	Mode m_currentMode;
+
+	/*!
+	 * \brief Указатель на класс трекающий клики кнопок
+	 */
+	ClickTracker* m_clickTracker;
+
+	/*!
+	 * \brief Указатель на обработчик модификации объектов фигур
+	 */
+	ModificationHandler* m_modificationHandler;
 };
 
 #endif // FIGURESCENE_H
