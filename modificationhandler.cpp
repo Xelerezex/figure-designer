@@ -176,22 +176,11 @@ void ModificationHandler::updateAllItems() const
 
 void ModificationHandler::startRotation(const QPoint& coordinate)
 {
-	// m_currentRectangle
-	//	= qgraphicsitem_cast<Rectangle*>(m_parentView->itemAt(coordinate));
-	//
-	// if (m_currentRectangle != nullptr)
-	//{
-	//	m_currentRectangle->setTransformOriginPoint(
-	//		m_currentRectangle->center());
-	//	// DEBUG:
-	//	qDebug() << "center" << m_currentRectangle->center();
-	// }
-
+	// Установить первичное значение для начала вращения
 	m_clickTracker->setLastRightMousePressed(coordinate);
 }
 
-// TODO: В сцене modHandler скорее всегобудетназывать selectionHandler
-void ModificationHandler::continueRotation(const QPoint& coordinate)
+void ModificationHandler::continueRotation(const QPoint& sceneCoord)
 {
 	QPointF	   lastRightPressedCoord{m_clickTracker->lastRightMousePressed()};
 
@@ -199,8 +188,8 @@ void ModificationHandler::continueRotation(const QPoint& coordinate)
 	QTransform transform;
 	transform.translate(center.x(), center.y());
 
-	qreal angle = qAtan2(lastRightPressedCoord.y() - coordinate.y(),
-						 lastRightPressedCoord.x() - coordinate.x());
+	qreal angle = qAtan2(lastRightPressedCoord.y() - sceneCoord.y(),
+						 lastRightPressedCoord.x() - sceneCoord.x());
 
 	transform.rotate(angle);
 	transform.translate(-center.x(), -center.y());
@@ -210,20 +199,6 @@ void ModificationHandler::continueRotation(const QPoint& coordinate)
 		item->setPos(transform.map(item->pos()));
 		item->setRotation(item->rotation() + angle);
 	}
-
-	// QPointF lastRightPressedCoord{m_clickTracker->lastRightMousePressed()};
-	//
-	// qreal	angle = qAtan2(lastRightPressedCoord.y() - coordinate.y(),
-	//					 lastRightPressedCoord.x() - coordinate.x());
-	//// angle * 180 / PI
-	//
-	//	   // DEBUG:
-	// qDebug() << qRadiansToDegrees(angle);
-	// m_currentRectangle->setRotation(qRadiansToDegrees(angle));
-}
-
-void ModificationHandler::stopRotation(const QPoint& coordinate)
-{
 }
 
 QRectF ModificationHandler::getUnitedSelectedBoundingRect() const

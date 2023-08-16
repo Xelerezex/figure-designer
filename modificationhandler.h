@@ -93,17 +93,32 @@ public:
 	/*!
 	 * \brief Метод обновляет все отрисованные фигуры
 	 */
-	void	updateAllItems() const;
+	void updateAllItems() const;
 
-	void	startRotation(const QPoint& coordinate);
+	/*!
+	 * \brief Начать вращение
+	 * \param sceneCoord - координата сцены, где произошел евент
+	 */
+	void startRotation(const QPoint& sceneCoord);
 
-	void	continueRotation(const QPoint& coordinate);
+	/*!
+	 * \brief продолжать вращение
+	 * \param sceneCoord - координата сцены, где произошел евент
+	 */
+	void continueRotation(const QPoint& sceneCoord);
 
-	void	stopRotation(const QPoint& coordinate);
+	/*!
+	 * \brief Получить объединеный прямоугольник, составленный из выделенных
+	 *        фигур
+	 * \return прямоугольник
+	 */
+	[[nodiscard]] QRectF getUnitedSelectedBoundingRect() const;
 
-	QRectF	getUnitedSelectedBoundingRect() const;
-
-	QPointF getUnitedSelectedCenter() const;
+	/*!
+	 * \brief Получить центр из объединенного прямоугольника
+	 * \return точка
+	 */
+	[[nodiscard]] QPointF getUnitedSelectedCenter() const;
 
 private:
 	/*!

@@ -86,32 +86,38 @@ void FigureHandler::addNewTriangleDot(QPointF itemCoord, QPointF sceneCoord)
 
 void FigureHandler::continueDrawingSquare(QPointF itemCoord)
 {
-	// TODO: try to added m_currentSquare != nullptr
-	m_currentSquare->act(ContinueDrawing{itemCoord});
-	m_parentView->scene()->update();
+	if (m_currentSquare != nullptr)
+	{
+		m_currentSquare->act(ContinueDrawing{itemCoord});
+		m_parentView->scene()->update();
+	}
 }
 
 void FigureHandler::continueDrawingRectangle(QPointF coordinate)
 {
-	m_currentRectangle->act(ContinueDrawing{coordinate});
-	m_parentView->scene()->update();
+	if (m_currentRectangle != nullptr)
+	{
+		m_currentRectangle->act(ContinueDrawing{coordinate});
+		m_parentView->scene()->update();
+	}
 }
 
 void FigureHandler::continueDrawingCircle(QPointF coordinate)
 {
-	m_currentCircle->act(ContinueDrawing{coordinate});
-	m_parentView->scene()->update();
+	if (m_currentCircle != nullptr)
+	{
+		m_currentCircle->act(ContinueDrawing{coordinate});
+		m_parentView->scene()->update();
+	}
 }
 
 void FigureHandler::continueDrawingTriangle(QPointF coordinate)
 {
-	if (m_currentTriangle == nullptr)
+	if (m_currentTriangle != nullptr)
 	{
-		return;
+		m_currentTriangle->act(ContinueDrawing{coordinate});
+		m_parentView->scene()->update();
 	}
-
-	m_currentTriangle->act(ContinueDrawing{coordinate});
-	m_parentView->scene()->update();
 }
 
 void FigureHandler::completeSquare(QPointF coordinate)

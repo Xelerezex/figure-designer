@@ -111,6 +111,19 @@ private:
 	 * \param mouseEvent - событие мыщи
 	 */
 	void onLeftMouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при нажатии на правую кнопку мыши
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onRightMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при движении с зажатой правой кнопокой мыши
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onRightMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
 	/*!
 	 * \brief Метод для удаления всех выделенных фигур
 	 */
