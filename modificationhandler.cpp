@@ -11,8 +11,6 @@
 #include <QGraphicsItem>
 #include <QApplication>
 #include <QtMath>
-// DEBUG:
-#include <QDebug>
 
 ModificationHandler::ModificationHandler(FigureScene*  parent,
 										 ClickTracker* clickTracker)
@@ -29,17 +27,8 @@ ModificationHandler::~ModificationHandler()
 
 bool ModificationHandler::isOnFigure(const QPointF& sceneCoord) const
 {
-	// updateAllItems();
-	// m_parentScene
-
 	// Указатель на фигуру
 	QGraphicsItem* figure = m_parentScene->itemAt(sceneCoord, QTransform{});
-
-	// DEBUG:
-	if (figure != nullptr)
-	{
-		qDebug() << "Is on figure:" << (figure != nullptr);
-	}
 
 	return figure != nullptr;
 }
@@ -49,19 +38,6 @@ void ModificationHandler::modificateOnLeftMousePressed(
 {
 	// Устанавливаем координату последнего нажатия левой кнопки мыши
 	m_clickTracker->setLastLeftMousePressed(sceneCoord);
-
-	// Указатель на фигуру
-	QGraphicsItem* figure = m_parentScene->itemAt(sceneCoord, QTransform{});
-	// Устанавливаем выбранную площадь
-	if (figure != nullptr)
-	{
-		// QPainterPath selectionPath;
-		// selectionPath.addRect(figure->boundingRect());
-		// m_parentScene->setSelectionArea(selectionPath, QTransform{});
-	}
-
-	// DEBUG:
-	qDebug() << "Pressed at:" << sceneCoord;
 }
 
 void ModificationHandler::modificateOnLeftMouseReleased(
@@ -75,7 +51,6 @@ void ModificationHandler::modificateOnLeftMouseReleased(
 
 	if (isClicked && !isOnFigure(sceneCoord))
 	{
-		qDebug() << "Clicked at:" << sceneCoord;
 		unselectAllItems();
 	}
 }
@@ -91,7 +66,6 @@ void ModificationHandler::selectAllItemsInList(
 
 void ModificationHandler::unselectAllItems() const
 {
-	// m_parentScene->setSelectionArea({}, QTransform{});
 	foreach (const auto item, m_parentScene->items())
 	{
 		item->setSelected(false);
@@ -106,7 +80,6 @@ void ModificationHandler::addNewSelectionRectangle(const QPointF& sceneCoord)
 		m_selectionRect->act(StartDrawing{sceneCoord, sceneCoord});
 		m_parentScene->addItem(m_selectionRect);
 	}
-	// m_parentScene->update();
 }
 
 void ModificationHandler::continueDrawingSelectionRectangle(
@@ -139,18 +112,11 @@ void ModificationHandler::completeDrawingSelectionRectangle(
 
 	m_selectionRect->act(CompleteDrawing{sceneCoord});
 
-	// QPainterPath selectionPath;
-	// selectionPath.addRect(m_selectionRect->boundingRect());
-	// m_parentScene->setSelectionArea(selectionPath, QTransform{});
-
 	// Получаем все элементы, которые пересекаются с Прямоугольником
 	// Выделения
 	const auto& listWithItems
 		= m_parentScene->items(m_selectionRect->boundingRect());
 	selectAllItemsInList(listWithItems);
-
-	// DEBUG:
-	qDebug() << "Selected items:" << listWithItems.size();
 
 	// Удаляем со сцены Прямоугольник
 	m_parentScene->removeItem(m_selectionRect);

@@ -29,6 +29,8 @@ set(PROJECT_SOURCES
         figuregraphicsview.cpp
         modificationhandler.h
         modificationhandler.cpp
+        figurecloner.h
+        figurecloner.cpp
 )
 
 set(PROJECT_RESOURCES

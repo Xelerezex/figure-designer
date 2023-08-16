@@ -125,6 +125,37 @@ private:
 	 */
 	void onEmptyMouseMoved(QMouseEvent* mouseEvent);
 
+	/*!
+	 * \brief Метод, вызываемый при нажатии на среднюю кнопку мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onMouseMiddleButtonPressed(QMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при движении с зажатой средней кнопкой мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onMouseMiddleButtonMoved(QMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при отжиме средней кнопкой мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onMouseMiddleButtonReleased(QMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод проверяет, есть ли по данным координатам какой-то объект
+	 * \param sceneCoord - координаты сцены
+	 * \return true - если сцена не пуста и объект есть
+	 */
+	[[nodiscard]] bool isOnFigure(const QPointF& sceneCoord) const;
+
+	/*!
+	 * \brief Метод для дебага
+	 * \param mouseEvent
+	 */
+	void printEventInfo(QMouseEvent* mouseEvent) const;
+
 private:
 	/*!
 	 * \brief Режим работы в котором, в данный момент времени, находится сцена

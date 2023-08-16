@@ -119,12 +119,22 @@ public:
 	 */
 	void abortDrawing();
 
+	/*!
+	 * \brief Метод клонирует все выделеные на сцене Фигуры
+	 */
+	void cloneSelectedItems();
+
 private:
 	/*!
 	 * \brief Данный метод позволяет удалить Треугольник со сцены,
 	 *        если точки расположены слигком близко друг к другу
 	 */
 	void handleTriangleRemovement();
+
+	/*!
+	 * \brief Метод убирает выделение со всех объектов сцены
+	 */
+	void unselectAllItems() const;
 
 private:
 	/*!

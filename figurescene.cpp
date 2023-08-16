@@ -7,10 +7,6 @@
 #include <QKeyEvent>
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
-// DEBUG:
-#include <QDebug>
-
-#include "rectangle.h"
 
 FigureScene::FigureScene(/*QMenu* itemMenu, */ QObject* parent)
 	: QGraphicsScene{parent}
@@ -28,8 +24,6 @@ FigureScene::~FigureScene()
 
 FigureScene::Mode FigureScene::currentMode() const
 {
-	// DEBUG:
-	qDebug() << m_currentMode;
 	return m_currentMode;
 }
 
@@ -114,7 +108,6 @@ void FigureScene::keyReleaseEvent(QKeyEvent* event)
 
 void FigureScene::setupFigureScene()
 {
-	// DEBUG:
 	setItemIndexMethod(QGraphicsScene::NoIndex);
 
 	// Устанавливаем ограничения по Сцене
@@ -201,6 +194,8 @@ void FigureScene::onRightMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	m_modificationHandler->continueRotation(scemeCoord);
 }
 
+// DEBUG:
+#include <QDebug>
 void FigureScene::handleSelectedDelete()
 {
 	// DEBUG:

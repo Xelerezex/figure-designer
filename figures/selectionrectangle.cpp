@@ -2,9 +2,6 @@
 
 #include <QPainter>
 
-// DEBUG:
-#include <QDebug>
-
 #include "startdrawing.h"
 #include "continuedrawing.h"
 #include "completedrawing.h"
@@ -13,12 +10,10 @@ SelectionRectangle::SelectionRectangle(QGraphicsItem* parent)
 	: FigureBase{parent}
 	, m_destination{0.0, 0.0}
 {
-	qDebug("SelectionRectangle created");
 }
 
 SelectionRectangle::~SelectionRectangle()
 {
-	qDebug("SelectionRectangle deleted");
 }
 
 int SelectionRectangle::type() const
@@ -81,11 +76,6 @@ void SelectionRectangle::paint(QPainter*					   painter,
 
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
-
-	// DEBUG:
-	qDebug() << "PAINT SELECTIONAL RECTANGLE: "
-			 << "center:" << center() << "destination:" << m_destination
-			 << "POSITION ON SCENE:" << pos();
 
 	const qreal penWidth{1.5};
 

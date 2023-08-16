@@ -2,9 +2,6 @@
 
 #include <QPainter>
 
-// DEBUG:
-#include <QDebug>
-
 #include "startdrawing.h"
 #include "continuedrawing.h"
 #include "completedrawing.h"
@@ -18,8 +15,6 @@ Rectangle::Rectangle(QGraphicsItem* parent)
 
 Rectangle::~Rectangle()
 {
-	// DEBUG:
-	qDebug("Rectangle deleted");
 }
 
 int Rectangle::type() const
@@ -100,11 +95,6 @@ void Rectangle::paint(QPainter*						  painter,
 			= {Qt::black, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin};
 		painter->setBrush(QBrush(color));
 	}
-
-	// DEBUG:
-	qDebug() << "PAINT RECTANGLE: "
-			 << "left_top:" << m_leftTop << "destination:" << m_destination
-			 << "center:" << center() << "POSITION ON SCENE:" << pos();
 
 	QPainterPath pathTitle;
 	pathTitle.setFillRule(Qt::OddEvenFill);

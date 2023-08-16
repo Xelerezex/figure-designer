@@ -1,5 +1,6 @@
 #include "figurehandler.h"
 
+#include "figurecloner.h"
 #include "clicktracker.h"
 #include "figuregraphicsview.h"
 
@@ -14,8 +15,6 @@
 
 #include <QGraphicsSceneMouseEvent>
 
-// DEBUG:
-#include <QDebug>
 #include <QtMath>
 
 FigureHandler::FigureHandler(FigureGraphicsView* parent,
@@ -170,6 +169,34 @@ void FigureHandler::abortDrawing()
 	}
 }
 
+void FigureHandler::cloneSelectedItems()
+{
+	const auto& items = m_parentView->scene()->selectedItems();
+
+	// Убираем старые выделения фигур
+	unselectAllItems();
+
+	foreach (const auto& item, items)
+	{
+		if (item->type() == FigureBase::Square)
+		{
+			m_parentView->scene()->addItem(FigureCloner::cloneSquare(item));
+		}
+		else if (item->type() == FigureBase::Rectangle)
+		{
+			m_parentView->scene()->addItem(FigureCloner::cloneRectangle(item));
+		}
+		else if (item->type() == FigureBase::Triangle)
+		{
+			m_parentView->scene()->addItem(FigureCloner::cloneTriangle(item));
+		}
+		else if (item->type() == FigureBase::Circle)
+		{
+			m_parentView->scene()->addItem(FigureCloner::cloneCircle(item));
+		}
+	}
+}
+
 void FigureHandler::handleTriangleRemovement()
 {
 	bool isShort{false};
@@ -196,5 +223,13 @@ void FigureHandler::handleTriangleRemovement()
 	{
 		m_currentTriangle->stopDrawingLine();
 		m_parentView->scene()->removeItem(m_currentTriangle);
+	}
+}
+
+void FigureHandler::unselectAllItems() const
+{
+	foreach (const auto item, m_parentView->scene()->items())
+	{
+		item->setSelected(false);
 	}
 }

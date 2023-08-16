@@ -67,18 +67,11 @@ bool ClickTracker::isLeftMouseClicked()
 	return distanceSpace < trashHoldDistance;
 }
 
-// DEBUG:
-#include <QDebug>
-
 bool ClickTracker::isShortDistance(const QPointF& first, const QPointF& second)
 {
 	const QLineF line{first, second};
 	const qreal	 trashHold{10};
 	const qreal	 trashHoldDistance{trashHold * 3};
-
-	// DEBUG:
-	qDebug() << "FIRST: " << first << "SECOND: " << second
-			 << "LENGTH:" << line.length() << "TRASH:" << trashHoldDistance;
 
 	return line.length() < trashHoldDistance;
 }

@@ -2,9 +2,6 @@
 
 #include <QPainter>
 
-// DEBUG:
-#include <QDebug>
-
 #include "startdrawing.h"
 #include "continuedrawing.h"
 #include "completedrawing.h"
@@ -19,8 +16,6 @@ Triangle::Triangle(QGraphicsItem* parent)
 
 Triangle::~Triangle()
 {
-	// DEBUG:
-	qDebug("Triangle deleted");
 }
 
 int Triangle::type() const
@@ -154,12 +149,6 @@ void Triangle::paint(QPainter*						 painter,
 		pathTitle.addPolygon(countPolygon());
 		painter->setBrush(QBrush(color));
 	}
-
-	// DEBUG:
-	qDebug() << "PAINT RECTANGLE: "
-			 << "first:" << m_first << "second:" << m_second
-			 << "third:" << m_third << "center:" << center()
-			 << "POSITION ON SCENE:" << pos();
 
 	painter->setPen(drawingPen);
 	painter->drawPath(pathTitle);

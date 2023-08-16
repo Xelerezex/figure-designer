@@ -6,9 +6,6 @@
 #include <QMouseEvent>
 #include <QGuiApplication>
 
-// DEBUG:
-#include <QDebug>
-
 FigureGraphicsView::FigureGraphicsView(QGraphicsScene* scene, QWidget* parent)
 	: QGraphicsView{scene, parent}
 	, m_currentMode{Mode::Modification}
@@ -44,8 +41,6 @@ void FigureGraphicsView::setupFigureGraphicsView()
 
 FigureGraphicsView::Mode FigureGraphicsView::currentMode() const
 {
-	// DEBUG:
-	qDebug() << m_currentMode;
 	return m_currentMode;
 }
 
@@ -60,6 +55,8 @@ void FigureGraphicsView::mousePressEvent(QMouseEvent* mouseEvent)
 	const bool isLeftButtonPressed{mouseEvent->button() == Qt::LeftButton};
 	// Нажата ли Правая кнопка мыщи
 	const bool isRightButtonPressed{mouseEvent->button() == Qt::RightButton};
+	// Нажата ли Средняя кнопка мыщи
+	const bool isMiddleButtonPressed{mouseEvent->button() == Qt::MiddleButton};
 
 	if (isLeftButtonPressed)
 	{
@@ -69,6 +66,10 @@ void FigureGraphicsView::mousePressEvent(QMouseEvent* mouseEvent)
 	{
 		// Прокидываем нажатие Правой кнопки на сцену
 		QGraphicsView::mousePressEvent(mouseEvent);
+	}
+	else if (isMiddleButtonPressed)
+	{
+		onMouseMiddleButtonPressed(mouseEvent);
 	}
 }
 
@@ -80,18 +81,26 @@ void FigureGraphicsView::mouseMoveEvent(QMouseEvent* mouseEvent)
 	// true - только если движение с зажатой правой кнопокой мыщи
 	bool onlyWithRightButtonMove{
 		static_cast<bool>(mouseEvent->buttons() & Qt::RightButton)};
+	// true - только если движение с зажатой правой кнопокой мыщи
+	bool onlyWithMiddleButtonMove{
+		static_cast<bool>(mouseEvent->buttons() & Qt::MiddleButton)};
 
 	// true - если движение мыщи без зажатых кнопок
 	bool onlyMouseMove{mouseEvent->buttons() == Qt::NoButton};
 
 	if (onlyWithLeftButtonMove)
 	{
+		printEventInfo(mouseEvent);
 		onMouseLeftButtonMoved(mouseEvent);
 	}
 	else if (onlyWithRightButtonMove)
 	{
 		// Прокидываем зажатие + движение Правой кнопки на сцену
 		QGraphicsView::mouseMoveEvent(mouseEvent);
+	}
+	else if (onlyWithMiddleButtonMove)
+	{
+		onMouseMiddleButtonMoved(mouseEvent);
 	}
 
 	if (onlyMouseMove && isTriangleMode())
@@ -154,6 +163,8 @@ void FigureGraphicsView::onMouseLeftButtonPressed(QMouseEvent* mouseEvent)
 	}
 	else if (m_currentMode == Modification)
 	{
+		// printEventInfo(mouseEvent);
+
 		QGraphicsView::mousePressEvent(mouseEvent);
 	}
 }
@@ -231,4 +242,85 @@ void FigureGraphicsView::onEmptyMouseMoved(QMouseEvent* mouseEvent)
 	{
 		m_figureHandler->continueDrawingTriangle(mouseEvent->pos());
 	}
+}
+
+void FigureGraphicsView::onMouseMiddleButtonPressed(QMouseEvent* mouseEvent)
+{
+	if (m_currentMode != Modification)
+	{
+		return;
+	}
+
+	// Координаты фигуры в системе кординат Элемента Сцены
+	const auto itemCoord = mouseEvent->pos();
+	// Координаты фигуры на Сцене
+	const auto sceneCoord = mapToScene(itemCoord);
+
+	if (isOnFigure(sceneCoord))
+	{
+		m_figureHandler->cloneSelectedItems();
+
+		// Прокидываем нажатие на левую кнопку мыщи
+		QMouseEvent fakeEvent{QEvent::MouseButtonPress,
+							  mouseEvent->localPos(),
+							  mouseEvent->screenPos(),
+							  Qt::LeftButton,
+							  Qt::LeftButton,
+							  mouseEvent->modifiers()};
+		printEventInfo(&fakeEvent);
+		QGraphicsView::mousePressEvent(&fakeEvent);
+	}
+}
+
+#include <QApplication>
+void FigureGraphicsView::onMouseMiddleButtonMoved(QMouseEvent* mouseEvent)
+{
+	if (m_currentMode != Modification)
+	{
+		return;
+	}
+
+	// Координаты фигуры в системе кординат Элемента Сцены
+	const auto itemCoord = mouseEvent->pos();
+	// Координаты фигуры на Сцене
+	const auto sceneCoord = mapToScene(itemCoord);
+
+	if (isOnFigure(sceneCoord))
+	{
+		printEventInfo(mouseEvent);
+		QMouseEvent fakeEvent{QEvent::MouseMove,
+							  mouseEvent->localPos(),
+							  mouseEvent->screenPos(),
+							  Qt::LeftButton,
+							  Qt::LeftButton,
+							  mouseEvent->modifiers()};
+		printEventInfo(&fakeEvent);
+		QGraphicsView::mouseMoveEvent(&fakeEvent);
+	}
+}
+
+void FigureGraphicsView::onMouseMiddleButtonReleased(QMouseEvent *mouseEvent)
+{
+
+}
+
+bool FigureGraphicsView::isOnFigure(const QPointF& sceneCoord) const
+{
+	// Указатель на фигуру
+	QGraphicsItem* figure = scene()->itemAt(sceneCoord, QTransform{});
+
+	return figure != nullptr;
+}
+
+// DEBUG:
+#include <QDebug>
+void FigureGraphicsView::printEventInfo(QMouseEvent* mouseEvent) const
+{
+	// DEBUG:
+	qDebug() << " TYPE      : " << mouseEvent->type() << "\n"
+			 << "LOCAL POS :" << mouseEvent->localPos() << "\n"
+			 << "SCREEN POS:" << mouseEvent->screenPos() << "\n"
+			 << "BUTTON    :" << mouseEvent->button() << "\n"
+			 << "BUTTONS   :" << mouseEvent->buttons() << "\n"
+			 << "MODIFIERS :" << mouseEvent->modifiers() << "\n";
 }
