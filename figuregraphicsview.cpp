@@ -26,24 +26,21 @@ void FigureGraphicsView::setupFigureGraphicsView()
 	// Включаем постоянный трекинг мыщи на сцене:
 	setMouseTracking(true);
 
-	// Задаем основные флаги:
 	// Данные флаги делают HD рендеринг
 	// setRenderHint(QPainter::Antialiasing, true);
 	// setRenderHint(QPainter::HighQualityAntialiasing, true);
-	// setRenderHint(QPainter::TextAntialiasing, true);
 	// setRenderHint(QPainter::SmoothPixmapTransform, true);
-	// setCacheMode(QGraphicsView::CacheBackground);
 
+	// Задаем основные флаги:
 	setRenderHint(QPainter::Antialiasing, false);
-	// TODO: Потенциально надо использовать только этот метод, и избавиться от
-	//       отрисовки своего костыля-выделителя
-	setDragMode(QGraphicsView::RubberBandDrag);
-	setOptimizationFlags(QGraphicsView::DontSavePainterState);
+	setDragMode(QGraphicsView::NoDrag);
 	setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
 	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+	// Включаем кеширование бекграунда
+	setCacheMode(QGraphicsView::CacheBackground);
 
 	// Задаем основные режимы работы Вью:
-	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+	setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
 
 	// Устанавливаем имя объекта класса
 	setObjectName(QLatin1String("FigureGraphicsView"));
@@ -284,7 +281,6 @@ void FigureGraphicsView::onMouseMiddleButtonPressed(QMouseEvent* mouseEvent)
 	}
 }
 
-#include <QApplication>
 void FigureGraphicsView::onMouseMiddleButtonMoved(QMouseEvent* mouseEvent)
 {
 	if (m_currentMode != Modification)
@@ -292,21 +288,14 @@ void FigureGraphicsView::onMouseMiddleButtonMoved(QMouseEvent* mouseEvent)
 		return;
 	}
 
-	// Координаты фигуры в системе кординат Элемента Сцены
-	const auto itemCoord = mouseEvent->pos();
-	// Координаты фигуры на Сцене
-	const auto sceneCoord = mapToScene(itemCoord);
+	QMouseEvent fakeEvent{QEvent::MouseMove,
+						  mouseEvent->localPos(),
+						  mouseEvent->screenPos(),
+						  Qt::LeftButton,
+						  Qt::LeftButton,
+						  mouseEvent->modifiers()};
 
-	if (isOnSelectedFigure(sceneCoord))
-	{
-		QMouseEvent fakeEvent{QEvent::MouseMove,
-							  mouseEvent->localPos(),
-							  mouseEvent->screenPos(),
-							  Qt::LeftButton,
-							  Qt::LeftButton,
-							  mouseEvent->modifiers()};
-		QGraphicsView::mouseMoveEvent(&fakeEvent);
-	}
+	QGraphicsView::mouseMoveEvent(&fakeEvent);
 }
 
 void FigureGraphicsView::onMouseMiddleButtonReleased(QMouseEvent* mouseEvent)

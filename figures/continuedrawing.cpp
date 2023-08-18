@@ -53,7 +53,9 @@ void ContinueDrawing::act(SelectionRectangle* selectRect)
 	if (selectRect->isNotExisting())
 	{
 		selectRect->startCreating();
+		selectRect->update();
 	}
 
 	selectRect->setDestination(m_itemCoord);
+	selectRect->update();
 }

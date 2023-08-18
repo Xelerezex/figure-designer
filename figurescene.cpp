@@ -108,14 +108,15 @@ void FigureScene::keyReleaseEvent(QKeyEvent* event)
 
 void FigureScene::setupFigureScene()
 {
-	setItemIndexMethod(QGraphicsScene::NoIndex);
-
 	// Устанавливаем ограничения по Сцене
 	const qreal coordX{0};
 	const qreal coordY{0};
 	const qreal width{5'000};
 	const qreal height{5'000};
 	setSceneRect(QRectF(coordX, coordY, width, height));
+
+	// Убрано индексирование для оптимизации
+	setItemIndexMethod(QGraphicsScene::NoIndex);
 
 	// Устанавливаем имя объекта класса
 	setObjectName(QLatin1String("FigureScene"));
@@ -130,9 +131,6 @@ void FigureScene::setCurrentMode(Mode newCurrentMode)
 
 void FigureScene::onLeftMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-	// Обновляем отрисовку сцены
-	update();
-
 	// Координаты эвента на Сцене
 	const QPointF sceneCoord = mouseEvent->scenePos();
 
@@ -152,9 +150,6 @@ void FigureScene::onLeftMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void FigureScene::onLeftMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-	// Обновляем отрисовку сцены
-	update();
-
 	// Координаты эвента на Сцене
 	const QPointF sceneCoord = mouseEvent->scenePos();
 

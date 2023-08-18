@@ -112,7 +112,6 @@ void FigureHandler::continueDrawingTriangle(QPointF coordinate)
 	if (m_currentTriangle != nullptr)
 	{
 		m_currentTriangle->act(ContinueDrawing{coordinate});
-		// m_parentView->scene()->update();
 	}
 }
 
