@@ -78,3 +78,7 @@ build*/
 # Added Clang format file
 !.clang-format
 !.gitignore
+
+# Added Visual Studio folders
+.vs
+out
