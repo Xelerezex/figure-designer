@@ -171,35 +171,38 @@ void FigureHandler::abortDrawing()
 
 void FigureHandler::cloneSelectedItems()
 {
-	const auto items = m_parentView->scene()->selectedItems();
+	const auto& items = m_parentView->scene()->selectedItems();
+
+	// Убираем старые выделения фигур
+	unselectAllItems();
 
 	foreach (const auto& item, items)
 	{
 		if (item->type() == FigureBase::Square)
 		{
-			m_parentView->scene()->addItem(FigureCloner::cloneSquare(item));
+			auto* square = FigureCloner::cloneSquare(item);
+			m_parentView->scene()->addItem(square);
+			square->setSelected(true);
 		}
 		else if (item->type() == FigureBase::Rectangle)
 		{
-			m_parentView->scene()->addItem(FigureCloner::cloneRectangle(item));
+			auto* rectangle = FigureCloner::cloneRectangle(item);
+			m_parentView->scene()->addItem(rectangle);
+			rectangle->setSelected(true);
 		}
 		else if (item->type() == FigureBase::Triangle)
 		{
-			m_parentView->scene()->addItem(FigureCloner::cloneTriangle(item));
+			auto* triangle = FigureCloner::cloneTriangle(item);
+			m_parentView->scene()->addItem(triangle);
+			triangle->setSelected(true);
 		}
 		else if (item->type() == FigureBase::Circle)
 		{
-			m_parentView->scene()->addItem(FigureCloner::cloneCircle(item));
+			auto* circle = FigureCloner::cloneCircle(item);
+			m_parentView->scene()->addItem(circle);
+			circle->setSelected(true);
 		}
 	}
-
-	// Убираем старые выделения фигур
-	// unselectAllItems();
-
-	// foreach (const auto& item, items)
-	//{
-	//	item->setSelected(true);
-	// }
 }
 
 void FigureHandler::handleTriangleRemovement()

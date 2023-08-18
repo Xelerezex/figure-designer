@@ -246,8 +246,7 @@ void FigureGraphicsView::onEmptyMouseMoved(QMouseEvent* mouseEvent)
 		m_figureHandler->continueDrawingTriangle(mouseEvent->pos());
 	}
 }
-// DEBUG:
-#include <QDebug>
+
 void FigureGraphicsView::onMouseMiddleButtonPressed(QMouseEvent* mouseEvent)
 {
 	if (m_currentMode != Modification)
@@ -262,6 +261,7 @@ void FigureGraphicsView::onMouseMiddleButtonPressed(QMouseEvent* mouseEvent)
 
 	if (isOnSelectedFigure(sceneCoord))
 	{
+		// Клонируем все выделенные объекты:
 		m_figureHandler->cloneSelectedItems();
 
 		// Прокидываем нажатие на левую кнопку мыщи
@@ -271,7 +271,6 @@ void FigureGraphicsView::onMouseMiddleButtonPressed(QMouseEvent* mouseEvent)
 							  Qt::LeftButton,
 							  Qt::LeftButton,
 							  mouseEvent->modifiers()};
-		printEventInfo(&fakeEvent);
 		QGraphicsView::mousePressEvent(&fakeEvent);
 	}
 }
@@ -297,7 +296,6 @@ void FigureGraphicsView::onMouseMiddleButtonMoved(QMouseEvent* mouseEvent)
 							  Qt::LeftButton,
 							  Qt::LeftButton,
 							  mouseEvent->modifiers()};
-		printEventInfo(&fakeEvent);
 		QGraphicsView::mouseMoveEvent(&fakeEvent);
 	}
 }
@@ -314,18 +312,17 @@ void FigureGraphicsView::onMouseMiddleButtonReleased(QMouseEvent* mouseEvent)
 	// Координаты фигуры на Сцене
 	const auto sceneCoord = mapToScene(itemCoord);
 
-	// if (isOnSelectedFigure(sceneCoord))
-	//{
-	QMouseEvent fakeEvent{QEvent::MouseButtonRelease,
-						  mouseEvent->localPos(),
-						  mouseEvent->screenPos(),
-						  Qt::LeftButton,
-						  Qt::LeftButton,
-						  mouseEvent->modifiers()};
-	printEventInfo(&fakeEvent);
-	QGraphicsView::mouseReleaseEvent(&fakeEvent);
-	qDebug() << "released after middle button";
-	//}
+	if (isOnSelectedFigure(sceneCoord))
+	{
+		QMouseEvent fakeEvent{QEvent::MouseButtonRelease,
+							  mouseEvent->localPos(),
+							  mouseEvent->screenPos(),
+							  Qt::LeftButton,
+							  Qt::LeftButton,
+							  mouseEvent->modifiers()};
+		QGraphicsView::mouseReleaseEvent(&fakeEvent);
+	}
+	QGraphicsView::mouseReleaseEvent(mouseEvent);
 }
 
 bool FigureGraphicsView::isOnSelectedFigure(const QPointF& sceneCoord) const

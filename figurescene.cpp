@@ -108,7 +108,7 @@ void FigureScene::keyReleaseEvent(QKeyEvent* event)
 
 void FigureScene::setupFigureScene()
 {
-	// setItemIndexMethod(QGraphicsScene::NoIndex);
+	setItemIndexMethod(QGraphicsScene::NoIndex);
 
 	// Устанавливаем ограничения по Сцене
 	const qreal coordX{0};

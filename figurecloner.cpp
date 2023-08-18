@@ -14,8 +14,6 @@ Square* FigureCloner::cloneSquare(QGraphicsItem* item)
 {
 	// Указатель на копируемый объект
 	auto* square = qgraphicsitem_cast<Square*>(item);
-	square->setSelected(true);
-
 	// Матрица трансформации копируемого объекта
 	QTransform transform{square->transform()};
 
@@ -27,13 +25,9 @@ Square* FigureCloner::cloneSquare(QGraphicsItem* item)
 	auto* newSquare = new Square{};
 	newSquare->act(StartDrawing{square->center(), figureCoord});
 	newSquare->act(CompleteDrawing{square->destination()});
-	newSquare->setSelected(false);
-	//  Задаем новому объекту матрицу трансформаций старого
+	// Задаем новому объекту матрицу трансформаций старого
 	newSquare->setPos(transform.map(item->pos()));
 	newSquare->setRotation(square->rotation());
-
-	// newSquare->setZValue(square->zValue() + 0.1);
-	// newSquare->update();
 
 	return newSquare;
 }
@@ -53,7 +47,6 @@ Rectangle* FigureCloner::cloneRectangle(QGraphicsItem* item)
 	auto* newRectangle = new Rectangle{};
 	newRectangle->act(StartDrawing{rectangle->leftTop(), figureCoord});
 	newRectangle->act(CompleteDrawing{rectangle->destination()});
-	newRectangle->setSelected(true);
 	// Задаем новому объекту матрицу трансформаций старого
 	newRectangle->setPos(transform.map(item->pos()));
 	newRectangle->setRotation(rectangle->rotation());
@@ -76,7 +69,6 @@ Triangle* FigureCloner::cloneTriangle(QGraphicsItem* item)
 	newTriangle->act(StartDrawing{triangle->first(), firstDotCoord});
 	newTriangle->act(CompleteDrawing{triangle->second()});
 	newTriangle->act(CompleteDrawing{triangle->third()});
-	newTriangle->setSelected(true);
 	// Задаем новому объекту матрицу трансформаций старого
 	newTriangle->setPos(transform.map(item->pos()));
 	newTriangle->setRotation(triangle->rotation());
@@ -98,8 +90,7 @@ Circle* FigureCloner::cloneCircle(QGraphicsItem* item)
 	auto* newCircle = new Circle{};
 	newCircle->act(StartDrawing{circle->center(), figureCoord});
 	newCircle->act(CompleteDrawing{circle->destination()});
-	newCircle->setSelected(false);
-	//  Задаем новому объекту матрицу трансформаций старого
+	// Задаем новому объекту матрицу трансформаций старого
 	newCircle->setPos(transform.map(item->pos()));
 	newCircle->setRotation(circle->rotation());
 
