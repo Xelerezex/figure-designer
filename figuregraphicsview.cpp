@@ -27,11 +27,20 @@ void FigureGraphicsView::setupFigureGraphicsView()
 	setMouseTracking(true);
 
 	// Задаем основные флаги:
-	setRenderHint(QPainter::Antialiasing, true);
-	setRenderHint(QPainter::HighQualityAntialiasing, true);
-	setRenderHint(QPainter::TextAntialiasing, true);
-	setRenderHint(QPainter::SmoothPixmapTransform, true);
-	setCacheMode(QGraphicsView::CacheBackground);
+	// Данные флаги делают HD рендеринг
+	// setRenderHint(QPainter::Antialiasing, true);
+	// setRenderHint(QPainter::HighQualityAntialiasing, true);
+	// setRenderHint(QPainter::TextAntialiasing, true);
+	// setRenderHint(QPainter::SmoothPixmapTransform, true);
+	// setCacheMode(QGraphicsView::CacheBackground);
+
+	setRenderHint(QPainter::Antialiasing, false);
+	// TODO: Потенциально надо использовать только этот метод, и избавиться от
+	//       отрисовки своего костыля-выделителя
+	setDragMode(QGraphicsView::RubberBandDrag);
+	setOptimizationFlags(QGraphicsView::DontSavePainterState);
+	setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 
 	// Задаем основные режимы работы Вью:
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);

@@ -132,6 +132,7 @@ void ModificationHandler::updateSelectedItems() const
 	}
 }
 
+// TODO: REmove method
 void ModificationHandler::updateAllItems() const
 {
 	foreach (const auto item, m_parentScene->items())

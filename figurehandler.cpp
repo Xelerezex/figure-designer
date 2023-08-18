@@ -88,7 +88,6 @@ void FigureHandler::continueDrawingSquare(QPointF itemCoord)
 	if (m_currentSquare != nullptr)
 	{
 		m_currentSquare->act(ContinueDrawing{itemCoord});
-		m_parentView->scene()->update();
 	}
 }
 
@@ -97,7 +96,6 @@ void FigureHandler::continueDrawingRectangle(QPointF coordinate)
 	if (m_currentRectangle != nullptr)
 	{
 		m_currentRectangle->act(ContinueDrawing{coordinate});
-		m_parentView->scene()->update();
 	}
 }
 
@@ -106,7 +104,6 @@ void FigureHandler::continueDrawingCircle(QPointF coordinate)
 	if (m_currentCircle != nullptr)
 	{
 		m_currentCircle->act(ContinueDrawing{coordinate});
-		m_parentView->scene()->update();
 	}
 }
 
@@ -115,7 +112,7 @@ void FigureHandler::continueDrawingTriangle(QPointF coordinate)
 	if (m_currentTriangle != nullptr)
 	{
 		m_currentTriangle->act(ContinueDrawing{coordinate});
-		m_parentView->scene()->update();
+		// m_parentView->scene()->update();
 	}
 }
 

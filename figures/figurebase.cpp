@@ -8,6 +8,28 @@ FigureBase::FigureBase(QGraphicsItem* parent)
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
 	// setFlag(QGraphicsItem::ItemSendsScenePositionChanges, true);
+
+	setAcceptHoverEvents(true);
+}
+
+void FigureBase::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+	update();
+	QGraphicsItem::mousePressEvent(event);
+}
+
+#include <QDebug>
+void FigureBase::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+	// qDebug("Move event");
+	update();
+	QGraphicsItem::mouseMoveEvent(event);
+}
+
+void FigureBase::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+	update();
+	QGraphicsItem::mouseReleaseEvent(event);
 }
 
 FigureBase::~FigureBase()

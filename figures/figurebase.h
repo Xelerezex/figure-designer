@@ -108,6 +108,12 @@ protected:
 	 */
 	[[nodiscard]] virtual QRectF countFigure() const = 0;
 
+	void mousePressEvent (QGraphicsSceneMouseEvent* event) override;
+
+	void mouseMoveEvent (QGraphicsSceneMouseEvent* event) override;
+
+	void mouseReleaseEvent (QGraphicsSceneMouseEvent* event) override;
+
 private:
 	/*!
 	 * \brief Жизненый цикл объекта Сцены

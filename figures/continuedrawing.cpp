@@ -18,11 +18,13 @@ ContinueDrawing::~ContinueDrawing()
 void ContinueDrawing::act(Circle* circle)
 {
 	circle->setDestination(m_itemCoord);
+	circle->update();
 }
 
 void ContinueDrawing::act(Square* square)
 {
 	square->setDestination(m_itemCoord);
+	square->update();
 }
 
 void ContinueDrawing::act(Triangle* triangle)
@@ -42,6 +44,7 @@ void ContinueDrawing::act(Triangle* triangle)
 void ContinueDrawing::act(Rectangle* rectangle)
 {
 	rectangle->setDestination(m_itemCoord);
+	rectangle->update();
 }
 
 void ContinueDrawing::act(SelectionRectangle* selectRect)
