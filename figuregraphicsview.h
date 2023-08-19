@@ -126,6 +126,24 @@ private:
 	void onEmptyMouseMoved(QMouseEvent* mouseEvent);
 
 	/*!
+	 * \brief Метод, вызываемый при нажатии на правую кнопку мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onMouseRightButtonPressed(QMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при движении с зажатой правой кнопкой мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onMouseRightButtonMoved(QMouseEvent* mouseEvent);
+
+	/*!
+	 * \brief Метод, вызываемый при разжатии правой кнопки мыщи
+	 * \param mouseEvent - событие мыщи
+	 */
+	void onMouseRightButtonReleased(QMouseEvent* mouseEvent);
+
+	/*!
 	 * \brief Метод, вызываемый при нажатии на среднюю кнопку мыщи
 	 * \param mouseEvent - событие мыщи
 	 */

@@ -132,37 +132,76 @@ void ModificationHandler::updateSelectedItems() const
 	}
 }
 
-// TODO: REmove method
-void ModificationHandler::updateAllItems() const
-{
-	foreach (const auto item, m_parentScene->items())
-	{
-		item->update();
-	}
-}
-
 void ModificationHandler::startRotation(const QPoint& coordinate)
 {
 	// Установить первичное значение для начала вращения
 	m_clickTracker->setLastRightMousePressed(coordinate);
 }
 
-void ModificationHandler::continueRotation(const QPoint& sceneCoord)
+qreal findAngle (QLineF first, QLineF second)
 {
-	QPointF	   lastRightPressedCoord{m_clickTracker->lastRightMousePressed()};
+	QPointF firstLineStart = {first.x1(), first.y1()};
+	QPointF firstLineEnd   = {first.x2(), first.y2()};
 
-	QPointF	   center = getUnitedSelectedCenter();
-	QTransform transform;
-	transform.translate(center.x(), center.y());
+	QPointF secondLineStart = {second.x1(), second.y1()};
+	QPointF secondLineEnd	= {second.x2(), second.y2()};
 
-	qreal angle = qAtan2(lastRightPressedCoord.y() - sceneCoord.y(),
-						 lastRightPressedCoord.x() - sceneCoord.x());
+	qreal	angle1 = atan2(firstLineStart.y() - firstLineEnd.y(),
+						   firstLineStart.x() - firstLineEnd.x());
+	qreal	angle2 = atan2(secondLineStart.y() - secondLineEnd.y(),
+						   secondLineStart.x() - secondLineEnd.x());
 
-	transform.rotate(angle);
-	transform.translate(-center.x(), -center.y());
+	qreal	resultAngle = (angle2 - angle1) * 180 / M_PI;
+	if (resultAngle < 0)
+	{
+		resultAngle += 360;
+	}
+
+	return resultAngle;
+}
+
+/*!
+ * \brief Данная функция - это попытка сделать правильное вращениеи объект, но
+ *        она провалилась
+ */
+qreal getAngle (QPointF center, QPointF oldPosition, QPointF newPosition)
+{
+	qreal x1 = oldPosition.x() - center.x();
+	qreal y1 = oldPosition.y() - center.y();
+	qreal x2 = newPosition.x() - center.x();
+	qreal y2 = newPosition.y() - center.y();
+	qreal d1 = qSqrt(x1 * x1 + y1 * y1);
+	qreal d2 = qSqrt(x2 * x2 + y2 * y2);
+
+	return qAsin((x1 / d1) * (y2 / d2) - (y1 / d1) * (x2 / d2));
+}
+
+void ModificationHandler::continueRotation(const QPointF& sceneCoord)
+{
+	QPointF lastRightPressedCoord{m_clickTracker->lastRightMousePressed()};
+
+	// Раньше все фигуры крутились рядом с одним общим центром
+	// QPointF	   center = getUnitedSelectedCenter();
 
 	foreach (QGraphicsItem* item, m_parentScene->selectedItems())
 	{
+		QTransform transform;
+		QPointF	   center = item->sceneBoundingRect().center();
+
+		transform.translate(center.x(), center.y());
+
+		qreal angle = qAtan2(lastRightPressedCoord.y() - sceneCoord.y(),
+							 lastRightPressedCoord.x() - sceneCoord.x());
+
+		// qreal angle = getAngle(center, lastRightPressedCoord, sceneCoord);
+		// if (getAngle(center, lastRightPressedCoord, sceneCoord) < 0)
+		//{
+		//	angle *= -1;
+		// }
+
+		transform.rotate(angle);
+		transform.translate(-center.x(), -center.y());
+
 		item->setPos(transform.map(item->pos()));
 		item->setRotation(item->rotation() + angle);
 	}

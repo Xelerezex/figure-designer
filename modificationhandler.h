@@ -91,11 +91,6 @@ public:
 	void updateSelectedItems() const;
 
 	/*!
-	 * \brief Метод обновляет все отрисованные фигуры
-	 */
-	void updateAllItems() const;
-
-	/*!
 	 * \brief Начать вращение
 	 * \param sceneCoord - координата сцены, где произошел евент
 	 */
@@ -105,7 +100,7 @@ public:
 	 * \brief продолжать вращение
 	 * \param sceneCoord - координата сцены, где произошел евент
 	 */
-	void continueRotation(const QPoint& sceneCoord);
+	void continueRotation(const QPointF &sceneCoord);
 
 	/*!
 	 * \brief Получить объединеный прямоугольник, составленный из выделенных

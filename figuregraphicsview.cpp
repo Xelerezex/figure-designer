@@ -71,8 +71,7 @@ void FigureGraphicsView::mousePressEvent(QMouseEvent* mouseEvent)
 	}
 	else if (isRightButtonPressed)
 	{
-		// Прокидываем нажатие Правой кнопки на сцену
-		QGraphicsView::mousePressEvent(mouseEvent);
+		onMouseRightButtonPressed(mouseEvent);
 	}
 	else if (isMiddleButtonPressed)
 	{
@@ -101,8 +100,7 @@ void FigureGraphicsView::mouseMoveEvent(QMouseEvent* mouseEvent)
 	}
 	else if (onlyWithRightButtonMove)
 	{
-		// Прокидываем зажатие + движение Правой кнопки на сцену
-		QGraphicsView::mouseMoveEvent(mouseEvent);
+		onMouseRightButtonMoved(mouseEvent);
 	}
 	else if (onlyWithMiddleButtonMove)
 	{
@@ -130,8 +128,7 @@ void FigureGraphicsView::mouseReleaseEvent(QMouseEvent* mouseEvent)
 	}
 	else if (isRightButtonReleased)
 	{
-		// Прокидываем отжатие Правой кнопки на сцену
-		QGraphicsView::mouseReleaseEvent(mouseEvent);
+		onMouseRightButtonReleased(mouseEvent);
 	}
 	else if (isMiddleButtonReleased)
 	{
@@ -251,6 +248,63 @@ void FigureGraphicsView::onEmptyMouseMoved(QMouseEvent* mouseEvent)
 	{
 		m_figureHandler->continueDrawingTriangle(mouseEvent->pos());
 	}
+}
+
+void FigureGraphicsView::onMouseRightButtonPressed(QMouseEvent* mouseEvent)
+{
+	if (m_currentMode != Modification)
+	{
+		return;
+	}
+
+	// Координаты фигуры в системе кординат Элемента Сцены
+	const auto itemCoord = mouseEvent->pos();
+	// Координаты фигуры на Сцене
+	const auto sceneCoord = mapToScene(itemCoord);
+
+	if (isOnSelectedFigure(sceneCoord))
+	{
+		// Прокидываем нажатие Правой кнопки на сцену
+		QGraphicsView::mousePressEvent(mouseEvent);
+	}
+}
+
+void FigureGraphicsView::onMouseRightButtonMoved(QMouseEvent* mouseEvent)
+{
+	if (m_currentMode != Modification)
+	{
+		return;
+	}
+
+	// Координаты фигуры в системе кординат Элемента Сцены
+	const auto itemCoord = mouseEvent->pos();
+	// Координаты фигуры на Сцене
+	const auto sceneCoord = mapToScene(itemCoord);
+
+	if (isOnSelectedFigure(sceneCoord))
+	{
+		// Прокидываем зажатие + движение Правой кнопки на сцену
+		QGraphicsView::mouseMoveEvent(mouseEvent);
+	}
+}
+
+void FigureGraphicsView::onMouseRightButtonReleased(QMouseEvent* mouseEvent)
+{
+	if (m_currentMode != Modification)
+	{
+		return;
+	}
+
+	// Координаты фигуры в системе кординат Элемента Сцены
+	const auto itemCoord = mouseEvent->pos();
+	// Координаты фигуры на Сцене
+	const auto sceneCoord = mapToScene(itemCoord);
+
+	// if (isOnSelectedFigure(sceneCoord))
+	//{
+	//  Прокидываем отжатие Правой кнопки на сцену
+	QGraphicsView::mouseReleaseEvent(mouseEvent);
+	//}
 }
 
 void FigureGraphicsView::onMouseMiddleButtonPressed(QMouseEvent* mouseEvent)

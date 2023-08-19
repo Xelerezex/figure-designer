@@ -176,17 +176,15 @@ void FigureScene::onRightMousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	// Координаты Сцены
 	const auto sceneCoord = mouseEvent->screenPos();
 
-	m_clickTracker->setLastRightMousePressed(sceneCoord);
-
 	m_modificationHandler->startRotation(sceneCoord);
 }
 
 void FigureScene::onRightMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-	// Координаты фигуры в системе кординат Элемента Сцены
-	const auto scemeCoord = mouseEvent->screenPos();
+	// Координаты Сцены
+	const auto sceneCoord = mouseEvent->scenePos();
 
-	m_modificationHandler->continueRotation(scemeCoord);
+	m_modificationHandler->continueRotation(sceneCoord);
 }
 
 // DEBUG:
