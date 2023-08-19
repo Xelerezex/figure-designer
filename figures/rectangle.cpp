@@ -6,8 +6,8 @@
 #include "continuedrawing.h"
 #include "completedrawing.h"
 
-Rectangle::Rectangle(QGraphicsItem* parent)
-	: FigureBase{parent}
+Rectangle::Rectangle(QMenu* fileMenu, QGraphicsItem* parent)
+	: FigureBase{fileMenu, parent}
 	, m_leftTop{0.0, 0.0}
 	, m_destination{0.0, 0.0}
 {

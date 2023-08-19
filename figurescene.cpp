@@ -8,11 +8,13 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
-FigureScene::FigureScene(/*QMenu* itemMenu, */ QObject* parent)
+FigureScene::FigureScene(QMenu* itemMenu, QObject* parent)
 	: QGraphicsScene{parent}
 	, m_currentMode{Mode::Modification}
+	, m_pFileMenu{itemMenu}
 	, m_clickTracker{new ClickTracker{this}}
-	, m_modificationHandler{new ModificationHandler{this, m_clickTracker}}
+	, m_modificationHandler{
+		  new ModificationHandler{m_pFileMenu, m_clickTracker, this}}
 {
 	// Настраиваем сцену
 	setupFigureScene();

@@ -1,22 +1,29 @@
 #include "centralwidget.h"
 
+#include <QApplication>
 #include <QButtonGroup>
 #include <QGraphicsView>
 #include <QToolButton>
 #include <QHBoxLayout>
 #include <QAction>
+#include <QMenu>
 
 #include "figurescene.h"
 #include "figuregraphicsview.h"
 
-CentralWidget::CentralWidget(QWidget* parent)
+CentralWidget::CentralWidget(QMenu* fileMenu, QWidget* parent)
 	: QWidget{parent}
+	, m_pFileMenu{fileMenu}
 	, m_figureScene{nullptr}
 	, m_figureGraphicsView{nullptr}
+	, m_menuActionsGroup{nullptr}
 	, m_toolBarButtonGroup{nullptr}
 {
 	// Создать и настроить все кнопки для тулбара
 	setupToolBarButtons();
+
+	// Создать и настроить все кнопки для Меню
+	setupFileMenu();
 
 	// Создать и настроить Сцену для отрисовки Фигур
 	setupScene();
@@ -32,6 +39,27 @@ CentralWidget::~CentralWidget()
 QList<QAbstractButton*> CentralWidget::buttons() const
 {
 	return m_toolBarButtonGroup->buttons();
+}
+
+void CentralWidget::setupMenuActions()
+{
+	m_menuActionsGroup = new QActionGroup{this};
+	m_menuActionsGroup->setExclusive(false);
+
+	// Добавляем кнопку выхода из приложения
+	auto* exitAction = new QAction(tr("E&xit"), this);
+	exitAction->setShortcut(QKeySequence::Quit);
+	exitAction->setStatusTip(tr("Exit from application"));
+	// FIXME: Закрывает только виджет
+	connect(exitAction, &QAction::triggered, this, &QCoreApplication::quit);
+	m_menuActionsGroup->addAction(exitAction);
+}
+
+void CentralWidget::setupFileMenu()
+{
+	setupMenuActions();
+
+	m_pFileMenu->addActions(m_menuActionsGroup->actions());
 }
 
 void CentralWidget::setupToolBarButtons()
@@ -79,10 +107,10 @@ void CentralWidget::setupToolBarButtons()
 
 void CentralWidget::setupScene()
 {
-	// TODO: Не забыть вставить сюда Меню
-	m_figureScene = new FigureScene{/*nullptr,*/ this};
+	m_figureScene = new FigureScene{m_pFileMenu, this};
 
-	m_figureGraphicsView = new FigureGraphicsView{m_figureScene};
+	m_figureGraphicsView
+		= new FigureGraphicsView{m_pFileMenu, m_figureScene, this};
 
 	// Создание основного лейаута со Сценой
 	auto* mainLayout = new QHBoxLayout;

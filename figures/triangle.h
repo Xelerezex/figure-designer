@@ -18,9 +18,10 @@ class Triangle : public FigureBase
 public:
 	/*!
 	 * \brief Основной конструктор
+	 * \param fileMenu - указатель на основное Меню
 	 * \param parent - указаетль на родительский класс
 	 */
-	explicit Triangle(QGraphicsItem* parent = nullptr);
+	explicit Triangle(QMenu* fileMenu, QGraphicsItem* parent = nullptr);
 
 	/*!
 	 * \brief Основной деструктор

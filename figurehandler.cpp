@@ -16,10 +16,13 @@
 #include <QGraphicsSceneMouseEvent>
 
 #include <QtMath>
+#include <QMenu>
 
-FigureHandler::FigureHandler(FigureGraphicsView* parent,
-							 ClickTracker*		 clickTracker)
+FigureHandler::FigureHandler(QMenu*				 fileMenu,
+							 ClickTracker*		 clickTracker,
+							 FigureGraphicsView* parent)
 	: QObject{parent}
+	, m_pFileMenu{fileMenu}
 	, m_parentView{parent}
 	, m_currentSquare{nullptr}
 	, m_currentRectangle{nullptr}
@@ -36,21 +39,21 @@ FigureHandler::~FigureHandler()
 
 void FigureHandler::addNewSquare(QPointF itemCoord, QPointF sceneCoord)
 {
-	m_currentSquare = new Square{};
+	m_currentSquare = new Square{m_pFileMenu};
 	m_currentSquare->act(StartDrawing{itemCoord, sceneCoord});
 	m_parentView->scene()->addItem(m_currentSquare);
 }
 
 void FigureHandler::addNewRectangle(QPointF itemCoord, QPointF sceneCoord)
 {
-	m_currentRectangle = new Rectangle{};
+	m_currentRectangle = new Rectangle{m_pFileMenu};
 	m_currentRectangle->act(StartDrawing{itemCoord, sceneCoord});
 	m_parentView->scene()->addItem(m_currentRectangle);
 }
 
 void FigureHandler::addNewCircle(QPointF itemCoord, QPointF sceneCoord)
 {
-	m_currentCircle = new Circle{};
+	m_currentCircle = new Circle{m_pFileMenu};
 	m_currentCircle->act(StartDrawing{itemCoord, sceneCoord});
 	m_parentView->scene()->addItem(m_currentCircle);
 }
@@ -62,7 +65,7 @@ void FigureHandler::addNewTriangleDot(QPointF itemCoord, QPointF sceneCoord)
 	// Первичное создание треугольника
 	if (isNull)
 	{
-		m_currentTriangle = new Triangle{};
+		m_currentTriangle = new Triangle{m_pFileMenu};
 		m_currentTriangle->act(StartDrawing{itemCoord, sceneCoord});
 		m_parentView->scene()->addItem(m_currentTriangle);
 	}
@@ -176,25 +179,25 @@ void FigureHandler::cloneSelectedItems()
 	{
 		if (item->type() == FigureBase::Square)
 		{
-			auto* square = FigureCloner::cloneSquare(item);
+			auto* square = FigureCloner::cloneSquare(m_pFileMenu, item);
 			m_parentView->scene()->addItem(square);
 			square->setSelected(true);
 		}
 		else if (item->type() == FigureBase::Rectangle)
 		{
-			auto* rectangle = FigureCloner::cloneRectangle(item);
+			auto* rectangle = FigureCloner::cloneRectangle(m_pFileMenu, item);
 			m_parentView->scene()->addItem(rectangle);
 			rectangle->setSelected(true);
 		}
 		else if (item->type() == FigureBase::Triangle)
 		{
-			auto* triangle = FigureCloner::cloneTriangle(item);
+			auto* triangle = FigureCloner::cloneTriangle(m_pFileMenu, item);
 			m_parentView->scene()->addItem(triangle);
 			triangle->setSelected(true);
 		}
 		else if (item->type() == FigureBase::Circle)
 		{
-			auto* circle = FigureCloner::cloneCircle(item);
+			auto* circle = FigureCloner::cloneCircle(m_pFileMenu, item);
 			m_parentView->scene()->addItem(circle);
 			circle->setSelected(true);
 		}

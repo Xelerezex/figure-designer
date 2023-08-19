@@ -13,9 +13,11 @@ class SelectionRectangle : public FigureBase
 public:
 	/*!
 	 * \brief Основной конструктор
+	 * \param fileMenu - указатель на основное Меню
 	 * \param parent - указаетль на родительский класс
 	 */
-	explicit SelectionRectangle(QGraphicsItem* parent = nullptr);
+	explicit SelectionRectangle(QMenu*		   fileMenu,
+								QGraphicsItem* parent = nullptr);
 
 	/*!
 	 * \brief Основной деструктор

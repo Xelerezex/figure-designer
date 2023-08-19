@@ -40,6 +40,11 @@ private:
 	void setupToolBar();
 
 	/*!
+	 * \brief Создать и настроить меню на главном окне
+	 */
+	void setupMenu();
+
+	/*!
 	 * \brief Создать и настроить центральный виджет
 	 */
 	void setupCentralWidget();
@@ -75,6 +80,11 @@ private:
 	 * \brief Указатель на основной тулбар
 	 */
 	QToolBar* m_pToolBar;
+
+	/*!
+	 * \brief Указатель на основное Меню
+	 */
+	QMenu* m_pMenu;
 };
 
 #endif // MAINWINDOW_H

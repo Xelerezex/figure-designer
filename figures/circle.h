@@ -13,9 +13,10 @@ class Circle : public FigureBase
 public:
 	/*!
 	 * \brief Основной конструктор
+	 * \param fileMenu - указатель на основное Меню
 	 * \param parent - указаетль на родительский класс
 	 */
-	explicit Circle(QGraphicsItem* parent = nullptr);
+	explicit Circle(QMenu* fileMenu, QGraphicsItem* parent = nullptr);
 
 	/*!
 	 * \brief Основной деструктор

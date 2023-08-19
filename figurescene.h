@@ -41,10 +41,10 @@ public:
 
 	/*!
 	 * \brief Основной конструктор
+	 * \param itemMenu - указатель на меню из центрального виджета
 	 * \param parent - указатель на родительский класс
 	 */
-	// TODO: Не забыть про itemMenu
-	explicit FigureScene(/*QMenu* itemMenu, */ QObject* parent = nullptr);
+	explicit FigureScene(QMenu* itemMenu, QObject* parent = nullptr);
 
 	/*!
 	 * \brief Основной деструктор
@@ -134,6 +134,11 @@ private:
 	 * \brief Режим работы в котором, в данный момент времени, находится сцена
 	 */
 	Mode m_currentMode;
+
+	/*!
+	 * \brief Указатель на Меню Файл
+	 */
+	QMenu* m_pFileMenu;
 
 	/*!
 	 * \brief Указатель на класс трекающий клики кнопок

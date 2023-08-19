@@ -4,9 +4,11 @@
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
+class QMenu;
 class FigureScene;
 class QToolButton;
 class QButtonGroup;
+class QActionGroup;
 class QAbstractButton;
 class FigureGraphicsView;
 QT_END_NAMESPACE
@@ -24,9 +26,10 @@ public:
 
 	/*!
 	 * \brief Основной конструктор
+	 * \param fileMenu - указатель на меню из основного окна
 	 * \param parent - указатель на родительский класс
 	 */
-	explicit CentralWidget(QWidget* parent = nullptr);
+	explicit CentralWidget(QMenu* fileMenu, QWidget* parent = nullptr);
 
 	/*!
 	 *  \brief Дефолтный деструктор
@@ -40,6 +43,16 @@ public:
 	[[nodiscard]] QList<QAbstractButton*> buttons() const;
 
 private:
+	/*!
+	 * \brief Создать и настроить все кнопки для Меню
+	 */
+	void setupMenuActions();
+
+	/*!
+	 * \brief Настроить основное Меню
+	 */
+	void setupFileMenu();
+
 	/*!
 	 * \brief Создать и настроить кнопки для ТулБара
 	 */
@@ -67,6 +80,11 @@ private slots:
 
 private:
 	/*!
+	 * \brief Указатель на Меню Файл
+	 */
+	QMenu* m_pFileMenu;
+
+	/*!
 	 * \brief Указатель на основную сцену отрисовки Фигур
 	 */
 	FigureScene* m_figureScene;
@@ -77,7 +95,12 @@ private:
 	FigureGraphicsView* m_figureGraphicsView;
 
 	/*!
-	 * \brief Указаетль на основную группу кнопок
+	 * \brief Указатель на группу Экшенов для меню
+	 */
+	QActionGroup* m_menuActionsGroup;
+
+	/*!
+	 * \brief Указаетль на группу кнопок ТулБара
 	 */
 	QButtonGroup* m_toolBarButtonGroup;
 };

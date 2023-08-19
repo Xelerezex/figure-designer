@@ -4,6 +4,7 @@
 #include <QObject>
 
 QT_BEGIN_NAMESPACE
+class QMenu;
 class Square;
 class Circle;
 class Triangle;
@@ -28,10 +29,12 @@ public:
 
 	/*!
 	 * \brief Основной конструктор
+	 * \param fileMenu - указатель на основное Меню
 	 * \param parent - указатель на родительский класс
 	 */
-	explicit FigureHandler(FigureGraphicsView* parent,
-						   ClickTracker*	   clickTracker);
+	explicit FigureHandler(QMenu*			   fileMenu,
+						   ClickTracker*	   clickTracker,
+						   FigureGraphicsView* parent);
 
 	/*!
 	 * \brief Основной деструктор
@@ -137,6 +140,11 @@ private:
 	void unselectAllItems() const;
 
 private:
+	/*!
+	 * \brief Указатель на Меню Файл
+	 */
+	QMenu* m_pFileMenu;
+
 	/*!
 	 * \brief Указатель на Вьюшку сцены родителя
 	 */

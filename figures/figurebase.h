@@ -97,9 +97,10 @@ public:
 protected:
 	/*!
 	 * \brief Основной конструктор
+	 * \param fileMenu - указатель на основное Меню
 	 * \param parent - указатель на родительский класс
 	 */
-	explicit FigureBase(QGraphicsItem* parent = nullptr);
+	explicit FigureBase(QMenu* fileMenu, QGraphicsItem* parent = nullptr);
 
 	/*!
 	 * \brief Метод высчитывает границы данного Квадрата относительно центра
@@ -108,11 +109,11 @@ protected:
 	 */
 	[[nodiscard]] virtual QRectF countFigure() const = 0;
 
-	void mousePressEvent (QGraphicsSceneMouseEvent* event) override;
+	void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
-	void mouseMoveEvent (QGraphicsSceneMouseEvent* event) override;
+	void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 
-	void mouseReleaseEvent (QGraphicsSceneMouseEvent* event) override;
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
 	/*!
@@ -124,6 +125,11 @@ private:
 		Creating,
 		FullyCreated
 	};
+
+	/*!
+	 * \brief Указатель на Меню Файл
+	 */
+	QMenu* m_pFileMenu;
 
 	/*!
 	 * \brief Текущий жизненый цикл

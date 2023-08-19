@@ -6,8 +6,8 @@
 #include "continuedrawing.h"
 #include "completedrawing.h"
 
-Triangle::Triangle(QGraphicsItem* parent)
-	: FigureBase{parent}
+Triangle::Triangle(QMenu* fileMenu, QGraphicsItem* parent)
+	: FigureBase{fileMenu, parent}
 	, m_currentStatus{NotDrawn}
 	, m_drawingLine{false}
 	, m_first{0.0, 0.0}

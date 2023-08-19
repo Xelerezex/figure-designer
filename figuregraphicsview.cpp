@@ -6,12 +6,16 @@
 #include <QGraphicsItem>
 #include <QMouseEvent>
 #include <QGuiApplication>
+#include <QMenu>
 
-FigureGraphicsView::FigureGraphicsView(QGraphicsScene* scene, QWidget* parent)
+FigureGraphicsView::FigureGraphicsView(QMenu*		   fileMenu,
+									   QGraphicsScene* scene,
+									   QWidget*		   parent)
 	: QGraphicsView{scene, parent}
 	, m_currentMode{Mode::Modification}
+	, m_pFileMenu{fileMenu}
 	, m_clickTracker{new ClickTracker{this}}
-	, m_figureHandler{new FigureHandler{this, m_clickTracker}}
+	, m_figureHandler{new FigureHandler{m_pFileMenu, m_clickTracker, this}}
 {
 	// Проведем основную настройку объекта:
 	setupFigureGraphicsView();

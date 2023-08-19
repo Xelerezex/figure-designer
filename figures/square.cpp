@@ -6,8 +6,8 @@
 #include "continuedrawing.h"
 #include "completedrawing.h"
 
-Square::Square(QGraphicsItem* parent)
-	: FigureBase{parent}
+Square::Square(QMenu* fileMenu, QGraphicsItem* parent)
+	: FigureBase{fileMenu, parent}
 	, m_destination{0.0, 0.0}
 {
 }

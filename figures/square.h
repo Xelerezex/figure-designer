@@ -13,9 +13,10 @@ class Square : public FigureBase
 public:
 	/*!
 	 * \brief Основной конструктор
+	 * \param fileMenu - указатель на основное Меню
 	 * \param parent - указаетль на родительский класс
 	 */
-	explicit Square(QGraphicsItem* parent = nullptr);
+	explicit Square(QMenu* fileMenu, QGraphicsItem* parent = nullptr);
 
 	/*!
 	 * \brief Основной деструктор

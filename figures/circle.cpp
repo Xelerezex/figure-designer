@@ -6,8 +6,8 @@
 #include "continuedrawing.h"
 #include "completedrawing.h"
 
-Circle::Circle(QGraphicsItem* parent)
-	: FigureBase{parent}
+Circle::Circle(QMenu* fileMenu, QGraphicsItem* parent)
+	: FigureBase{fileMenu, parent}
 	, m_destination{0.0, 0.0}
 {
 }

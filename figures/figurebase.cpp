@@ -1,7 +1,8 @@
 #include "figurebase.h"
 
-FigureBase::FigureBase(QGraphicsItem* parent)
+FigureBase::FigureBase(QMenu* fileMenu, QGraphicsItem* parent)
 	: QGraphicsItem{parent}
+	, m_pFileMenu{fileMenu}
 	, m_currentCycle{NotExisting}
 	, m_center{0.0, 0.0}
 {
@@ -19,7 +20,6 @@ void FigureBase::mousePressEvent(QGraphicsSceneMouseEvent* event)
 	update();
 }
 
-#include <QDebug>
 void FigureBase::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
 	update();

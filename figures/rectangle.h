@@ -13,9 +13,10 @@ class Rectangle : public FigureBase
 public:
 	/*!
 	 * \brief Основной конструктор
+	 * \param fileMenu - указатель на основное Меню
 	 * \param parent - указаетль на родительский класс
 	 */
-	explicit Rectangle(QGraphicsItem* parent = nullptr);
+	explicit Rectangle(QMenu* fileMenu, QGraphicsItem* parent = nullptr);
 
 	/*!
 	 * \brief Основной деструктор

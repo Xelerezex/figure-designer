@@ -9,8 +9,9 @@
 #include "completedrawing.h"
 
 #include <QGraphicsSceneMouseEvent>
+#include <QMenu>
 
-Square* FigureCloner::cloneSquare(QGraphicsItem* item)
+Square* FigureCloner::cloneSquare(QMenu* fileMenu, QGraphicsItem* item)
 {
 	// Указатель на копируемый объект
 	auto* square = qgraphicsitem_cast<Square*>(item);
@@ -22,7 +23,7 @@ Square* FigureCloner::cloneSquare(QGraphicsItem* item)
 						   + square->center()};
 
 	// Создаем новый объект и настраиваем
-	auto* newSquare = new Square{};
+	auto* newSquare = new Square{fileMenu};
 	newSquare->act(StartDrawing{square->center(), figureCoord});
 	newSquare->act(CompleteDrawing{square->destination()});
 	// Задаем новому объекту матрицу трансформаций старого
@@ -32,7 +33,7 @@ Square* FigureCloner::cloneSquare(QGraphicsItem* item)
 	return newSquare;
 }
 
-Rectangle* FigureCloner::cloneRectangle(QGraphicsItem* item)
+Rectangle* FigureCloner::cloneRectangle(QMenu* fileMenu, QGraphicsItem* item)
 {
 	// Указатель на копируемый объект
 	auto* rectangle = qgraphicsitem_cast<Rectangle*>(item);
@@ -44,7 +45,7 @@ Rectangle* FigureCloner::cloneRectangle(QGraphicsItem* item)
 						   + rectangle->leftTop()};
 
 	// Создаем новый объект и настраиваем
-	auto* newRectangle = new Rectangle{};
+	auto* newRectangle = new Rectangle{fileMenu};
 	newRectangle->act(StartDrawing{rectangle->leftTop(), figureCoord});
 	newRectangle->act(CompleteDrawing{rectangle->destination()});
 	// Задаем новому объекту матрицу трансформаций старого
@@ -54,7 +55,7 @@ Rectangle* FigureCloner::cloneRectangle(QGraphicsItem* item)
 	return newRectangle;
 }
 
-Triangle* FigureCloner::cloneTriangle(QGraphicsItem* item)
+Triangle* FigureCloner::cloneTriangle(QMenu* fileMenu, QGraphicsItem* item)
 {
 	// Указатель на копируемый объект
 	auto* triangle = qgraphicsitem_cast<Triangle*>(item);
@@ -65,7 +66,7 @@ Triangle* FigureCloner::cloneTriangle(QGraphicsItem* item)
 							 + triangle->first()};
 
 	// Создаем новый объект и настраиваем
-	auto* newTriangle = new Triangle{};
+	auto* newTriangle = new Triangle{fileMenu};
 	newTriangle->act(StartDrawing{triangle->first(), firstDotCoord});
 	newTriangle->act(CompleteDrawing{triangle->second()});
 	newTriangle->act(CompleteDrawing{triangle->third()});
@@ -76,7 +77,7 @@ Triangle* FigureCloner::cloneTriangle(QGraphicsItem* item)
 	return newTriangle;
 }
 
-Circle* FigureCloner::cloneCircle(QGraphicsItem* item)
+Circle* FigureCloner::cloneCircle(QMenu* fileMenu, QGraphicsItem* item)
 {
 	// Указатель на копируемый объект
 	auto* circle = qgraphicsitem_cast<Circle*>(item);
@@ -87,7 +88,7 @@ Circle* FigureCloner::cloneCircle(QGraphicsItem* item)
 						   + circle->center()};
 
 	// Создаем новый объект и настраиваем
-	auto* newCircle = new Circle{};
+	auto* newCircle = new Circle{fileMenu};
 	newCircle->act(StartDrawing{circle->center(), figureCoord});
 	newCircle->act(CompleteDrawing{circle->destination()});
 	// Задаем новому объекту матрицу трансформаций старого

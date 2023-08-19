@@ -6,17 +6,22 @@
 #include <QToolButton>
 #include <QSettings>
 #include <QToolBar>
+#include <QMenuBar>
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)
 	, m_pCentralWidget{nullptr}
 	, m_pToolBar{nullptr}
+	, m_pMenu{nullptr}
 {
 	// Настроить основное окно
 	setupMainWindow();
 
 	// Создать и настроить тулбар на главном окне
 	setupToolBar();
+
+	// Создать и настроить меню на главном окне
+	setupMenu();
 
 	// Создать и настроить центральный виджет
 	setupCentralWidget();
@@ -35,7 +40,7 @@ MainWindow::~MainWindow()
 void MainWindow::setupMainWindow()
 {
 	// Устанавливаем название организации
-	QCoreApplication::setOrganizationName(tr("Vestan"));
+	QCoreApplication::setOrganizationName(QLatin1String("Vestan"));
 
 	// Устанавливаем название приложения
 	QCoreApplication::setApplicationName(QLatin1String("Figure Designer"));
@@ -60,10 +65,15 @@ void MainWindow::setupToolBar()
 	addToolBar(Qt::LeftToolBarArea, m_pToolBar);
 }
 
+void MainWindow::setupMenu()
+{
+	m_pMenu = menuBar()->addMenu(QLatin1String("&File"));
+}
+
 void MainWindow::setupCentralWidget()
 {
 	// Создадим и настроем центральный виджет
-	m_pCentralWidget = new CentralWidget(this);
+	m_pCentralWidget = new CentralWidget(m_pMenu, this);
 
 	// Добавим центральный виджет на основное окно
 	setCentralWidget(m_pCentralWidget);

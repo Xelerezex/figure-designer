@@ -6,8 +6,8 @@
 #include "continuedrawing.h"
 #include "completedrawing.h"
 
-SelectionRectangle::SelectionRectangle(QGraphicsItem* parent)
-	: FigureBase{parent}
+SelectionRectangle::SelectionRectangle(QMenu* fileMenu, QGraphicsItem* parent)
+	: FigureBase{fileMenu, parent}
 	, m_destination{0.0, 0.0}
 {
 }

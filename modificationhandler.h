@@ -4,6 +4,7 @@
 #include <QObject>
 
 QT_BEGIN_NAMESPACE
+class QMenu;
 class FigureScene;
 class ClickTracker;
 class QGraphicsItem;
@@ -26,11 +27,13 @@ public:
 
 	/*!
 	 * \brief Основной конструктор
+	 * \param fileMenu - указатель на основное меню
 	 * \param scene - указатель на сцену
 	 * \param parent - указатель на родительский класс
 	 */
-	explicit ModificationHandler(FigureScene*  parent,
-								 ClickTracker* clickTracker);
+	explicit ModificationHandler(QMenu*		   fileMenu,
+								 ClickTracker* clickTracker,
+								 FigureScene*  parent);
 
 	/*!
 	 * \brief Основной деструктор
@@ -100,7 +103,7 @@ public:
 	 * \brief продолжать вращение
 	 * \param sceneCoord - координата сцены, где произошел евент
 	 */
-	void continueRotation(const QPointF &sceneCoord);
+	void continueRotation(const QPointF& sceneCoord);
 
 	/*!
 	 * \brief Получить объединеный прямоугольник, составленный из выделенных
@@ -116,6 +119,11 @@ public:
 	[[nodiscard]] QPointF getUnitedSelectedCenter() const;
 
 private:
+	/*!
+	 * \brief Указатель на Меню Файл
+	 */
+	QMenu* m_pFileMenu;
+
 	/*!
 	 * \brief Указатель на Сцену
 	 */

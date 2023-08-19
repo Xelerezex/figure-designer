@@ -4,6 +4,7 @@
 #include <QGraphicsView>
 
 QT_BEGIN_NAMESPACE
+class QMenu;
 class ClickTracker;
 class FigureHandler;
 class CentralWidget;
@@ -41,11 +42,13 @@ public:
 
 	/*!
 	 * \brief Основной конструктор
+	 * \param fileMenu - указатель на основное Меню
 	 * \param scene - указатель на сцену
 	 * \param parent - указатель на родительский виджет
 	 */
-	explicit FigureGraphicsView(QGraphicsScene* scene,
-								QWidget*		parent = nullptr);
+	explicit FigureGraphicsView(QMenu*			fileMenu,
+								QGraphicsScene* scene,
+								QWidget*		parent);
 
 	/*!
 	 * \brief Основной деструктор
@@ -179,6 +182,11 @@ private:
 	 * \brief Режим работы в котором, в данный момент времени, находится сцена
 	 */
 	Mode m_currentMode;
+
+	/*!
+	 * \brief Указатель на Меню Файл
+	 */
+	QMenu* m_pFileMenu;
 
 	/*!
 	 * \brief Указатель на класс трекающий клики кнопок

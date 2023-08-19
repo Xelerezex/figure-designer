@@ -11,10 +11,13 @@
 #include <QGraphicsItem>
 #include <QApplication>
 #include <QtMath>
+#include <QMenu>
 
-ModificationHandler::ModificationHandler(FigureScene*  parent,
-										 ClickTracker* clickTracker)
+ModificationHandler::ModificationHandler(QMenu*		   fileMenu,
+										 ClickTracker* clickTracker,
+										 FigureScene*  parent)
 	: QObject{parent}
+	, m_pFileMenu{fileMenu}
 	, m_parentScene{parent}
 	, m_clickTracker{clickTracker}
 	, m_selectionRect{nullptr}
@@ -76,7 +79,7 @@ void ModificationHandler::addNewSelectionRectangle(const QPointF& sceneCoord)
 {
 	if (m_selectionRect == nullptr)
 	{
-		m_selectionRect = new SelectionRectangle{};
+		m_selectionRect = new SelectionRectangle{m_pFileMenu};
 		m_selectionRect->act(StartDrawing{sceneCoord, sceneCoord});
 		m_parentScene->addItem(m_selectionRect);
 	}

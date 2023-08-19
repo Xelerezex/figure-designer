@@ -4,6 +4,7 @@
 #include <QtGlobal>
 
 QT_BEGIN_NAMESPACE
+class QMenu;
 class Square;
 class Circle;
 class Triangle;
@@ -27,28 +28,28 @@ public:
 	 * \param item - указатель на базовый класс конкретной фигуры
 	 * \return указатель на Квадрат
 	 */
-	static Square* cloneSquare(QGraphicsItem* item);
+	static Square* cloneSquare(QMenu* fileMenu, QGraphicsItem* item);
 
 	/*!
 	 * \brief Метод для клонирования нового объекта Прямоугольника
 	 * \param item - указатель на базовый класс конкретной фигуры
 	 * \return указатель на Прямоугольник
 	 */
-	static Rectangle* cloneRectangle(QGraphicsItem* item);
+	static Rectangle* cloneRectangle(QMenu* fileMenu, QGraphicsItem* item);
 
 	/*!
 	 * \brief Метод для клонирования нового объекта Треугольника
 	 * \param item - указатель на базовый класс конкретной фигуры
 	 * \return указатель на Треугольник
 	 */
-	static Triangle* cloneTriangle(QGraphicsItem* item);
+	static Triangle* cloneTriangle(QMenu* fileMenu, QGraphicsItem* item);
 
 	/*!
 	 * \brief Метод для клонирования нового объекта Окружности
 	 * \param item - указатель на базовый класс конкретной фигуры
 	 * \return указатель на Окружность
 	 */
-	static Circle* cloneCircle(QGraphicsItem* item);
+	static Circle* cloneCircle(QMenu* fileMenu, QGraphicsItem* item);
 };
 
 #endif // FIGURECLONER_H
