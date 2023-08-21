@@ -3,10 +3,14 @@
 #include <QApplication>
 #include <QButtonGroup>
 #include <QGraphicsView>
+#include <QFileDialog>
 #include <QToolButton>
 #include <QHBoxLayout>
+#include <QMessageBox>
 #include <QAction>
 #include <QMenu>
+
+#include <QJsonDocument>
 
 #include "figurescene.h"
 #include "figuregraphicsview.h"
@@ -50,9 +54,16 @@ void CentralWidget::setupMenuActions()
 	auto* exitAction = new QAction(tr("E&xit"), this);
 	exitAction->setShortcut(QKeySequence::Quit);
 	exitAction->setStatusTip(tr("Exit from application"));
-	// FIXME: Закрывает только виджет
 	connect(exitAction, &QAction::triggered, this, &QCoreApplication::quit);
 	m_menuActionsGroup->addAction(exitAction);
+
+	// Добавляем кнопку Сохранить как
+	auto* saveAsAction = new QAction(tr("&Save as..."), this);
+	saveAsAction->setShortcut(QKeySequence::SaveAs);
+	saveAsAction->setStatusTip(tr("Save your data in file"));
+	connect(
+		saveAsAction, &QAction::triggered, this, &CentralWidget::saveToFile);
+	m_menuActionsGroup->addAction(saveAsAction);
 }
 
 void CentralWidget::setupFileMenu()
@@ -138,4 +149,49 @@ void CentralWidget::buttonGroupClicked(int index)
 	m_figureGraphicsView->setCurrentMode(
 		static_cast<FigureGraphicsView::Mode>(index));
 	m_figureScene->setCurrentMode(static_cast<FigureScene::Mode>(index));
+}
+
+#include <QDebug>
+void CentralWidget::saveToFile()
+{
+	QString fileName = QFileDialog::getSaveFileName(
+		this,
+		tr("Save Figures data"),
+		"",
+		tr("Figure Designer (*.fgd);;JSON (*.json);;Picture (*.png)"));
+
+	QFileInfo fileInfo{fileName};
+
+	qDebug() << fileInfo.baseName() << fileInfo.suffix();
+
+	if (fileName.isEmpty())
+	{
+		return;
+	}
+
+	QFile file(fileName);
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		QMessageBox::information(
+			this, tr("Unable to open file"), file.errorString());
+		return;
+	}
+
+	if (fileInfo.suffix() == "json")
+	{
+		file.write(m_figureGraphicsView->figuresData().toJson());
+	}
+	else if (fileInfo.suffix() == "png")
+	{
+		QPixmap pixMap = m_figureGraphicsView->grab();
+		pixMap.save(fileName);
+	}
+	else
+	{
+		QDataStream out(&file);
+		out.setVersion(QDataStream::Qt_5_13);
+		out << m_figureGraphicsView->figuresData();
+	}
+
+	file.close();
 }

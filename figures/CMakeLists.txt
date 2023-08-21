@@ -36,6 +36,8 @@ add_library(
             completedrawing.cpp
             selectionrectangle.h
             selectionrectangle.cpp
+            serializetojson.h
+            serializetojson.cpp
 )
 
 target_link_libraries(

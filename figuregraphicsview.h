@@ -67,6 +67,12 @@ public:
 	 */
 	[[nodiscard]] bool isTriangleMode() const;
 
+	/*!
+	 * \brief Вернуть все данные со сцены
+	 * \return мап c данными
+	 */
+	[[nodiscard]] QJsonDocument figuresData();
+
 protected:
 	/*!
 	 * \brief Переопределнный метод Нажатия Кнопки Мыщи

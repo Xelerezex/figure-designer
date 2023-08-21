@@ -10,6 +10,7 @@ class Circle;
 class Triangle;
 class Rectangle;
 class ClickTracker;
+class QGraphicsItem;
 class FigureGraphicsView;
 QT_END_NAMESPACE
 
@@ -126,6 +127,13 @@ public:
 	 * \brief Метод клонирует все выделеные на сцене Фигуры
 	 */
 	void cloneSelectedItems();
+
+	/*!
+	 * \brief Сериализовать в объект JSON фигуру
+	 * \param item - указатель на объект
+	 * \return Объект JSON формата
+	 */
+	QJsonObject serializeFigure(QGraphicsItem* item);
 
 private:
 	/*!

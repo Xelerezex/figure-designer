@@ -8,6 +8,10 @@
 #include <QGuiApplication>
 #include <QMenu>
 
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
+
 FigureGraphicsView::FigureGraphicsView(QMenu*		   fileMenu,
 									   QGraphicsScene* scene,
 									   QWidget*		   parent)
@@ -58,6 +62,18 @@ FigureGraphicsView::Mode FigureGraphicsView::currentMode() const
 bool FigureGraphicsView::isTriangleMode() const
 {
 	return m_currentMode == TriangleDraw;
+}
+
+QJsonDocument FigureGraphicsView::figuresData()
+{
+	QJsonArray recordsArray;
+	foreach (const auto& item, items())
+	{
+		recordsArray.push_back(m_figureHandler->serializeFigure(item));
+	}
+
+	QJsonDocument doc{recordsArray};
+	return doc;
 }
 
 void FigureGraphicsView::mousePressEvent(QMouseEvent* mouseEvent)

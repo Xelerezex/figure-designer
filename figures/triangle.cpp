@@ -5,6 +5,7 @@
 #include "startdrawing.h"
 #include "continuedrawing.h"
 #include "completedrawing.h"
+#include "serializetojson.h"
 
 Triangle::Triangle(QMenu* fileMenu, QGraphicsItem* parent)
 	: FigureBase{fileMenu, parent}
@@ -36,6 +37,11 @@ void Triangle::act(ContinueDrawing&& continueDrawing)
 void Triangle::act(CompleteDrawing&& completeDrawing)
 {
 	completeDrawing.act(this);
+}
+
+void Triangle::act(SerializeToJson&& serialize)
+{
+	serialize.act(this);
 }
 
 const QPointF& Triangle::first() const

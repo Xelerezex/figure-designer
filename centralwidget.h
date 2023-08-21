@@ -78,6 +78,11 @@ private slots:
 	 */
 	void buttonGroupClicked(int index);
 
+	/*!
+	 * \brief Слот, активирующийся при нажатии на кнопку меню "Save As"
+	 */
+	void saveToFile();
+
 private:
 	/*!
 	 * \brief Указатель на Меню Файл

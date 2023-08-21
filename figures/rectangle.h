@@ -51,6 +51,12 @@ public:
 	void act(CompleteDrawing&& completeDrawing) override;
 
 	/*!
+	 * \brief Метод вызываемый, когда нужно совершить сериализацию (visitor)
+	 * \param serialize - класс действия сериализации в JSON формат
+	 */
+	void act (SerializeToJson&& serialize) override;
+
+	/*!
 	 * \brief Возвращает начальную точку, от которой началась отрисовка
 	 * \return координата
 	 */

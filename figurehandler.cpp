@@ -12,8 +12,13 @@
 #include "startdrawing.h"
 #include "continuedrawing.h"
 #include "completedrawing.h"
+#include "serializetojson.h"
 
 #include <QGraphicsSceneMouseEvent>
+
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 #include <QtMath>
 #include <QMenu>
@@ -202,6 +207,19 @@ void FigureHandler::cloneSelectedItems()
 			circle->setSelected(true);
 		}
 	}
+}
+
+QJsonObject FigureHandler::serializeFigure(QGraphicsItem* item)
+{
+	QJsonObject figureObject;
+
+	if (item->type() == FigureBase::Square)
+	{
+		auto* square = qgraphicsitem_cast<Square*>(item);
+		square->act(SerializeToJson{&figureObject});
+	}
+
+	return figureObject;
 }
 
 void FigureHandler::handleTriangleRemovement()

@@ -5,6 +5,7 @@
 #include "startdrawing.h"
 #include "continuedrawing.h"
 #include "completedrawing.h"
+#include "serializetojson.h"
 
 Rectangle::Rectangle(QMenu* fileMenu, QGraphicsItem* parent)
 	: FigureBase{fileMenu, parent}
@@ -35,6 +36,11 @@ void Rectangle::act(ContinueDrawing&& continueDrawing)
 void Rectangle::act(CompleteDrawing&& completeDrawing)
 {
 	completeDrawing.act(this);
+}
+
+void Rectangle::act(SerializeToJson&& serialize)
+{
+	serialize.act(this);
 }
 
 const QPointF& Rectangle::leftTop()

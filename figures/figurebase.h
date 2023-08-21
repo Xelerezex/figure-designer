@@ -6,6 +6,7 @@
 class StartDrawing;
 class ContinueDrawing;
 class CompleteDrawing;
+class SerializeToJson;
 
 /*!
  * \brief Базовый класс представления фигуры
@@ -57,6 +58,12 @@ public:
 	 * \param startDrawing - класс действия завершения отрисовки фигуры
 	 */
 	virtual void act(CompleteDrawing&& completeDrawing) = 0;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить сериализацию (visitor)
+	 * \param serialize - класс действия сериализации в JSON формат
+	 */
+	virtual void act(SerializeToJson&& serialize) = 0;
 
 	/*!
 	 * \brief Получить координаты точки центра
