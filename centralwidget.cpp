@@ -50,12 +50,12 @@ void CentralWidget::setupMenuActions()
 	m_menuActionsGroup = new QActionGroup{this};
 	m_menuActionsGroup->setExclusive(false);
 
-	// Добавляем кнопку выхода из приложения
-	auto* exitAction = new QAction(tr("E&xit"), this);
-	exitAction->setShortcut(QKeySequence::Quit);
-	exitAction->setStatusTip(tr("Exit from application"));
-	connect(exitAction, &QAction::triggered, this, &QCoreApplication::quit);
-	m_menuActionsGroup->addAction(exitAction);
+	// Добавляем кнопку Новый Файл
+	auto* newAction = new QAction(tr("&New"), this);
+	newAction->setShortcut(QKeySequence::New);
+	newAction->setStatusTip(tr("Clean whole sceen"));
+	connect(newAction, &QAction::triggered, this, &CentralWidget::newFile);
+	m_menuActionsGroup->addAction(newAction);
 
 	// Добавляем кнопку Сохранить как
 	auto* saveAsAction = new QAction(tr("&Save as..."), this);
@@ -64,6 +64,13 @@ void CentralWidget::setupMenuActions()
 	connect(
 		saveAsAction, &QAction::triggered, this, &CentralWidget::saveToFile);
 	m_menuActionsGroup->addAction(saveAsAction);
+
+	// Добавляем кнопку выхода из приложения
+	auto* exitAction = new QAction(tr("E&xit"), this);
+	exitAction->setShortcut(QKeySequence::Quit);
+	exitAction->setStatusTip(tr("Exit from application"));
+	connect(exitAction, &QAction::triggered, this, &QCoreApplication::quit);
+	m_menuActionsGroup->addAction(exitAction);
 }
 
 void CentralWidget::setupFileMenu()
@@ -152,6 +159,11 @@ void CentralWidget::buttonGroupClicked(int index)
 }
 
 #include <QDebug>
+void CentralWidget::newFile()
+{
+	m_figureScene->clear();
+}
+
 void CentralWidget::saveToFile()
 {
 	QString fileName = QFileDialog::getSaveFileName(

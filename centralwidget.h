@@ -79,6 +79,11 @@ private slots:
 	void buttonGroupClicked(int index);
 
 	/*!
+	 * \brief Слот, активирующийся при нажатии на кнопку меню "New"
+	 */
+	void newFile();
+
+	/*!
 	 * \brief Слот, активирующийся при нажатии на кнопку меню "Save As"
 	 */
 	void saveToFile();

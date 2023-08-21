@@ -33,7 +33,7 @@ void SerializeToJson::act(Square* square)
 									 .arg(square->destination().x())
 									 .arg(square->destination().y()))));
 
-	// Запомнить Координаты Позиции ан сцене
+	// Запомнить Координаты Позиции на сцене
 	m_jsonObject->insert(
 		"Position",
 		QJsonValue::fromVariant((QString{"(%1, %2)"}
