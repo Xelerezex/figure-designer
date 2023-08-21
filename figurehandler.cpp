@@ -226,6 +226,12 @@ QJsonObject FigureHandler::serializeFigure(QGraphicsItem* item)
 		m_currentRectangle->act(SerializeToJson{&figureObject});
 		m_currentRectangle = nullptr;
 	}
+	if (item->type() == FigureBase::Circle)
+	{
+		m_currentCircle = qgraphicsitem_cast<Circle*>(item);
+		m_currentCircle->act(SerializeToJson{&figureObject});
+		m_currentCircle = nullptr;
+	}
 
 	return figureObject;
 }
@@ -249,6 +255,13 @@ void FigureHandler::deserializeFigure(QJsonObject& object)
 		m_currentRectangle->act(DeserializeFromJson{&object});
 		m_parentView->scene()->addItem(m_currentRectangle);
 		m_currentRectangle = nullptr;
+	}
+	else if (type == FigureBase::Circle)
+	{
+		m_currentCircle = new Circle{m_pFileMenu};
+		m_currentCircle->act(DeserializeFromJson{&object});
+		m_parentView->scene()->addItem(m_currentCircle);
+		m_currentCircle = nullptr;
 	}
 }
 

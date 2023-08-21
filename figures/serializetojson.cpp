@@ -12,6 +12,32 @@ SerializeToJson::SerializeToJson(QJsonObject* jsonObject)
 
 void SerializeToJson::act(Circle* circle)
 {
+	// Запомнить Тип
+	m_jsonObject->insert("Type", QJsonValue::fromVariant(circle->type()));
+
+	// Запомнить Координаты Центра
+	m_jsonObject->insert(
+		"Center",
+		QJsonValue::fromVariant((QString{"(%1,%2)"}
+									 .arg(circle->center().x())
+									 .arg(circle->center().y()))));
+
+	// Запомнить Координаты Второй точки
+	m_jsonObject->insert(
+		"Destination",
+		QJsonValue::fromVariant((QString{"(%1,%2)"}
+									 .arg(circle->destination().x())
+									 .arg(circle->destination().y()))));
+
+	// Запомнить Координаты Позиции на сцене
+	m_jsonObject->insert(
+		"Position",
+		QJsonValue::fromVariant((
+			QString{"(%1,%2)"}.arg(circle->pos().x()).arg(circle->pos().y()))));
+
+	// Запомнить Угол поворота Фигуры
+	m_jsonObject->insert("Rotation",
+						 QJsonValue::fromVariant(circle->rotation()));
 }
 
 void SerializeToJson::act(Square* square)

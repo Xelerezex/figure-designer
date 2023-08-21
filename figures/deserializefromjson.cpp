@@ -17,6 +17,24 @@ DeserializeFromJson::DeserializeFromJson(QJsonObject* jsonObject)
 
 void DeserializeFromJson::act(Circle* circle)
 {
+	// Получаем координаты центра в координатах фигуры
+	QPointF center = toQPointF(m_jsonObject->value("Center").toString());
+	// Получаем координаты второй точки в координатах фигуры
+	QPointF destination
+		= toQPointF(m_jsonObject->value("Destination").toString());
+	// Получаем координаты фигуры в координатах сцены
+	QPointF postition = toQPointF(m_jsonObject->value("Position").toString());
+	// Получаем угол поворота фигуры
+	qreal angle = m_jsonObject->value("Rotation").toDouble();
+	// Высчитываем матрицу трансформации фигуры
+	QTransform transform = toQTransform(postition, angle);
+
+	// Отрисовывваем новый объект
+	circle->act(StartDrawing{center, postition});
+	circle->act(CompleteDrawing{destination});
+	// Задаем новому объекту матрицу трансформации
+	circle->setPos(transform.map(postition));
+	circle->setRotation(angle);
 }
 
 void DeserializeFromJson::act(Square* square)
