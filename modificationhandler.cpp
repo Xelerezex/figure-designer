@@ -179,6 +179,7 @@ qreal getAngle (QPointF center, QPointF oldPosition, QPointF newPosition)
 	return qAsin((x1 / d1) * (y2 / d2) - (y1 / d1) * (x2 / d2));
 }
 
+#include <QDebug>
 void ModificationHandler::continueRotation(const QPointF& sceneCoord)
 {
 	QPointF lastRightPressedCoord{m_clickTracker->lastRightMousePressed()};
@@ -196,11 +197,12 @@ void ModificationHandler::continueRotation(const QPointF& sceneCoord)
 		qreal angle = qAtan2(lastRightPressedCoord.y() - sceneCoord.y(),
 							 lastRightPressedCoord.x() - sceneCoord.x());
 
+		qDebug() << angle;
 		// qreal angle = getAngle(center, lastRightPressedCoord, sceneCoord);
-		// if (getAngle(center, lastRightPressedCoord, sceneCoord) < 0)
+		// if (angle < 0)
 		//{
 		//	angle *= -1;
-		// }
+		//}
 
 		transform.rotate(angle);
 		transform.translate(-center.x(), -center.y());

@@ -47,6 +47,24 @@ void DeserializeFromJson::act(Triangle* triangle)
 
 void DeserializeFromJson::act(Rectangle* rectangle)
 {
+	// Получаем координаты левой верхней точки в координатах фигуры
+	QPointF lefTop = toQPointF(m_jsonObject->value("LeftTop").toString());
+	// Получаем координаты второй точки в координатах фигуры
+	QPointF destination
+		= toQPointF(m_jsonObject->value("Destination").toString());
+	// Получаем координаты фигуры в координатах сцены
+	QPointF postition = toQPointF(m_jsonObject->value("Position").toString());
+	// Получаем угол поворота фигуры
+	qreal angle = m_jsonObject->value("Rotation").toDouble();
+	// Высчитываем матрицу трансформации фигуры
+	QTransform transform = toQTransform(postition, angle);
+
+	// Отрисовывваем новый объект
+	rectangle->act(StartDrawing{lefTop, postition});
+	rectangle->act(CompleteDrawing{destination});
+	// Задаем новому объекту матрицу трансформации
+	rectangle->setPos(transform.map(postition));
+	rectangle->setRotation(angle);
 }
 
 void DeserializeFromJson::act(SelectionRectangle* rectangle)
