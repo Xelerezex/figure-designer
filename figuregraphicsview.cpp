@@ -416,15 +416,13 @@ bool FigureGraphicsView::isOnSelectedFigure(const QPointF& sceneCoord) const
 	return figure != nullptr && figure->isSelected();
 }
 
-// DEBUG:
-#include <QDebug>
+// #include <QDebug>
 void FigureGraphicsView::printEventInfo(QMouseEvent* mouseEvent) const
 {
-	// DEBUG:
-	qDebug() << " TYPE      : " << mouseEvent->type() << "\n"
-			 << "LOCAL POS :" << mouseEvent->localPos() << "\n"
-			 << "SCREEN POS:" << mouseEvent->screenPos() << "\n"
-			 << "BUTTON    :" << mouseEvent->button() << "\n"
-			 << "BUTTONS   :" << mouseEvent->buttons() << "\n"
-			 << "MODIFIERS :" << mouseEvent->modifiers() << "\n";
+	// 	qDebug() << " TYPE      : " << mouseEvent->type() << "\n"
+	// 			 << "LOCAL POS :" << mouseEvent->localPos() << "\n"
+	// 			 << "SCREEN POS:" << mouseEvent->screenPos() << "\n"
+	// 			 << "BUTTON    :" << mouseEvent->button() << "\n"
+	// 			 << "BUTTONS   :" << mouseEvent->buttons() << "\n"
+	// 			 << "MODIFIERS :" << mouseEvent->modifiers() << "\n";
 }

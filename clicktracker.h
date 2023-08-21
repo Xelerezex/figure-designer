@@ -91,8 +91,7 @@ public:
 	[[nodiscard]] static bool isShortDistance(const QPointF& first,
 											  const QPointF& second);
 
-	// TODO: Comment
-	QPointF lastRightMousePressed() const;
+	QPointF					  lastRightMousePressed() const;
 	void	setLastRightMousePressed(QPointF newLastRightMousePressed);
 
 	QPointF lastRightMouseReleased() const;

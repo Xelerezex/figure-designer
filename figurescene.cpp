@@ -189,19 +189,11 @@ void FigureScene::onRightMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	m_modificationHandler->continueRotation(sceneCoord);
 }
 
-// DEBUG:
-#include <QDebug>
 void FigureScene::handleSelectedDelete()
 {
-	// DEBUG:
-	qDebug() << "Deleted" << selectedItems().size() << "items";
-
 	foreach (auto* item, selectedItems())
 	{
 		removeItem(item);
 		delete item;
 	}
-
-	// DEBUG:
-	qDebug() << "Elements remained" << items().size();
 }

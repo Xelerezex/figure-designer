@@ -111,7 +111,6 @@ void DeserializeFromJson::act(SelectionRectangle* rectangle)
 	Q_UNUSED(rectangle);
 }
 
-#include <QDebug>
 QPointF DeserializeFromJson::toQPointF(const QString& string)
 {
 	QRegularExpression regex{QString{"([+-]?\\d*\\.?\\d+)"}};
@@ -130,8 +129,6 @@ QPointF DeserializeFromJson::toQPointF(const QString& string)
 		temporary.setY(matchY.captured(0).toDouble());
 	}
 
-	qDebug() << temporary;
-
 	return temporary;
 }
 
@@ -139,9 +136,6 @@ QTransform DeserializeFromJson::toQTransform(const QPointF& position,
 											 const qreal&	angle)
 {
 	QTransform transform;
-	// QPointF	   center = square->sceneBoundingRect().center();
-	qDebug() << "Transform" << center;
-
 	transform.translate(position.x(), position.y());
 	transform.rotate(angle);
 	transform.translate(-position.x(), -position.y());

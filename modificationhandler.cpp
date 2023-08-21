@@ -141,51 +141,32 @@ void ModificationHandler::startRotation(const QPoint& coordinate)
 	m_clickTracker->setLastRightMousePressed(coordinate);
 }
 
-qreal findAngle (QLineF first, QLineF second)
+namespace
 {
-	QPointF firstLineStart = {first.x1(), first.y1()};
-	QPointF firstLineEnd   = {first.x2(), first.y2()};
-
-	QPointF secondLineStart = {second.x1(), second.y1()};
-	QPointF secondLineEnd	= {second.x2(), second.y2()};
-
-	qreal	angle1 = atan2(firstLineStart.y() - firstLineEnd.y(),
-						   firstLineStart.x() - firstLineEnd.x());
-	qreal	angle2 = atan2(secondLineStart.y() - secondLineEnd.y(),
-						   secondLineStart.x() - secondLineEnd.x());
-
-	qreal	resultAngle = (angle2 - angle1) * 180 / M_PI;
-	if (resultAngle < 0)
-	{
-		resultAngle += 360;
-	}
-
-	return resultAngle;
-}
-
 /*!
- * \brief Данная функция - это попытка сделать правильное вращениеи объект, но
- *        она провалилась
+ * \brief Метод позволяющий определить в какую сторону крутится мыщь,
+ *        по часовой или против часовой
+ * \param rotationCenter - точка центра вращения фигуры
+ * \param previousPoint - точка, где произошло нажатие на правую кнопку
+ * \param currentPoint - точка где сейчас стоит мышка после движения
+ * \return true - если по часовой
  */
-qreal getAngle (QPointF center, QPointF oldPosition, QPointF newPosition)
+bool isLeft (const QPointF& rotationCenter,
+			 const QPointF& previousPoint,
+			 const QPointF& currentPoint)
 {
-	qreal x1 = oldPosition.x() - center.x();
-	qreal y1 = oldPosition.y() - center.y();
-	qreal x2 = newPosition.x() - center.x();
-	qreal y2 = newPosition.y() - center.y();
-	qreal d1 = qSqrt(x1 * x1 + y1 * y1);
-	qreal d2 = qSqrt(x2 * x2 + y2 * y2);
-
-	return qAsin((x1 / d1) * (y2 / d2) - (y1 / d1) * (x2 / d2));
+	return ((previousPoint.x() - rotationCenter.x())
+				* (currentPoint.y() - rotationCenter.y())
+			- (previousPoint.y() - rotationCenter.y())
+				  * (currentPoint.x() - rotationCenter.x()))
+		   > 0;
 }
+} // namespace
 
 #include <QDebug>
 void ModificationHandler::continueRotation(const QPointF& sceneCoord)
 {
 	QPointF lastRightPressedCoord{m_clickTracker->lastRightMousePressed()};
-
-	// Раньше все фигуры крутились рядом с одним общим центром
-	// QPointF	   center = getUnitedSelectedCenter();
 
 	foreach (QGraphicsItem* item, m_parentScene->selectedItems())
 	{
@@ -194,15 +175,26 @@ void ModificationHandler::continueRotation(const QPointF& sceneCoord)
 
 		transform.translate(center.x(), center.y());
 
-		qreal angle = qAtan2(lastRightPressedCoord.y() - sceneCoord.y(),
-							 lastRightPressedCoord.x() - sceneCoord.x());
+		// Угол на который стоит повернуть Фигуру
+		qreal angle{1.25};
+		// С этой формулой долгое время не выходило
+		// = qAtan2(lastRightPressedCoord.y() - sceneCoord.y(),
+		//				   lastRightPressedCoord.x() - sceneCoord.x());
+		// Значение PI
+		// const qreal piValue{qAtan(1) * 4};
+		if (!isLeft(center, lastRightPressedCoord, sceneCoord))
+		{
+			angle = -qAbs(angle);
+		}
+		else
+		{
+			angle = qAbs(angle);
+		}
 
-		qDebug() << angle;
-		// qreal angle = getAngle(center, lastRightPressedCoord, sceneCoord);
-		// if (angle < 0)
-		//{
-		//	angle *= -1;
-		//}
+		qDebug() << "Center:" << center << "lastRight" << lastRightPressedCoord
+				 << "sceneCoord" << sceneCoord << "isLeft"
+				 << isLeft(center, lastRightPressedCoord, sceneCoord) << "Angle"
+				 << angle;
 
 		transform.rotate(angle);
 		transform.translate(-center.x(), -center.y());
@@ -210,6 +202,7 @@ void ModificationHandler::continueRotation(const QPointF& sceneCoord)
 		item->setPos(transform.map(item->pos()));
 		item->setRotation(item->rotation() + angle);
 	}
+	m_clickTracker->setLastRightMousePressed(sceneCoord);
 }
 
 QRectF ModificationHandler::getUnitedSelectedBoundingRect() const

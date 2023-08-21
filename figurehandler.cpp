@@ -242,7 +242,6 @@ QJsonObject FigureHandler::serializeFigure(QGraphicsItem* item)
 	return figureObject;
 }
 
-#include <QDebug>
 void FigureHandler::deserializeFigure(QJsonObject& object)
 {
 	// Тип фигуры
