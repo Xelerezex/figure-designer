@@ -42,6 +42,13 @@ public:
 	 */
 	[[nodiscard]] QList<QAbstractButton*> buttons() const;
 
+protected:
+	/*!
+	 * \brief Переопределенный метод закрытия виджета
+	 * \param event - Эвент закрытия
+	 */
+	void closeEvent(QCloseEvent* event) override;
+
 private:
 	/*!
 	 * \brief Создать и настроить все кнопки для Меню
@@ -84,6 +91,11 @@ private slots:
 	void newFile();
 
 	/*!
+	 * \brief Слот, активирующийся при нажатии на кнопку меню "Save"
+	 */
+	void saveFile();
+
+	/*!
 	 * \brief Слот, активирующийся при нажатии на кнопку меню "Save As"
 	 */
 	void saveToFile();
@@ -92,6 +104,11 @@ private slots:
 	 * \brief Слот, активирующийся при нажатии на кнопку меню "Load"
 	 */
 	void loadFromFile();
+
+	/*!
+	 * \brief Слот, активирующийся при нажатии на кнопку "Exit"
+	 */
+	void exitFromApp();
 
 private:
 	/*!
@@ -118,6 +135,11 @@ private:
 	 * \brief Указаетль на группу кнопок ТулБара
 	 */
 	QButtonGroup* m_toolBarButtonGroup;
+
+	/*!
+	 * \brief Имя файла, в который идет автосохранение
+	 */
+	QString m_fileToSaveName;
 };
 
 #endif // CENTRALWIDGET_H

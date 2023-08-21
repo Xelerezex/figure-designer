@@ -91,6 +91,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 {
 	// Записать позиции основного окна в файл настроек
 	writeState();
+	m_pCentralWidget->close();
 
 	// Вызвать базовое событие закрытия
 	QMainWindow::closeEvent(event);

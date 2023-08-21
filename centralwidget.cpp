@@ -22,6 +22,7 @@ CentralWidget::CentralWidget(QMenu* fileMenu, QWidget* parent)
 	, m_figureGraphicsView{nullptr}
 	, m_menuActionsGroup{nullptr}
 	, m_toolBarButtonGroup{nullptr}
+	, m_fileToSaveName{}
 {
 	// Создать и настроить все кнопки для тулбара
 	setupToolBarButtons();
@@ -45,6 +46,19 @@ QList<QAbstractButton*> CentralWidget::buttons() const
 	return m_toolBarButtonGroup->buttons();
 }
 
+void CentralWidget::closeEvent(QCloseEvent* event)
+{
+	if (m_fileToSaveName.isEmpty())
+	{
+		saveToFile();
+	}
+	else
+	{
+		saveFile();
+	}
+	QWidget::closeEvent(event);
+}
+
 void CentralWidget::setupMenuActions()
 {
 	m_menuActionsGroup = new QActionGroup{this};
@@ -57,6 +71,13 @@ void CentralWidget::setupMenuActions()
 	connect(newAction, &QAction::triggered, this, &CentralWidget::newFile);
 	m_menuActionsGroup->addAction(newAction);
 
+	// Добавляем кнопку Сохранить
+	auto* saveAction = new QAction(tr("&Save"), this);
+	saveAction->setShortcut(QKeySequence::Save);
+	saveAction->setStatusTip(tr("Save your data in file"));
+	connect(saveAction, &QAction::triggered, this, &CentralWidget::saveFile);
+	m_menuActionsGroup->addAction(saveAction);
+
 	// Добавляем кнопку Загрузить
 	auto* loadAction = new QAction(tr("&Load"), this);
 	loadAction->setShortcut(QKeySequence::Open);
@@ -68,7 +89,7 @@ void CentralWidget::setupMenuActions()
 	// Добавляем кнопку Сохранить как
 	auto* saveAsAction = new QAction(tr("&Save as..."), this);
 	saveAsAction->setShortcut(QKeySequence::SaveAs);
-	saveAsAction->setStatusTip(tr("Save your data in file"));
+	saveAsAction->setStatusTip(tr("Save as your data in file"));
 	connect(
 		saveAsAction, &QAction::triggered, this, &CentralWidget::saveToFile);
 	m_menuActionsGroup->addAction(saveAsAction);
@@ -77,7 +98,7 @@ void CentralWidget::setupMenuActions()
 	auto* exitAction = new QAction(tr("E&xit"), this);
 	exitAction->setShortcut(QKeySequence::Quit);
 	exitAction->setStatusTip(tr("Exit from application"));
-	connect(exitAction, &QAction::triggered, this, &QCoreApplication::quit);
+	connect(exitAction, &QAction::triggered, this, &CentralWidget::exitFromApp);
 	m_menuActionsGroup->addAction(exitAction);
 }
 
@@ -166,30 +187,35 @@ void CentralWidget::buttonGroupClicked(int index)
 	m_figureScene->setCurrentMode(static_cast<FigureScene::Mode>(index));
 }
 
-#include <QDebug>
 void CentralWidget::newFile()
 {
+	if (m_fileToSaveName.isEmpty())
+	{
+		saveToFile();
+	}
+	else
+	{
+		saveFile();
+	}
 	m_figureScene->clear();
 }
 
-void CentralWidget::saveToFile()
+void CentralWidget::saveFile()
 {
-	QString fileName = QFileDialog::getSaveFileName(
-		this,
-		tr("Save Figures data"),
-		"",
-		tr("Figure Designer (*.fgd);;JSON (*.json);;Picture (*.png)"));
-
-	QFileInfo fileInfo{fileName};
-
-	qDebug() << fileInfo.baseName() << fileInfo.suffix();
-
-	if (fileName.isEmpty())
+	if (m_figureScene->items().empty())
 	{
 		return;
 	}
 
-	QFile file(fileName);
+	if (m_fileToSaveName.isEmpty())
+	{
+		saveToFile();
+		return;
+	}
+
+	QFile	  file(m_fileToSaveName);
+	QFileInfo fileInfo{m_fileToSaveName};
+
 	if (!file.open(QIODevice::WriteOnly))
 	{
 		QMessageBox::information(
@@ -204,7 +230,50 @@ void CentralWidget::saveToFile()
 	else if (fileInfo.suffix() == "png")
 	{
 		QPixmap pixMap = m_figureGraphicsView->grab();
-		pixMap.save(fileName);
+		pixMap.save(m_fileToSaveName);
+	}
+	else
+	{
+		QDataStream out(&file);
+		out.setVersion(QDataStream::Qt_5_13);
+		out << m_figureGraphicsView->figuresData();
+	}
+
+	file.close();
+}
+
+void CentralWidget::saveToFile()
+{
+	m_fileToSaveName = QFileDialog::getSaveFileName(
+		this,
+		tr("Save Figures data"),
+		"",
+		tr("Figure Designer (*.fgd);;JSON (*.json);;Picture (*.png)"));
+
+	QFileInfo fileInfo{m_fileToSaveName};
+
+	if (m_fileToSaveName.isEmpty())
+	{
+		return;
+	}
+
+	QFile file(m_fileToSaveName);
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		QMessageBox::information(
+			this, tr("Unable to open file"), file.errorString());
+		return;
+	}
+
+	if (fileInfo.suffix() == "json")
+	{
+		file.write(m_figureGraphicsView->figuresData().toJson());
+	}
+	else if (fileInfo.suffix() == "png")
+	{
+		m_figureScene->clearSelection();
+		QPixmap pixMap = m_figureGraphicsView->grab();
+		pixMap.save(m_fileToSaveName);
 	}
 	else
 	{
@@ -218,21 +287,25 @@ void CentralWidget::saveToFile()
 
 void CentralWidget::loadFromFile()
 {
-	QString fileName = QFileDialog::getOpenFileName(
+	m_fileToSaveName = QFileDialog::getOpenFileName(
 		this,
 		tr("Open Figure Designer save"),
 		"",
 		tr("Figure Designer (*.fgd);;All Files (*)"));
-
-	if (fileName.isEmpty())
+	if (m_fileToSaveName.isEmpty())
 	{
 		return;
 	}
 
-	QFile	  file(fileName);
-
-	QFileInfo fileInfo{fileName};
-	qDebug() << fileInfo.baseName() << fileInfo.suffix();
+	QFile	  file(m_fileToSaveName);
+	QFileInfo fileInfo{m_fileToSaveName};
+	if (fileInfo.suffix() != "fgd")
+	{
+		m_fileToSaveName.clear();
+		QMessageBox::information(
+			this, tr("Unable to open file"), file.errorString());
+		return;
+	}
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -255,6 +328,20 @@ void CentralWidget::loadFromFile()
 	}
 	else
 	{
+		m_figureScene->clear();
 		m_figureGraphicsView->addedLoadedData(doc);
 	}
+}
+
+void CentralWidget::exitFromApp()
+{
+	if (m_fileToSaveName.isEmpty())
+	{
+		saveToFile();
+	}
+	else
+	{
+		saveFile();
+	}
+	QCoreApplication::quit();
 }

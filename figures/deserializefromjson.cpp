@@ -75,10 +75,6 @@ void DeserializeFromJson::act(Triangle* triangle)
 	// Высчитываем матрицу трансформации фигуры
 	QTransform transform = toQTransform(postition, angle);
 
-	// Координаты фигуры
-	// const auto firstDotCoord{transform.map(triangle->pos()).toPoint()
-	//						 + triangle->first()};
-
 	// Отрисовывваем новый объект
 	triangle->act(StartDrawing{firstDot, postition});
 	triangle->act(CompleteDrawing{secondDot});
