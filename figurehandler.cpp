@@ -220,17 +220,23 @@ QJsonObject FigureHandler::serializeFigure(QGraphicsItem* item)
 		m_currentSquare->act(SerializeToJson{&figureObject});
 		m_currentSquare = nullptr;
 	}
-	if (item->type() == FigureBase::Rectangle)
+	else if (item->type() == FigureBase::Rectangle)
 	{
 		m_currentRectangle = qgraphicsitem_cast<Rectangle*>(item);
 		m_currentRectangle->act(SerializeToJson{&figureObject});
 		m_currentRectangle = nullptr;
 	}
-	if (item->type() == FigureBase::Circle)
+	else if (item->type() == FigureBase::Circle)
 	{
 		m_currentCircle = qgraphicsitem_cast<Circle*>(item);
 		m_currentCircle->act(SerializeToJson{&figureObject});
 		m_currentCircle = nullptr;
+	}
+	else if (item->type() == FigureBase::Triangle)
+	{
+		m_currentTriangle = qgraphicsitem_cast<Triangle*>(item);
+		m_currentTriangle->act(SerializeToJson{&figureObject});
+		m_currentTriangle = nullptr;
 	}
 
 	return figureObject;
@@ -262,6 +268,13 @@ void FigureHandler::deserializeFigure(QJsonObject& object)
 		m_currentCircle->act(DeserializeFromJson{&object});
 		m_parentView->scene()->addItem(m_currentCircle);
 		m_currentCircle = nullptr;
+	}
+	else if (type == FigureBase::Triangle)
+	{
+		m_currentTriangle = new Triangle{m_pFileMenu};
+		m_currentTriangle->act(DeserializeFromJson{&object});
+		m_parentView->scene()->addItem(m_currentTriangle);
+		m_currentTriangle = nullptr;
 	}
 }
 

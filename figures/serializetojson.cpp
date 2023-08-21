@@ -72,6 +72,40 @@ void SerializeToJson::act(Square* square)
 
 void SerializeToJson::act(Triangle* triangle)
 {
+	// Запомнить Тип
+	m_jsonObject->insert("Type", QJsonValue::fromVariant(triangle->type()));
+
+	// Запомнить Координаты первой точки
+	m_jsonObject->insert(
+		"FirstDot",
+		QJsonValue::fromVariant((QString{"(%1,%2)"}
+									 .arg(triangle->first().x())
+									 .arg(triangle->first().y()))));
+
+	// Запомнить Координаты второй точки
+	m_jsonObject->insert(
+		"SecondDot",
+		QJsonValue::fromVariant((QString{"(%1,%2)"}
+									 .arg(triangle->second().x())
+									 .arg(triangle->second().y()))));
+
+	// Запомнить Координаты третьей точки
+	m_jsonObject->insert(
+		"ThirdDot",
+		QJsonValue::fromVariant((QString{"(%1,%2)"}
+									 .arg(triangle->third().x())
+									 .arg(triangle->third().y()))));
+
+	// Запомнить Координаты Позиции на сцене
+	m_jsonObject->insert(
+		"Position",
+		QJsonValue::fromVariant((QString{"(%1,%2)"}
+									 .arg(triangle->pos().x())
+									 .arg(triangle->pos().y()))));
+
+	// Запомнить Угол поворота Фигуры
+	m_jsonObject->insert("Rotation",
+						 QJsonValue::fromVariant(triangle->rotation()));
 }
 
 void SerializeToJson::act(Rectangle* rectangle)
