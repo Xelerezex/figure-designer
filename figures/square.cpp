@@ -6,6 +6,7 @@
 #include "continuedrawing.h"
 #include "completedrawing.h"
 #include "serializetojson.h"
+#include "deserializefromjson.h"
 
 Square::Square(QMenu* fileMenu, QGraphicsItem* parent)
 	: FigureBase{fileMenu, parent}
@@ -38,6 +39,11 @@ void Square::act(CompleteDrawing&& completeDrawing)
 }
 
 void Square::act(SerializeToJson&& serialize)
+{
+	serialize.act(this);
+}
+
+void Square::act(DeserializeFromJson&& serialize)
 {
 	serialize.act(this);
 }

@@ -13,6 +13,7 @@
 #include "continuedrawing.h"
 #include "completedrawing.h"
 #include "serializetojson.h"
+#include "deserializefromjson.h"
 
 #include <QGraphicsSceneMouseEvent>
 
@@ -215,11 +216,27 @@ QJsonObject FigureHandler::serializeFigure(QGraphicsItem* item)
 
 	if (item->type() == FigureBase::Square)
 	{
-		auto* square = qgraphicsitem_cast<Square*>(item);
-		square->act(SerializeToJson{&figureObject});
+		m_currentSquare = qgraphicsitem_cast<Square*>(item);
+		m_currentSquare->act(SerializeToJson{&figureObject});
+		m_currentSquare = nullptr;
 	}
 
 	return figureObject;
+}
+
+#include <QDebug>
+void FigureHandler::deserializeFigure(QJsonObject& object)
+{
+	// Тип фигуры
+	int type{object.value("Type").toInt()};
+
+	if (type == FigureBase::Square)
+	{
+		m_currentSquare = new Square{m_pFileMenu};
+		m_currentSquare->act(DeserializeFromJson{&object});
+		m_parentView->scene()->addItem(m_currentSquare);
+		m_currentSquare = nullptr;
+	}
 }
 
 void FigureHandler::handleTriangleRemovement()

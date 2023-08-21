@@ -54,7 +54,13 @@ public:
 	 * \brief Метод вызываемый, когда нужно совершить сериализацию (visitor)
 	 * \param serialize - класс действия сериализации в JSON формат
 	 */
-	void act (SerializeToJson&& serialize) override;
+	void act(SerializeToJson&& serialize) override;
+
+	/*!
+	 * \brief Метод вызываемый, когда нужно совершить десериализацию (visitor)
+	 * \param serialize - класс действия десериализации в JSON формат
+	 */
+	void act(DeserializeFromJson&& serialize) override;
 
 	/*!
 	 * \brief Получить координаты второй точки

@@ -58,6 +58,12 @@ public:
 	void act(SerializeToJson&& serialize) override;
 
 	/*!
+	 * \brief Метод вызываемый, когда нужно совершить десериализацию (visitor)
+	 * \param serialize - класс действия десериализации в JSON формат
+	 */
+	void act(DeserializeFromJson&& serialize) override;
+
+	/*!
 	 * \brief Возвращает начальную точку, от которой началась отрисовка
 	 * \return координата
 	 */

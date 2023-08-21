@@ -6,6 +6,7 @@
 #include "continuedrawing.h"
 #include "completedrawing.h"
 #include "serializetojson.h"
+#include "deserializefromjson.h"
 
 Circle::Circle(QMenu* fileMenu, QGraphicsItem* parent)
 	: FigureBase{fileMenu, parent}
@@ -38,6 +39,11 @@ void Circle::act(CompleteDrawing&& completeDrawing)
 }
 
 void Circle::act(SerializeToJson&& serialize)
+{
+	serialize.act(this);
+}
+
+void Circle::act(DeserializeFromJson&& serialize)
 {
 	serialize.act(this);
 }

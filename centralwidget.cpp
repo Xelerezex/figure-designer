@@ -57,6 +57,14 @@ void CentralWidget::setupMenuActions()
 	connect(newAction, &QAction::triggered, this, &CentralWidget::newFile);
 	m_menuActionsGroup->addAction(newAction);
 
+	// Добавляем кнопку Загрузить
+	auto* loadAction = new QAction(tr("&Load"), this);
+	loadAction->setShortcut(QKeySequence::Open);
+	loadAction->setStatusTip(tr("Save your data in file"));
+	connect(
+		loadAction, &QAction::triggered, this, &CentralWidget::loadFromFile);
+	m_menuActionsGroup->addAction(loadAction);
+
 	// Добавляем кнопку Сохранить как
 	auto* saveAsAction = new QAction(tr("&Save as..."), this);
 	saveAsAction->setShortcut(QKeySequence::SaveAs);
@@ -206,4 +214,47 @@ void CentralWidget::saveToFile()
 	}
 
 	file.close();
+}
+
+void CentralWidget::loadFromFile()
+{
+	QString fileName = QFileDialog::getOpenFileName(
+		this,
+		tr("Open Figure Designer save"),
+		"",
+		tr("Figure Designer (*.fgd);;All Files (*)"));
+
+	if (fileName.isEmpty())
+	{
+		return;
+	}
+
+	QFile	  file(fileName);
+
+	QFileInfo fileInfo{fileName};
+	qDebug() << fileInfo.baseName() << fileInfo.suffix();
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		QMessageBox::information(
+			this, tr("Unable to open file"), file.errorString());
+		return;
+	}
+
+	QJsonDocument doc;
+	QDataStream	  in(&file);
+	in.setVersion(QDataStream::Qt_5_13);
+	in >> doc;
+
+	if (doc.isEmpty())
+	{
+		QMessageBox::information(this,
+								 tr("No contacts in file"),
+								 tr("The file you are attempting to open "
+									"contains no contacts."));
+	}
+	else
+	{
+		m_figureGraphicsView->addedLoadedData(doc);
+	}
 }

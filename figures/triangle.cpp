@@ -6,6 +6,7 @@
 #include "continuedrawing.h"
 #include "completedrawing.h"
 #include "serializetojson.h"
+#include "deserializefromjson.h"
 
 Triangle::Triangle(QMenu* fileMenu, QGraphicsItem* parent)
 	: FigureBase{fileMenu, parent}
@@ -40,6 +41,11 @@ void Triangle::act(CompleteDrawing&& completeDrawing)
 }
 
 void Triangle::act(SerializeToJson&& serialize)
+{
+	serialize.act(this);
+}
+
+void Triangle::act(DeserializeFromJson&& serialize)
 {
 	serialize.act(this);
 }

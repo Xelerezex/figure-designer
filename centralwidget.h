@@ -88,6 +88,11 @@ private slots:
 	 */
 	void saveToFile();
 
+	/*!
+	 * \brief Слот, активирующийся при нажатии на кнопку меню "Load"
+	 */
+	void loadFromFile();
+
 private:
 	/*!
 	 * \brief Указатель на Меню Файл

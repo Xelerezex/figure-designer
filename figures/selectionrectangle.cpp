@@ -6,6 +6,7 @@
 #include "continuedrawing.h"
 #include "completedrawing.h"
 #include "serializetojson.h"
+#include "deserializefromjson.h"
 
 SelectionRectangle::SelectionRectangle(QMenu* fileMenu, QGraphicsItem* parent)
 	: FigureBase{fileMenu, parent}
@@ -38,6 +39,11 @@ void SelectionRectangle::act(CompleteDrawing&& completeDrawing)
 }
 
 void SelectionRectangle::act(SerializeToJson&& serialize)
+{
+	serialize.act(this);
+}
+
+void SelectionRectangle::act(DeserializeFromJson&& serialize)
 {
 	serialize.act(this);
 }

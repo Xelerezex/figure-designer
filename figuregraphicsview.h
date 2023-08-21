@@ -73,6 +73,12 @@ public:
 	 */
 	[[nodiscard]] QJsonDocument figuresData();
 
+	/*!
+	 * \brief Загрузить данные в сцену из QJsonDocument
+	 * \param document - документ с закгружденными данными
+	 */
+	void addedLoadedData(QJsonDocument& document);
+
 protected:
 	/*!
 	 * \brief Переопределнный метод Нажатия Кнопки Мыщи

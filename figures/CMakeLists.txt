@@ -38,6 +38,8 @@ add_library(
             selectionrectangle.cpp
             serializetojson.h
             serializetojson.cpp
+            deserializefromjson.h
+            deserializefromjson.cpp
 )
 
 target_link_libraries(

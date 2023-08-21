@@ -12,6 +12,8 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
+#include "figurebase.h"
+
 FigureGraphicsView::FigureGraphicsView(QMenu*		   fileMenu,
 									   QGraphicsScene* scene,
 									   QWidget*		   parent)
@@ -74,6 +76,15 @@ QJsonDocument FigureGraphicsView::figuresData()
 
 	QJsonDocument doc{recordsArray};
 	return doc;
+}
+
+void FigureGraphicsView::addedLoadedData(QJsonDocument& document)
+{
+	foreach (const QJsonValue& item, document.array())
+	{
+		QJsonObject object{item.toObject()};
+		m_figureHandler->deserializeFigure(object);
+	}
 }
 
 void FigureGraphicsView::mousePressEvent(QMouseEvent* mouseEvent)

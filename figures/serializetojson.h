@@ -16,11 +16,16 @@ public:
 	SerializeToJson() = delete;
 
 	/*!
-	 * \brief Дефолтный кеонстуктор
+	 * \brief Дефолтный констуктор
 	 * \param jsonObject - указатель на объект, куда ведется запись
 	 *        данных из фигуры
 	 */
 	explicit SerializeToJson(QJsonObject* jsonObject);
+
+	/*!
+	 * \brief Дефолтный деструктор
+	 */
+	~SerializeToJson() override = default;
 
 	/*!
 	 * \brief Дейстиве сериализации фигуры Круга

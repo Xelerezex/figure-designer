@@ -135,6 +135,13 @@ public:
 	 */
 	QJsonObject serializeFigure(QGraphicsItem* item);
 
+	/*!
+	 * \brief Десериализовать из JSON объекта данные
+	 *        и добавить фигуру на сцену, по полученным данным
+	 * \param object - объект JSON
+	 */
+	void deserializeFigure(QJsonObject& object);
+
 private:
 	/*!
 	 * \brief Данный метод позволяет удалить Треугольник со сцены,

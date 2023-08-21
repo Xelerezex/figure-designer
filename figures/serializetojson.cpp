@@ -22,23 +22,26 @@ void SerializeToJson::act(Square* square)
 	// Запомнить Координаты Центра
 	m_jsonObject->insert(
 		"Center",
-		QJsonValue::fromVariant((QString{"(%1, %2)"}
+		QJsonValue::fromVariant((QString{"(%1,%2)"}
 									 .arg(square->center().x())
 									 .arg(square->center().y()))));
 
 	// Запомнить Координаты Второй точки
 	m_jsonObject->insert(
 		"Destination",
-		QJsonValue::fromVariant((QString{"(%1, %2)"}
+		QJsonValue::fromVariant((QString{"(%1,%2)"}
 									 .arg(square->destination().x())
 									 .arg(square->destination().y()))));
 
 	// Запомнить Координаты Позиции на сцене
 	m_jsonObject->insert(
 		"Position",
-		QJsonValue::fromVariant((QString{"(%1, %2)"}
-									 .arg(square->scenePos().x())
-									 .arg(square->scenePos().y()))));
+		QJsonValue::fromVariant((
+			QString{"(%1,%2)"}.arg(square->pos().x()).arg(square->pos().y()))));
+
+	// Запомнить Угол поворота Фигуры
+	m_jsonObject->insert("Rotation",
+						 QJsonValue::fromVariant(square->rotation()));
 }
 
 void SerializeToJson::act(Triangle* triangle)
