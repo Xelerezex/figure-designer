@@ -2,11 +2,11 @@
 
 #include "clicktracker.h"
 #include "figurescene.h"
-#include "selectionrectangle.h"
+#include "figures/selectionrectangle.h"
 
-#include "startdrawing.h"
-#include "continuedrawing.h"
-#include "completedrawing.h"
+#include "figures/startdrawing.h"
+#include "figures/continuedrawing.h"
+#include "figures/completedrawing.h"
 
 #include <QGraphicsItem>
 #include <QApplication>

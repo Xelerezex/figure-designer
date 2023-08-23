@@ -1,12 +1,12 @@
 #include "figurecloner.h"
 
-#include "square.h"
-#include "circle.h"
-#include "triangle.h"
-#include "rectangle.h"
+#include "figures/square.h"
+#include "figures/circle.h"
+#include "figures/triangle.h"
+#include "figures/rectangle.h"
 
-#include "startdrawing.h"
-#include "completedrawing.h"
+#include "figures/startdrawing.h"
+#include "figures/completedrawing.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QMenu>

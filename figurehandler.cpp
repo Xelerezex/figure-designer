@@ -4,16 +4,16 @@
 #include "clicktracker.h"
 #include "figuregraphicsview.h"
 
-#include "square.h"
-#include "circle.h"
-#include "triangle.h"
-#include "rectangle.h"
+#include "figures/square.h"
+#include "figures/circle.h"
+#include "figures/triangle.h"
+#include "figures/rectangle.h"
 
-#include "startdrawing.h"
-#include "continuedrawing.h"
-#include "completedrawing.h"
-#include "serializetojson.h"
-#include "deserializefromjson.h"
+#include "figures/startdrawing.h"
+#include "figures/continuedrawing.h"
+#include "figures/completedrawing.h"
+#include "figures/serializetojson.h"
+#include "figures/deserializefromjson.h"
 
 #include <QGraphicsSceneMouseEvent>
 

@@ -12,7 +12,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
-#include "figurebase.h"
+#include "figures/figurebase.h"
 
 FigureGraphicsView::FigureGraphicsView(QMenu*		   fileMenu,
 									   QGraphicsScene* scene,

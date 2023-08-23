@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>qml;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+    </Filter>
+    <Filter Include="Source Files\figures">
+      <UniqueIdentifier>{509d383a-90e4-4ec6-91a7-d7e34803f8f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\figures">
+      <UniqueIdentifier>{b6110835-fc78-4657-89eb-b0cb23167608}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="resources.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtMoc Include="mainwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="centralwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="clicktracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="figurecloner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="figuregraphicsview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="figurehandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="figurescene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modificationhandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\triangle.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\startdrawing.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\square.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\serializetojson.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\selectionrectangle.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\rectangle.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\figurebase.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\figureaction.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\deserializefromjson.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\continuedrawing.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\completedrawing.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+    <ClCompile Include="figures\circle.cpp">
+      <Filter>Source Files\figures</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="centralwidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="clicktracker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="figuregraphicsview.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="figurehandler.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="figurescene.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="modificationhandler.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="figurecloner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\circle.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\completedrawing.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\continuedrawing.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\deserializefromjson.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\figureaction.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\figurebase.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\rectangle.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\triangle.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\startdrawing.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\square.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\serializetojson.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+    <ClInclude Include="figures\selectionrectangle.h">
+      <Filter>Header Files\figures</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
